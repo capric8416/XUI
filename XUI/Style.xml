@@ -1,0 +1,323 @@
+<Style>
+    <Body type="id">
+        <padding left="-5" top="-5" right="-5" bottom="-5"></padding>
+        <background>
+            <normal color="0xffffff"></normal>
+        </background>
+        <text>
+            <normal h-align="center" v-align="center" color="0x000000"></normal>
+        </text>
+    </Body>
+
+    <RadioGroup type="tag">
+        <padding left="-1" top="-1" right="-1" bottom="-1"></padding>
+        <border>
+            <normal color="0x009688"></normal>
+        </border>
+    </RadioGroup>
+
+    <RadioBox type="tag">
+        <background>
+            <checked color="0x009688"></checked>
+        </background>
+        <border>
+            <normal color="0x009688"></normal>
+        </border>
+        <text>
+            <normal color="0x009688"></normal>
+            <checked color="0xffffff"></checked>
+        </text>
+    </RadioBox>
+
+    <LeftNavTab type="id">
+        <position x="0" y="0" width="150" height="500"></position>
+    </LeftNavTab>
+
+    <CastScreen type="id">
+        <position x="0" y="0" width="1000" height="200"></position>
+        <text>
+            <normal>CastScreen</normal>
+        </text>
+    </CastScreen>
+
+    <CastWindow type="id">
+        <position x="0" y="200" width="1000" height="200"></position>
+        <text>
+            <normal>CastWindow</normal>
+        </text>
+    </CastWindow>
+
+    <CastVideo type="id">
+        <position x="0" y="400" width="1000" height="200"></position>
+        <text>
+            <normal>CastVideo</normal>
+        </text>
+    </CastVideo>
+
+    <CastAudio type="id">
+        <position x="0" y="600" width="1000" height="200"></position>
+        <text>
+            <normal>CastAudio</normal>
+        </text>
+    </CastAudio>
+
+    <CastImage type="id">
+        <position x="0" y="800" width="1000" height="200"></position>
+        <text>
+            <normal>CastImage</normal>
+        </text>
+    </CastImage>
+
+    <CenterSettings type="id">
+        <position x="150" y="0" width="550" height="800"></position>
+        <padding left="50"></padding>
+    </CenterSettings>
+
+    <DisplayTitle type="id">
+        <position x="0" y="0" width="100" height="100"></position>
+    </DisplayTitle>
+
+    <Display type="id">
+        <position x="100" y="0" width="200" height="100"></position>
+    </Display>
+
+    <DefaultDisplay type="id">
+        <position x="200" y="0" width="100" height="100"></position>
+        <text>
+            <normal>DefaultDisplay</normal>
+        </text>
+    </DefaultDisplay>
+
+    <VirtualDisplay type="id">
+        <position x="300" y="0" width="100" height="100"></position>
+        <text>
+            <normal>VirtualDisplay</normal>
+        </text>
+    </VirtualDisplay>
+
+    <ResolutionTitle type="class">
+        <position x="0" y="100" width="100" height="100"></position>
+        <text>
+            <normal>Resolution</normal>
+        </text>
+    </ResolutionTitle>
+
+    <Resolution type="class">
+        <position x="100" y="100" width="200" height="100"></position>
+    </Resolution>
+
+    <Resolution_1080p type="class">
+        <position x="200" y="100" width="100" height="100"></position>
+        <text>
+            <normal>1080p</normal>
+        </text>
+    </Resolution_1080p>
+
+    <Resolution_720p type="class">
+        <position x="300" y="100" width="100" height="100"></position>
+        <text>
+            <normal>720p</normal>
+        </text>
+    </Resolution_720p>
+
+    <Switch type="class">
+        <background>
+            <checked color="0x009688"></checked>
+        </background>
+        <border>
+            <normal color="0x009688"></normal>
+        </border>
+        <text>
+            <normal color="0x009688"></normal>
+            <checked color="0x00000"></checked>
+        </text>
+    </Switch>
+
+    <CursorTitle type="class">
+        <position x="0" y="200" width="100" height="100"></position>
+        <text>
+            <normal>Cursor</normal>
+        </text>
+    </CursorTitle>
+
+    <Cursor type="class">
+        <position x="100" y="200" width="100" height="100"></position>
+        <text>
+            <normal>Disable</normal>
+            <checked>Enable</checked>
+        </text>
+    </Cursor>
+
+    <AudioTitle type="class">
+        <position x="0" y="300" width="100" height="100"></position>
+        <text>
+            <normal>Audio</normal>
+        </text>
+    </AudioTitle>
+
+    <Audio type="class">
+        <position x="100" y="300" width="100" height="100"></position>
+        <text>
+            <normal>Disable</normal>
+            <checked>Enable</checked>
+        </text>
+    </Audio>
+
+    <SliderBarLabel type="tag">
+        <position x="0" y="0" width="100" height="1000"></position>
+    </SliderBarLabel>
+
+    <SliderBarBody type="tag">
+        <position x="100" y="0" width="800" height="1000"></position>
+        <background>
+            <normal color="0x009688" position="0 300 1000 400"></normal>
+        </background>
+        <border>
+            <normal color="0x009688" position="0 300 1000 400"></normal>
+        </border>
+    </SliderBarBody>
+
+    <SliderBarValue type="tag">
+        <position x="900" y="0" width="100" height="1000"></position>
+        <text>
+            <normal></normal>
+        </text>
+    </SliderBarValue>
+
+    <ScreenVolume type="class">
+        <position x="0" y="400" width="800" height="100"></position>
+    </ScreenVolume>
+
+    <ScreenVolumeLabel type="class">
+        <text>
+            <normal>Volume</normal>
+        </text>
+    </ScreenVolumeLabel>
+
+    <RightDevices type="id">
+        <position x="700" y="0" width="300" height="800"></position>
+    </RightDevices>
+
+    <Device type="class">
+        <position x="0" y="0" width="1000" height="50"></position>
+    </Device>
+
+    <BottomOption type="id">
+        <position x="0" y="800" width="1000" height="100"></position>
+    </BottomOption>
+
+    <Encoders type="id">
+        <position x="110" y="0" width="400" height="1000"></position>
+    </Encoders>
+
+    <SystemEncoder type="id">
+        <position x="0" y="0" width="333" height="1000"></position>
+        <text>
+            <normal>System</normal>
+        </text>
+    </SystemEncoder>
+
+    <HardwareEncoder type="id">
+        <position x="333" y="0" width="334" height="1000"></position>
+        <text>
+            <normal>Hardware</normal>
+        </text>
+    </HardwareEncoder>
+
+    <SoftwareEncoder type="id">
+        <position x="667" y="0" width="333" height="1000"></position>
+        <text>
+            <normal>Software</normal>
+        </text>
+    </SoftwareEncoder>
+
+    <FPS type="id">
+        <position x="200" y="0" width="500" height="1000"></position>
+    </FPS>
+
+    <FPSLabel type="id">
+        <text>
+            <normal>FPS</normal>
+        </text>
+    </FPSLabel>
+
+    <Bitrate type="id">
+        <position x="325" y="0" width="500" height="1000"></position>
+    </Bitrate>
+
+    <BitrateLabel type="id">
+        <text>
+            <normal>Bitrate</normal>
+        </text>
+    </BitrateLabel>
+
+    <Quality type="id">
+        <position x="450" y="0" width="500" height="1000"></position>
+    </Quality>
+
+    <QualityLabel type="id">
+        <text>
+            <normal>Quality</normal>
+        </text>
+    </QualityLabel>
+
+    <BottomStatus type="id">
+        <position x="0" y="0" width="1000" height="100"></position>
+    </BottomStatus>
+
+    <NetworkType type="id">
+        <position x="0" y="0" width="80" height="100"></position>
+        <text>
+            <normal></normal>
+        </text>
+    </NetworkType>
+
+    <NetworkAddress type="id">
+        <position x="80" y="0" width="170" height="100"></position>
+        <text>
+            <normal></normal>
+        </text>
+    </NetworkAddress>
+
+    <EncoderStatus type="id">
+        <position x="250" y="0" width="125" height="100"></position>
+        <text>
+            <normal>Encoder</normal>
+        </text>
+    </EncoderStatus>
+
+    <FPSStatus type="id">
+        <position x="375" y="0" width="125" height="100"></position>
+        <text>
+            <normal>FPS</normal>
+        </text>
+    </FPSStatus>
+
+    <BitrateStatus type="id">
+        <position x="500" y="0" width="125" height="100"></position>
+        <text>
+            <normal>Bitrate</normal>
+        </text>
+    </BitrateStatus>
+
+    <QualityStatus type="id">
+        <position x="625" y="0" width="125" height="100"></position>
+        <text>
+            <normal>Quality</normal>
+        </text>
+    </QualityStatus>
+
+    <Language type="id">
+        <position x="750" y="0" width="125" height="100"></position>
+        <text>
+            <normal></normal>
+        </text>
+    </Language>
+
+    <Version type="id">
+        <position x="875" y="0" width="125" height="100"></position>
+        <text>
+            <normal></normal>
+        </text>
+    </Version>
+</Style>

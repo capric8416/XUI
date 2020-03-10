@@ -1,0 +1,110 @@
+<Window width="400" min-height="300">
+    <Control id="Body">
+        <RadioGroup id="LeftNavTab">
+            <RadioBox id="CastScreen"></RadioBox>
+            <RadioBox id="CastWindow"></RadioBox>
+            <RadioBox id="CastVideo"></RadioBox>
+            <RadioBox id="CastAudio"></RadioBox>
+            <RadioBox id="CastImage"></RadioBox>
+        </RadioGroup>
+
+        <Control id="CenterSettings">
+            <Control id="CastScreenSettings">
+                <Label id="DisplayTitle"></Label>
+                <RadioGroup id="Display">
+                    <RadioBox id="DefaultDisplay"></RadioBox>
+                    <RadioBox id="VirtualDisplay"></RadioBox>
+                </RadioGroup>
+
+                <Label id="ResolutionTitle"></Label>
+                <RadioGroup id="Resolution">
+                    <RadioBox id="1080p"></RadioBox>
+                    <RadioBox id="720p"></RadioBox>
+                </RadioGroup>
+
+                <Label id="CursorTitle"></Label>
+                <CheckBox id="Cursor" class="Switch"></CheckBox>
+
+                <Label id="AudioTitle"></Label>
+                <CheckBox id="Audio" class="Switch">></CheckBox>
+
+                <SlierBar id="ScreenVolume">
+                    <SlierBarLabel id="ScreenVolumeLabel"></SlierBarLabel>
+                    <SlierBarBody id="ScreenVolumeBody"></SlierBarBody>
+                    <SlierBarValue id="ScreenVolumeValue"></SlierBarValue>
+                </SlierBar>
+            </Control>
+
+            <Control id="CastWindowSettings">
+                <Button id="SelectWindow"></Button>
+                <Label id="SelectedWindow"></Label>
+
+                <Label id="ResolutionTitle"></Label>
+                <RadioGroup id="Resolution">
+                    <RadioBox id="1080p"></RadioBox>
+                    <RadioBox id="720p"></RadioBox>
+                </RadioGroup>
+
+                <Label id="CursorTitle"></Label>
+                <CheckBox id="Cursor"></CheckBox>
+
+                <Label id="AudioTitle"></Label>
+                <CheckBox id="Audio"></CheckBox>
+
+                <SlierBar id="WindowVolume">
+                    <SlierBarLabel id="WindowVolumeLabel"></SlierBarLabel>
+                    <SlierBarBody id="WindowVolumeBody"></SlierBarBody>
+                    <SlierBarValue id="WindowVolumeValue"></SlierBarValue>
+                </SlierBar>
+            </Control>
+
+            <Control id="CastVideoSettings">
+            </Control>
+
+            <Control id="CastAudioSettings">
+            </Control>
+
+            <Control id="CastImageSettings">
+            </Control>
+        </Control>
+
+        <RadioGroup id="RightDevices"></RadioGroup>
+
+        <Control id="BottomOption">
+            <RadioGroup id="Encoders">
+                <RadioBox id="SystemEncoder"></RadioBox>
+                <RadioBox id="HardwareEncoder"></RadioBox>
+                <RadioBox id="SoftwareEncoder"></RadioBox>
+            </RadioGroup>
+
+            <SlierBar id="FPS">
+                <SlierBarLabel id="FPSLabel"></SlierBarLabel>
+                <SlierBarBody id="FPSBody"></SlierBarBody>
+                <SlierBarValue id="FPSValue"></SlierBarValue>
+            </SlierBar>
+
+            <SlierBar id="Bitrate">
+                <SlierBarLabel id="BitrateLabel"></SlierBarLabel>
+                <SlierBarBody id="BitrateBody"></SlierBarBody>
+                <SlierBarValue id="BitrateValue"></SlierBarValue>
+            </SlierBar>
+
+            <SlierBar id="Quality">
+                <SlierBarLabel id="QualityLabel"></SlierBarLabel>
+                <SlierBarBody id="QualityBody"></SlierBarBody>
+                <SlierBarValue id="QualityValue"></SlierBarValue>
+            </SlierBar>
+        </Control>
+
+        <CheckGroup id="BottomStatus">
+            <CheckBox id="NetworkType"></CheckBox>
+            <CheckBox id="NetworkAddress"></CheckBox>
+            <CheckBox id="EncoderStatus"></CheckBox>
+            <CheckBox id="FPSStatus"></CheckBox>
+            <CheckBox id="BitrateStatus"></CheckBox>
+            <CheckBox id="QualityStatus"></CheckBox>
+            <CheckBox id="Language"></CheckBox>
+            <CheckBox id="Version"></CheckBox>
+        </CheckGroup>
+    </Control>
+</Window>
