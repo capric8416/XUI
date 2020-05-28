@@ -76,7 +76,8 @@ public:
     virtual void Style(CONTROL_STATUS Status);
     virtual void Style(uint8_t Index, Background* BackgroundStyle = nullptr, Border* BorderStyle = nullptr, Text* TextStyle = nullptr, Animation* AnimationStyle = nullptr);
 
-    void SetContent(std::wstring Content, bool Paint = true);
+    std::wstring GetContent();
+    bool SetContent(std::wstring Content, bool Paint = true);
 
 
     // Is hidden

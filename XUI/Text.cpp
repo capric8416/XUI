@@ -131,8 +131,13 @@ wstring Text::GetContent()
 }
 
 
-void Text::SetContent(wstring Content)
+bool Text::SetContent(wstring Content)
 {
+    if (Content == m_Content)
+    {
+        return false;
+    }
+
     HRESULT hr = S_OK;
 
     m_Content = Content;
@@ -146,5 +151,7 @@ void Text::SetContent(wstring Content)
         m_Position.rect.bottom - m_Position.rect.top,
         &m_TextLayout
     );
+
+    return true;
 }
 

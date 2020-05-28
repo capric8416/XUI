@@ -11,6 +11,7 @@
 #include "Control.h"
 
 // c++
+#include <functional>
 #include <string>
 
 // define
@@ -56,6 +57,9 @@ public:
     void UpdateValue(LONG X, LONG Y, bool Init = false, bool Paint = true);
 
     void Value(INT32 Value);
+;
+    bool SetMin(INT32 Value);
+    bool SetMax(INT32 Value);
 
     virtual void SavePosition(UINT16 Index);
 
@@ -101,9 +105,18 @@ public:
     virtual void OnValueChange(INT32 Value);
 
     INT32 Value();
-    void Value(INT32 Value);
+    bool Value(INT32 Value);
     void Min();
+    INT32 GetMin();
+    bool SetMin(INT32 Value);
     void Max();
+    INT32 GetMax();
+    bool SetMax(INT32 Value);
+
+    bool SetTitle(std::wstring Text);
+    bool SetTitle(INT32 Value);
+
+    void SetFormater(std::function<std::wstring(INT32)> Formatter);
 
 
 protected:
@@ -114,6 +127,8 @@ protected:
     INT32 m_StepValue;
 
     bool m_Vertical;
+
+    std::function<std::wstring(INT32)> m_Formatter;
 
     SliderBarLabel* m_SliderLabel;
     SliderBarValue* m_SliderValue;

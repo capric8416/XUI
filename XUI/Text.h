@@ -60,7 +60,7 @@ public:
     virtual void SavePosition();
 
     std::wstring GetContent();
-    void SetContent(std::wstring Content);
+    bool SetContent(std::wstring Content);
 
 
 private:

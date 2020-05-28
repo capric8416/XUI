@@ -229,6 +229,30 @@ void SliderBarBody::Value(INT32 Value)
 
 
 
+bool SliderBarBody::SetMin(INT32 Value)
+{
+    if (m_MinValue == Value)
+    {
+        return false;
+    }
+
+    m_MinValue = Value;
+    return true;
+}
+
+
+bool SliderBarBody::SetMax(INT32 Value)
+{
+    if (m_MaxValue == Value)
+    {
+        return false;
+    }
+
+    m_MaxValue = Value;
+    return true;
+}
+
+
 SliderBar::SliderBar(
     wstring ID,
     RECT Position,
@@ -275,7 +299,8 @@ m_Value(Value),
 m_MinValue(MinValue),
 m_MaxValue(MaxValue),
 m_StepValue(StepValue),
-m_Vertical(Vertical)
+m_Vertical(Vertical),
+m_Formatter(nullptr)
 {
 }
 
@@ -293,8 +318,15 @@ void SliderBar::OnValueChange(INT32 Value)
     m_Wnd->GetUI()->OnSliderValueChanged(this, m_SliderBody, m_Value, Value);
 
     m_Value = Value;
-
-    m_SliderValue->SetContent(to_wstring(m_Value));
+    
+    if (m_Formatter != nullptr)
+    {
+        m_SliderValue->SetContent(m_Formatter(m_Value));
+    }
+    else
+    {
+        m_SliderValue->SetContent(to_wstring(m_Value));
+    }
 }
 
 
@@ -304,7 +336,7 @@ INT32 SliderBar::Value()
 }
 
 
-void SliderBar::Value(INT32 Value)
+bool SliderBar::Value(INT32 Value)
 {
     if (Value != m_Value && m_MinValue <= Value && Value <= m_MaxValue)
     {
@@ -312,7 +344,14 @@ void SliderBar::Value(INT32 Value)
 
         bool paint = !m_Hidden;
 
-        m_SliderValue->SetContent(to_wstring(m_Value));
+        if (m_Formatter != nullptr)
+        {
+            m_SliderValue->SetContent(m_Formatter(m_Value));
+        }
+        else
+        {
+            m_SliderValue->SetContent(to_wstring(m_Value));
+        }
 
         m_SliderBody->Value(Value);
         m_SliderBody->UpdateValue(0, 0, true);
@@ -321,6 +360,8 @@ void SliderBar::Value(INT32 Value)
         {
             Invalidate();
         }
+
+        return true;
     }
 }
 
@@ -331,7 +372,71 @@ void SliderBar::Min()
 }
 
 
+INT32 SliderBar::GetMin()
+{
+    return m_MinValue;
+}
+
+
+bool SliderBar::SetMin(INT32 Value)
+{
+    if (m_MinValue == Value)
+    {
+        return false;
+    }
+
+    m_MinValue = Value;
+    m_SliderBody->SetMin(Value);
+    return true;
+}
+
+
 void SliderBar::Max()
 {
     Value(m_MaxValue);
 }
+
+
+INT32 SliderBar::GetMax()
+{
+    return m_MaxValue;
+}
+
+
+bool SliderBar::SetMax(INT32 Value)
+{
+    if (m_MaxValue == Value)
+    {
+        return false;
+    }
+
+    m_MaxValue = Value;
+    m_SliderBody->SetMax(Value);
+    return true;
+}
+
+
+bool SliderBar::SetTitle(wstring Text)
+{
+    return m_SliderLabel->SetContent(Text);
+}
+
+
+bool SliderBar::SetTitle(INT32 Value)
+{
+    if (m_Formatter != nullptr)
+    {
+        return m_SliderLabel->SetContent(m_Formatter(Value));
+    }
+    else
+    {
+        return m_SliderLabel->SetContent(to_wstring(Value));
+    }
+}
+
+
+void SliderBar::SetFormater(function<wstring(INT32)> Formatter)
+{
+    m_Formatter = Formatter;
+}
+

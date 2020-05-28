@@ -19,7 +19,7 @@ using namespace std;
 
 
 Control::Control(
-    std::wstring ID,
+    wstring ID,
     RECT Position,
     initializer_list<Control*> Children,
     initializer_list<Background*> BackgroundStyle,
@@ -315,20 +315,39 @@ void Control::Style(uint8_t Index, Background* BackgroundStyle, Border* BorderSt
 }
 
 
-void Control::SetContent(wstring Content, bool Paint)
+wstring Control::GetContent()
 {
     for (int i = CONTROL_STATUS_BTIV + 1; i < CONTROL_STATUS_SIZE; i++)
     {
         for (const auto& style : m_TextStyles[i])
         {
-            style->SetContent(Content);
+            return style->GetContent();
+        }
+    }
+}
+
+
+bool Control::SetContent(wstring Content, bool Paint)
+{
+    bool changed = false;
+    for (int i = CONTROL_STATUS_BTIV + 1; i < CONTROL_STATUS_SIZE; i++)
+    {
+        for (const auto& style : m_TextStyles[i])
+        {
+            auto x = style->SetContent(Content);
+            if (x)
+            {
+                changed = true;
+            }
         }
     }
 
-    if (Paint)
+    if (changed & Paint)
     {
         Invalidate();
     }
+
+    return changed;
 }
 
 
@@ -938,13 +957,13 @@ Control* Control::Find(RECT& Position)
 }
 
 
-Control* Control::Find(std::wstring ID)
+Control* Control::Find(wstring ID)
 {
     return nullptr;
 }
 
 
-void Control::Collect(std::unordered_map<std::wstring, Control*>& Container)
+void Control::Collect(unordered_map<wstring, Control*>& Container)
 {
     Container[m_ID] = this;
 
