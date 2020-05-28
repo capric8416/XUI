@@ -345,6 +345,10 @@ void RadioGroup::OnChildChecked(Control* Child, bool Notify)
     }
 
     m_Checked = (RadioBox*)Child;
+    if (!Notify)
+    {
+        m_Checked->Check();
+    }
 }
 
 
