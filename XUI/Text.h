@@ -48,7 +48,7 @@ public:
         DWRITE_FONT_WEIGHT FontWeight = DWRITE_FONT_WEIGHT_REGULAR,
         DWRITE_FONT_STYLE FontStyle = DWRITE_FONT_STYLE_NORMAL,
         DWRITE_FONT_STRETCH FontStretch = DWRITE_FONT_STRETCH_NORMAL,
-        float FontSize = 10.0f,
+        float FontSize = 12.5f,
         const wchar_t* LocaleName = L"en-us"
     );
     // Deconstructor
@@ -64,8 +64,6 @@ public:
 
 
 private:
-    MainWnd* m_Wnd;
-
     std::wstring m_Content;
 
     ID2D1SolidColorBrush* m_Brush;

@@ -97,7 +97,7 @@ void Text::SavePosition()
         m_FontWeight,
         m_FontStyle,
         m_FontStretch,
-        m_FontSize,
+        m_FontSize / m_Wnd->DpiScaleX(),
         m_LocaleName,
         &m_TextFormat
     );

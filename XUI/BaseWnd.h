@@ -89,6 +89,12 @@ public:
     void Setup(UI* Tree)
     {
         m_UI = Tree;
+
+        // Get the dpi information.
+        HDC screen = GetDC(0);
+        m_DpiScaleX = GetDeviceCaps(screen, LOGPIXELSX) / 96.0f;
+        m_DpiScaleY = GetDeviceCaps(screen, LOGPIXELSY) / 96.0f;
+        ReleaseDC(0, screen);
     }
 
     // Create window
@@ -111,12 +117,6 @@ public:
         }
 
         RegisterClass(&wc);
-
-        // Get the dpi information.
-        HDC screen = GetDC(0);
-        m_DpiScaleX = GetDeviceCaps(screen, LOGPIXELSX) / 96.0f;
-        m_DpiScaleY = GetDeviceCaps(screen, LOGPIXELSY) / 96.0f;
-        ReleaseDC(0, screen);
 
         m_NativeWnd = CreateWindowEx(
             ExStyle, ClassName, WindowName, Style, Left, Top,
