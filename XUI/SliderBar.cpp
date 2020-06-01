@@ -363,6 +363,8 @@ bool SliderBar::Value(INT32 Value)
 
         return true;
     }
+
+    return false;
 }
 
 

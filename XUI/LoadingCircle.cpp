@@ -20,14 +20,13 @@ LoadingAnimation::LoadingAnimation(
     D2D_RECT_F Position,
     float CircleXRadiusDetla,
     float CircleYRadiusDetla,
-    D2D1_COLOR_F ClearColor,
     D2D1::ColorF OutLineColor,
     D2D1::ColorF GradientStartColor,
     D2D1::ColorF GradientStopColor,
     float RadiusX,
     float RadiusY
 ) :
-    Animation(Status, Position, ClearColor, RadiusX, RadiusY),
+    Animation(Status, Position, RadiusX, RadiusY),
     m_OutlineBrush(nullptr),
     m_GradientBrush(nullptr),
     m_GeometryGroup(nullptr),
@@ -36,7 +35,7 @@ LoadingAnimation::LoadingAnimation(
     m_LastTime(TICK_COUNT),
     m_CurrentTime(TICK_COUNT)
 {
-    HRESULT hr = m_Wnd->RenderTarget()->CreateSolidColorBrush(D2D1::ColorF(OutLineColor), &m_OutlineBrush);
+    HRESULT hr = s_Wnd->RenderTarget()->CreateSolidColorBrush(D2D1::ColorF(OutLineColor), &m_OutlineBrush);
 
     m_HalfWidth = (m_Position.rect.right - m_Position.rect.left) / 2;
     m_HalfHeight = (m_Position.rect.bottom - m_Position.rect.top) / 2;
@@ -63,7 +62,7 @@ LoadingAnimation::LoadingAnimation(
     m_GradientStops[1].color = D2D1::ColorF(GradientStopColor);
     m_GradientStops[1].position = 1.f;
 
-    hr = m_Wnd->RenderTarget()->CreateGradientStopCollection(
+    hr = s_Wnd->RenderTarget()->CreateGradientStopCollection(
         m_GradientStops,
         LOADING_GEOMETRY_COUNT,
         D2D1_GAMMA_2_2,
@@ -71,7 +70,7 @@ LoadingAnimation::LoadingAnimation(
         &m_GradientStopCollection
     );
 
-    hr = m_Wnd->RenderTarget()->CreateRadialGradientBrush(
+    hr = s_Wnd->RenderTarget()->CreateRadialGradientBrush(
         D2D1::RadialGradientBrushProperties(
             D2D1::Point2F(
                 m_Position.rect.left + m_HalfWidth - (m_Position.rect.right - m_Position.rect.left) / 3,
@@ -87,10 +86,10 @@ LoadingAnimation::LoadingAnimation(
 
     for (int i = 0; i < LOADING_GEOMETRY_COUNT; i++)
     {
-        hr = m_Wnd->D2DFactory()->CreateEllipseGeometry(m_Ellipse[i], &m_EllipseArray[i]);
+        hr = s_Wnd->D2DFactory()->CreateEllipseGeometry(m_Ellipse[i], &m_EllipseArray[i]);
     }
 
-    hr = m_Wnd->D2DFactory()->CreateGeometryGroup(
+    hr = s_Wnd->D2DFactory()->CreateGeometryGroup(
         D2D1_FILL_MODE_ALTERNATE,
         (ID2D1Geometry**)&m_EllipseArray,
         ARRAYSIZE(m_EllipseArray),
@@ -125,7 +124,7 @@ void LoadingAnimation::OnAnimated()
     m_TotalAngle += m_TimeDelta;
 
     // Draw geometry group
-    m_Wnd->RenderTarget()->DrawGeometry(m_GeometryGroup, m_OutlineBrush);
+    s_Wnd->RenderTarget()->DrawGeometry(m_GeometryGroup, m_OutlineBrush);
 
     // Roatate the gradient brush based on the total elapsed time
     D2D1_MATRIX_3X2_F rotMatrix = D2D1::Matrix3x2F::Rotation(
@@ -138,7 +137,7 @@ void LoadingAnimation::OnAnimated()
     m_GradientBrush->SetTransform(rotMatrix);
 
     // Fill geometry group with the transformed brush
-    m_Wnd->RenderTarget()->FillGeometry(m_GeometryGroup, m_GradientBrush);
+    s_Wnd->RenderTarget()->FillGeometry(m_GeometryGroup, m_GradientBrush);
 
     // Update last time to current time for next loop
     m_LastTime = m_CurrentTime;

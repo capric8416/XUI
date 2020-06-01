@@ -13,7 +13,6 @@ Background::Background(
     D2D_RECT_F Position,
 
     D2D1_COLOR_F Color,
-    D2D1_COLOR_F ClearColor,
 
     float RadiusX,
     float RadiusY
@@ -21,21 +20,18 @@ Background::Background(
     Style(
         Status,
         Position,
-        ClearColor,
         RadiusX,
         RadiusY
-    )
+    ),
+    m_Color(Color),
+    m_Brush(nullptr)
 {
-    HRESULT hr = S_OK;
-
-    // Create brush
-    hr = m_RenderTarget->CreateSolidColorBrush(Color, &m_Brush);
+    SolidBrush();
 }
 
 
 Background::~Background()
 {
-    XSafeRelease(&m_Brush);
 }
 
 
@@ -57,11 +53,23 @@ void Background::OnPaint(bool Clear)
             rect.rect.bottom += 1;
         }
 
-        m_RenderTarget->FillRoundedRectangle(&rect, m_ClearBrush);
+        s_RenderTarget->FillRoundedRectangle(&rect, __super::SolidBrush(D2D1::ColorF(D2D1::ColorF::White)));
     }
 
     if (!m_Owner->Hidden())
     {
-        m_RenderTarget->FillRoundedRectangle(&m_Position, m_Brush);
+        s_RenderTarget->FillRoundedRectangle(&m_Position, SolidBrush());
     }
+}
+
+
+ID2D1SolidColorBrush* Background::SolidBrush()
+{
+    if (m_Brush != nullptr)
+    {
+        return m_Brush;
+    }
+
+    m_Brush = __super::SolidBrush(m_Color);
+    return m_Brush;
 }

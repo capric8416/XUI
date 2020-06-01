@@ -30,7 +30,6 @@ public:
         D2D_RECT_F Position = ZERO_RECT,
 
         D2D1_COLOR_F Color = D2D1::ColorF(D2D1::ColorF::Black),
-        D2D1_COLOR_F ClearColor = D2D1::ColorF(D2D1::ColorF::White),
 
         float RadiusX = 0,
         float RadiusY = 0,
@@ -43,8 +42,11 @@ public:
     // Handle paint event
     virtual void OnPaint();
 
+    virtual ID2D1SolidColorBrush* SolidBrush();
+
 
 private:
+    D2D1_COLOR_F m_Color;
     ID2D1SolidColorBrush* m_Brush;
 
     float m_StrokeWidth;

@@ -82,7 +82,7 @@ public:
                             new Label(
                                 L"Screen", ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, false, false, true,
                                 {
-                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff), D2D1::ColorF(0xffffff)),
+                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
                                 },
                                 {},
                                 {
@@ -92,7 +92,7 @@ public:
                             new Label(
                                 L"Window", ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, true, false, true,
                                 {
-                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff), D2D1::ColorF(0xffffff)),
+                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
                                 },
                                 {},
                                 {
@@ -148,7 +148,7 @@ public:
                             new Label(
                                 L"Video", {0, 0, 500, 1000}, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, true, false, true,
                                 {
-                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff), D2D1::ColorF(0xffffff)),
+                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
                                 },
                                 {},
                                 {
@@ -158,7 +158,7 @@ public:
                             new Label(
                                 L"Audio", {500, 0, 1000, 1000}, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, true, false, true,
                                 {
-                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff), D2D1::ColorF(0xffffff)),
+                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
                                 },
                                 {},
                                 {

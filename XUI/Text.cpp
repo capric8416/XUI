@@ -20,7 +20,6 @@ Text::Text(
     float RadiusY,
 
     D2D1_COLOR_F Color,
-    D2D1_COLOR_F ClearColor,
 
     DWRITE_TEXT_ALIGNMENT TextAlignment,
     DWRITE_PARAGRAPH_ALIGNMENT ParagraphAlignment,
@@ -36,10 +35,13 @@ Text::Text(
 Style(
     Status,
     Position,
-    ClearColor,
     RadiusX,
     RadiusY
 ),
+m_Color(Color),
+m_Brush(nullptr),
+m_TextFormat(nullptr),
+m_TextLayout(nullptr),
 m_Content(Content),
 m_TextAlignment(TextAlignment),
 m_ParagraphAlignment(ParagraphAlignment),
@@ -51,36 +53,18 @@ m_FontStretch(FontStretch),
 m_FontSize(FontSize),
 m_LocaleName(LocaleName)
 {
-    HRESULT hr = S_OK;
-
-    // Create brush
-    hr = m_RenderTarget->CreateSolidColorBrush(Color, &m_Brush);
+    SolidBrush();
 }
 
 
 Text::~Text()
 {
-    XSafeRelease(&m_TextLayout);
-    XSafeRelease(&m_TextFormat);
-    XSafeRelease(&m_Brush);
 }
 
 
 void Text::OnPaint()
 {
-    if (m_TextLayout == NULL)
-    {
-        m_DWriteFactory->CreateTextLayout(
-            m_Content.c_str(),
-            m_Content.length(),
-            m_TextFormat,
-            m_Position.rect.right - m_Position.rect.left,
-            m_Position.rect.bottom - m_Position.rect.top,
-            &m_TextLayout
-        );
-    }
-
-    m_RenderTarget->DrawTextLayout(D2D1::Point2F(m_Position.rect.left, m_Position.rect.top), m_TextLayout, m_Brush);
+    s_RenderTarget->DrawTextLayout(D2D1::Point2F(m_Position.rect.left, m_Position.rect.top), TextLayout(), SolidBrush());
 }
 
 
@@ -88,40 +72,7 @@ void Text::SavePosition()
 {
     __super::SavePosition();
 
-    HRESULT hr = S_OK;
-
-    // Create format
-    hr = m_DWriteFactory->CreateTextFormat(
-        m_FontFamily,
-        m_FontCollection,
-        m_FontWeight,
-        m_FontStyle,
-        m_FontStretch,
-        m_FontSize / m_Wnd->DpiScaleX(),
-        m_LocaleName,
-        &m_TextFormat
-    );
-    hr = m_TextFormat->SetTextAlignment(m_TextAlignment);
-    hr = m_TextFormat->SetParagraphAlignment(m_ParagraphAlignment);
-    hr = m_TextFormat->SetWordWrapping(DWRITE_WORD_WRAPPING_NO_WRAP);
-
-    DWRITE_TRIMMING trim1;
-    trim1.granularity = DWRITE_TRIMMING_GRANULARITY_CHARACTER;
-    trim1.delimiter = 1;
-    trim1.delimiterCount = 10;
-    IDWriteInlineObject* trim2 = NULL;
-    m_DWriteFactory->CreateEllipsisTrimmingSign(m_TextFormat, &trim2);
-    hr = m_TextFormat->SetTrimming(&trim1, trim2);
-
-    // Create layout
-    hr = m_DWriteFactory->CreateTextLayout(
-        m_Content.c_str(),
-        m_Content.length(),
-        m_TextFormat,
-        m_Position.rect.right - m_Position.rect.left,
-        m_Position.rect.bottom - m_Position.rect.top,
-        &m_TextLayout
-    );
+    TextLayout(true);
 }
 
 
@@ -138,20 +89,71 @@ bool Text::SetContent(wstring Content)
         return false;
     }
 
-    HRESULT hr = S_OK;
+    TextLayout(Content);
 
     m_Content = Content;
 
-    XSafeRelease(&m_TextLayout);
-    hr = m_DWriteFactory->CreateTextLayout(
-        m_Content.c_str(),
-        m_Content.length(),
-        m_TextFormat,
-        m_Position.rect.right - m_Position.rect.left,
-        m_Position.rect.bottom - m_Position.rect.top,
-        &m_TextLayout
-    );
-
     return true;
+}
+
+
+ID2D1SolidColorBrush* Text::SolidBrush()
+{
+    if (m_Brush != nullptr)
+    {
+        return m_Brush;
+    }
+
+    m_Brush = __super::SolidBrush(m_Color);
+    return m_Brush;
+}
+
+
+IDWriteTextFormat* Text::TextFormat()
+{
+    if (m_TextFormat != nullptr)
+    {
+        return m_TextFormat;
+    }
+
+    m_TextFormat = __super::TextFormat(
+        m_FontFamily, m_FontCollection, m_FontWeight, m_FontStyle, m_FontStretch,
+        m_FontSize, m_LocaleName, m_TextAlignment, m_ParagraphAlignment, true
+    );
+    return m_TextFormat;
+}
+
+
+IDWriteTextLayout* Text::TextLayout(bool Resize)
+{
+    if (m_TextLayout != nullptr && !Resize)
+    {
+        return m_TextLayout;
+    }
+
+    m_TextLayout = __super::TextLayout(
+        m_Content,
+        TextFormat(),
+        m_Position.rect.right - m_Position.rect.left,
+        m_Position.rect.bottom - m_Position.rect.top
+    );
+    return m_TextLayout;
+}
+
+
+IDWriteTextLayout* Text::TextLayout(std::wstring Content)
+{
+    if (m_TextLayout != nullptr && Content == m_Content)
+    {
+        return m_TextLayout;
+    }
+
+    m_TextLayout = __super::TextLayout(
+        m_Content,
+        TextFormat(),
+        m_Position.rect.right - m_Position.rect.left,
+        m_Position.rect.bottom - m_Position.rect.top
+    );
+    return m_TextLayout;
 }
 

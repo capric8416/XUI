@@ -38,7 +38,6 @@ public:
         float RadiusY = 0,
 
         D2D1_COLOR_F Color = D2D1::ColorF(D2D1::ColorF::Black),
-        D2D1_COLOR_F ClearColor = D2D1::ColorF(D2D1::ColorF::White),
 
         DWRITE_TEXT_ALIGNMENT TextAlignment = DWRITE_TEXT_ALIGNMENT_CENTER,
         DWRITE_PARAGRAPH_ALIGNMENT ParagraphAlignment = DWRITE_PARAGRAPH_ALIGNMENT_CENTER,
@@ -57,6 +56,11 @@ public:
     // Handle paint event
     virtual void OnPaint();
 
+    virtual ID2D1SolidColorBrush* SolidBrush();
+    virtual IDWriteTextFormat* TextFormat();
+    virtual IDWriteTextLayout* TextLayout(bool Resize = false);
+    virtual IDWriteTextLayout* TextLayout(std::wstring Content);
+
     virtual void SavePosition();
 
     std::wstring GetContent();
@@ -66,6 +70,7 @@ public:
 private:
     std::wstring m_Content;
 
+    D2D1_COLOR_F m_Color;
     ID2D1SolidColorBrush* m_Brush;
     IDWriteTextFormat* m_TextFormat;
     IDWriteTextLayout* m_TextLayout;

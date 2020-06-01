@@ -12,8 +12,6 @@ using namespace std;
 
 
 // static
-MainWnd* Animation::s_Wnd;
-HWND Animation::s_NativeWnd;
 UINT8 Animation::s_Tick;
 Event Animation::s_Stop;
 thread* Animation::s_Thread;
@@ -24,20 +22,16 @@ list<Control*> Animation::s_Tasks;
 Animation::Animation(
     CONTROL_STATUS Status,
     D2D_RECT_F Position,
-    D2D1_COLOR_F ClearColor,
     float RadiusX,
     float RadiusY
 ) :
     Style(
         Status,
         Position,
-        ClearColor,
         RadiusX,
         RadiusY
     )
 {
-    s_Wnd = m_Wnd;
-    s_NativeWnd = m_Wnd->NativeWnd();
 }
 
 

@@ -14,6 +14,10 @@
 #include <d2d1.h>
 #include <dwrite.h>
 
+// c/c++
+#include <string>
+#include <unordered_map>
+
 // forward
 class MainWnd;
 class Control;
@@ -26,7 +30,6 @@ public:
     Style(
         CONTROL_STATUS Status, 
         D2D_RECT_F Position = ZERO_RECT,
-        D2D1_COLOR_F ClearColor = D2D1::ColorF(D2D1::ColorF::White),
         float RadiusX = 0,
         float RadiusY = 0
     );
@@ -44,9 +47,21 @@ public:
 
     virtual CONTROL_STATUS Status();
 
+    virtual ID2D1SolidColorBrush* SolidBrush();
+    virtual IDWriteTextFormat* TextFormat();
+    virtual IDWriteTextLayout* TextLayout();
+
+    static ID2D1SolidColorBrush* SolidBrush(D2D1_COLOR_F Color);
+    static IDWriteTextFormat* TextFormat(
+        const wchar_t* FontFamilyName, IDWriteFontCollection* FontCollection, DWRITE_FONT_WEIGHT FontWeight, 
+        DWRITE_FONT_STYLE FontStyle, DWRITE_FONT_STRETCH FontStretch, FLOAT FontSize, const wchar_t* LocaleName,
+        DWRITE_TEXT_ALIGNMENT TextAlignment, DWRITE_PARAGRAPH_ALIGNMENT ParagraphAlignment, bool NoWrapAndEllipsis = true
+    );
+    static IDWriteTextLayout* TextLayout(std::wstring Text, IDWriteTextFormat* Format, float MaxWidth, float MaxHeight);
+
+    static void ReleaseResourceCache();
 
 protected:
-    MainWnd* m_Wnd;
     Control* m_Owner;
 
     CONTROL_STATUS m_Status;
@@ -54,10 +69,13 @@ protected:
     D2D1_ROUNDED_RECT m_Position;
     D2D1_ROUNDED_RECT m_PositionPercentage;
 
-    ID2D1SolidColorBrush* m_ClearBrush;
-
-    ID2D1Factory* m_D2DFactory;
-    IDWriteFactory* m_DWriteFactory;
-    ID2D1HwndRenderTarget* m_RenderTarget;
+    static MainWnd* s_Wnd;
+    static HWND s_NativeWnd;
+    static ID2D1Factory* s_D2DFactory;
+    static IDWriteFactory* s_DWriteFactory;
+    static ID2D1HwndRenderTarget* s_RenderTarget;
+    static std::unordered_map<std::wstring, ID2D1SolidColorBrush*> s_SolidBrushCache;
+    static std::unordered_map<std::wstring, IDWriteTextFormat*> s_TextFormatCache;
+    static std::unordered_map<std::wstring, IDWriteTextLayout*> s_TextLayoutCache;
 };
 

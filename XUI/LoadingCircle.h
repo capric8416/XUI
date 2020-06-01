@@ -28,7 +28,6 @@ public:
         D2D_RECT_F Position,
         float CircleXRadiusDetla,
         float CircleYRadiusDetla,
-        D2D1_COLOR_F ClearColor = D2D1::ColorF(D2D1::ColorF::White),
         D2D1::ColorF OutLineColor = D2D1::ColorF(D2D1::ColorF::Black),
         D2D1::ColorF GradientStartColor = D2D1::ColorF(D2D1::ColorF::DarkGreen),
         D2D1::ColorF GradientStopColor = D2D1::ColorF(D2D1::ColorF::White),

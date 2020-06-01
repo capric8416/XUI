@@ -13,7 +13,6 @@ Border::Border(
     D2D_RECT_F Position,
 
     D2D1_COLOR_F Color,
-    D2D1_COLOR_F ClearColor,
 
     float RadiusX,
     float RadiusY,
@@ -22,32 +21,38 @@ Border::Border(
 ) :
     Style(
         Status,
-        Position,
-        ClearColor
-    )
+        Position
+    ),
+    m_Color(Color),
+    m_Brush(nullptr),
+    m_StrokeWidth(StrokeWidth),
+    m_StrokeStyle(StrokeStyle)
 {
-    m_StrokeWidth = StrokeWidth;
-    m_StrokeStyle = StrokeStyle;
-
-    HRESULT hr = S_OK;
-
-    // Create brush
-    hr = m_RenderTarget->CreateSolidColorBrush(Color, &m_Brush);
+    SolidBrush();
 }
 
 
 Border::~Border()
 {
-    XSafeRelease(&m_Brush);
 }
 
 
 void Border::OnPaint()
 {
-    m_RenderTarget->DrawRoundedRectangle(&m_Position, m_ClearBrush, m_StrokeWidth, m_StrokeStyle);
-
     if (!m_Owner->Hidden())
     {
-        m_RenderTarget->DrawRoundedRectangle(&m_Position, m_Brush, m_StrokeWidth, m_StrokeStyle);
+        s_RenderTarget->DrawRoundedRectangle(&m_Position, SolidBrush(), m_StrokeWidth, m_StrokeStyle);
     }
+}
+
+
+ID2D1SolidColorBrush* Border::SolidBrush()
+{
+    if (m_Brush != nullptr)
+    {
+        return m_Brush;
+    }
+
+    m_Brush = __super::SolidBrush(m_Color);
+    return m_Brush;
 }

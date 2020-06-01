@@ -3,6 +3,7 @@
 
 // project
 #include "UI.h"
+#include "Style.h"
 
 
 
@@ -46,6 +47,7 @@ LRESULT MainWnd::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
     case WM_DESTROY:
         m_UI->StopAnimation(m_AnimationEnabled);
+        Style::ReleaseResourceCache();
         DiscardGraphicsResources();
         PostQuitMessage(0);
         return 0;

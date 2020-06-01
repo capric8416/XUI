@@ -35,8 +35,6 @@ public:
 
         D2D_RECT_F Position = ZERO_RECT,
 
-        D2D1_COLOR_F ClearColor = D2D1::ColorF(D2D1::ColorF::White),
-
         float RadiusX = 0,
         float RadiusY = 0
     );
@@ -53,15 +51,8 @@ public:
 
 
 protected:
-    static MainWnd* s_Wnd;
-
-    static HWND s_NativeWnd;
-
     static UINT8 s_Tick;
-    
     static Event s_Stop;
-    
     static std::thread* s_Thread;
-
     static std::list<Control*> s_Tasks;
 };
