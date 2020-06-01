@@ -192,7 +192,7 @@ void MainWnd::Resize()
 
     GetClientRect(m_NativeWnd, &m_ClientRect);
 
-    if (m_RenderTarget != nullptr)
+    if (m_RenderTarget != nullptr && !IS_ZERO_RECT(m_ClientRect))
     {
         m_RenderTarget->Resize(D2D1::SizeU(m_ClientRect.right, m_ClientRect.bottom));
 

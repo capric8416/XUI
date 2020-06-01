@@ -149,7 +149,7 @@ IDWriteTextLayout* Text::TextLayout(std::wstring Content)
     }
 
     m_TextLayout = __super::TextLayout(
-        m_Content,
+        Content,
         TextFormat(),
         m_Position.rect.right - m_Position.rect.left,
         m_Position.rect.bottom - m_Position.rect.top
