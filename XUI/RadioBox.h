@@ -39,6 +39,9 @@ public:
     void SetGrouped();
     void SetChecked(bool Status = true, bool Notify = true);
 
+    size_t GetPos();
+    void SetPos(size_t Value);
+
     // Handle left button click event
     virtual void OnLeftButtonClick(LONG X, LONG Y);
 
@@ -53,6 +56,8 @@ protected:
     bool m_Checked;
 
     bool m_Grouped;
+
+    size_t m_Pos;
 };
 
 
@@ -100,6 +105,8 @@ public:
 
     virtual void OnChildChecked(Control* Child, bool Notify = true);
     RadioBox* Checked();
+
+    bool Check(size_t Pos);
 
     void Pin(std::wstring ID);
     void Unpin(std::wstring ID);

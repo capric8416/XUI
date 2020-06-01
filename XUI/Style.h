@@ -44,8 +44,8 @@ public:
 
     virtual CONTROL_STATUS Status();
 
-protected:
 
+protected:
     MainWnd* m_Wnd;
     Control* m_Owner;
 

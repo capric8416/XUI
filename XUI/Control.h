@@ -67,7 +67,7 @@ public:
     virtual void SetParent(Control* Parent);
 
     // Get children
-    virtual std::list<Control*>* Children();
+    virtual std::vector<Control*>* Children();
 
     // Attach child control
     virtual void Attach(Control* Control);
@@ -261,7 +261,7 @@ protected:
     std::list<Animation*> m_AnimationStyles[CONTROL_STATUS_SIZE];
 
     // Child controls
-    std::list<Control*> m_Children;
+    std::vector<Control*> m_Children;
 
     // Left button opation point
     POINT m_LeftButtonDownPoint;

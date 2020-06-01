@@ -186,7 +186,7 @@ void Control::SetParent(Control* Parent)
 }
 
 
-list<Control*>* Control::Children()
+vector<Control*>* Control::Children()
 {
     return &m_Children;
 }

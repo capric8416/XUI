@@ -81,6 +81,18 @@ void RadioBox::SetChecked(bool Status, bool Notify)
 }
 
 
+size_t RadioBox::GetPos()
+{
+    return m_Pos;
+}
+
+
+void RadioBox::SetPos(size_t Value)
+{
+    m_Pos = Value;
+}
+
+
 void RadioBox::OnLeftButtonClick(LONG X, LONG Y)
 {
     __super::OnLeftButtonClick(X, Y);
@@ -234,6 +246,8 @@ void RadioGroup::Attach(RadioBox* Child, bool Checked, bool Pin, bool Paint)
 {
     __super::Attach(Child);
 
+    Child->SetPos(Size() - 1);
+
     Child->SetGrouped();
     if (Checked)
     {
@@ -267,21 +281,22 @@ void RadioGroup::Dettach(RadioBox* Child)
         m_Checked = nullptr;
     }
 
+    size_t pos = 0;
     auto iter = m_Children.begin();
     while (iter != m_Children.end())
     {
         auto target = *iter;
         if (target != Child)
         {
+            ((RadioBox*)target)->SetPos(pos);
+            pos++;
             iter++;
-            continue;
         }
-
-        XSafeDelete(target);
-
-        m_Children.erase(iter);
-
-        break;
+        else
+        {
+            XSafeDelete(target);
+            iter = m_Children.erase(iter);
+        }
     }
 
     Resize();
@@ -355,6 +370,19 @@ void RadioGroup::OnChildChecked(Control* Child, bool Notify)
 RadioBox* RadioGroup::Checked()
 {
     return m_Checked;
+}
+
+
+bool RadioGroup::Check(size_t Pos)
+{
+    if (0 <= Pos && Pos < Size())
+    {
+        OnChildChecked(m_Children[Pos], false);
+        m_Checked->SetPos(Pos);
+        return true;
+    }
+
+    return false;
 }
 
 
