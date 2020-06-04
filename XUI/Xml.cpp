@@ -413,8 +413,8 @@ XmlNode* Xml::Read(wstring Path)
     }
 
 CleanUp:
-    XSafeRelease(&reader);
-    XSafeRelease(&stream);
+    XSafeRelease(reader);
+    XSafeRelease(stream);
 
     return m_Controls.top();
 }

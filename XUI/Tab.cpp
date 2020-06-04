@@ -21,7 +21,8 @@ TabGroup::TabGroup(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
-    initializer_list<Animation*> AnimationStyle
+    initializer_list<Animation*> AnimationStyle,
+    initializer_list<Image*> ImageStyle
 ) :
     Control(
         ID,
@@ -37,10 +38,11 @@ TabGroup::TabGroup(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
-        AnimationStyle
+        AnimationStyle,
+        ImageStyle
     )
 {
-    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle);
+    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle, ImageStyle);
 
     Bind(Nav, Box);
 
@@ -74,7 +76,8 @@ TabGroup::TabGroup(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
-    initializer_list<Animation*> AnimationStyle
+    initializer_list<Animation*> AnimationStyle,
+    initializer_list<Image*> ImageStyle
 ) :
     Control(
         ID,
@@ -93,7 +96,7 @@ TabGroup::TabGroup(
         AnimationStyle
     )
 {
-    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle);
+    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle, ImageStyle);
 
     Bind(Nav, Box);
 

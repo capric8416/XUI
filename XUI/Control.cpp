@@ -8,6 +8,7 @@
 #include "Animation.h"
 #include "Background.h"
 #include "Border.h"
+#include "Image.h"
 #include "Text.h"
 
 // c/c++
@@ -25,7 +26,8 @@ Control::Control(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
-    initializer_list<Animation*> AnimationStyle
+    initializer_list<Animation*> AnimationStyle,
+    initializer_list<Image*> ImageStyle
 ) :
     m_Wnd(MainWnd::Instance()),
     m_Parent(nullptr),
@@ -53,9 +55,10 @@ Control::Control(
     m_BackgroundStyle(CONTROL_STATUS_NORMAL),
     m_BorderStyle(CONTROL_STATUS_NORMAL),
     m_TextStyle(CONTROL_STATUS_NORMAL),
-    m_AnimationStyle(CONTROL_STATUS_NORMAL)
+    m_AnimationStyle(CONTROL_STATUS_NORMAL),
+    m_ImageStyle(CONTROL_STATUS_NORMAL)
 {
-    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle);
+    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle, ImageStyle);
 
     for (const auto& child : m_Children)
     {
@@ -86,7 +89,8 @@ Control::Control(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
-    initializer_list<Animation*> AnimationStyle
+    initializer_list<Animation*> AnimationStyle,
+    initializer_list<Image*> ImageStyle
 ) :
     m_Wnd(MainWnd::Instance()),
     m_Parent(nullptr),
@@ -114,9 +118,10 @@ Control::Control(
     m_BackgroundStyle(CONTROL_STATUS_NORMAL),
     m_BorderStyle(CONTROL_STATUS_NORMAL),
     m_TextStyle(CONTROL_STATUS_NORMAL),
-    m_AnimationStyle(CONTROL_STATUS_NORMAL)
+    m_AnimationStyle(CONTROL_STATUS_NORMAL),
+    m_ImageStyle(CONTROL_STATUS_NORMAL)
 {
-    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle);
+    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle, ImageStyle);
 
     for (const auto& child : m_Children)
     {
@@ -324,6 +329,8 @@ wstring Control::GetContent()
             return style->GetContent();
         }
     }
+
+    return L"";
 }
 
 
@@ -335,6 +342,30 @@ bool Control::SetContent(wstring Content, bool Paint)
         for (const auto& style : m_TextStyles[i])
         {
             auto x = style->SetContent(Content);
+            if (x)
+            {
+                changed = true;
+            }
+        }
+    }
+
+    if (changed & Paint)
+    {
+        Invalidate();
+    }
+
+    return changed;
+}
+
+
+bool Control::SetImage(wstring Path, bool Paint)
+{
+    bool changed = false;
+    for (int i = CONTROL_STATUS_BTIV + 1; i < CONTROL_STATUS_SIZE; i++)
+    {
+        for (const auto& style : m_ImageStyles[i])
+        {
+            auto x = style->SetPath(Path);
             if (x)
             {
                 changed = true;
@@ -577,6 +608,11 @@ void Control::OnPaint(bool PaintChildren)
     }
 
     for (const auto& style : m_BorderStyles[m_BorderStyle])
+    {
+        style->OnPaint();
+    }
+
+    for (const auto& style : m_ImageStyles[m_ImageStyle])
     {
         style->OnPaint();
     }
@@ -1203,6 +1239,11 @@ void Control::SaveStylePosition()
         {
             style->SavePosition();
         }
+
+        for (const auto& style : m_ImageStyles[i])
+        {
+            style->SavePosition();
+        }
     }
 }
 
@@ -1211,7 +1252,8 @@ void Control::SaveStyleValues(
     initializer_list<Background*>& BackgroundStyle,
     initializer_list<Border*>& BorderStyle,
     initializer_list<Text*>& TextStyle,
-    initializer_list<Animation*>& AnimationStyle
+    initializer_list<Animation*>& AnimationStyle,
+    std::initializer_list<Image*>& ImageStyle
 )
 {
     for (const auto& style : BackgroundStyle)
@@ -1236,6 +1278,12 @@ void Control::SaveStyleValues(
     {
         style->SetOwner(this);
         m_AnimationStyles[style->Status()].push_back(style);
+    }
+
+    for (const auto& style : ImageStyle)
+    {
+        style->SetOwner(this);
+        m_ImageStyles[style->Status()].push_back(style);
     }
 
     for (const auto& child : m_Children)

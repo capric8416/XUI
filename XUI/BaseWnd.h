@@ -13,11 +13,14 @@
 
 // windows
 #include <d2d1.h>
+#include <d2d1helper.h>
 #include <dwrite.h>
+#include <wincodec.h>
 
 // link
 #pragma comment(lib, "d2d1")
 #pragma comment(lib, "dwrite")
+#pragma comment(lib, "WindowsCodecs")
 
 
 
@@ -33,6 +36,7 @@ public:
         m_DpiScaleY(1.0f),
         m_D2DFactory(nullptr),
         m_DWriteFactory(nullptr),
+        m_IWICFactory(nullptr),
         m_RenderTarget(nullptr)
     {
     }
@@ -73,6 +77,12 @@ public:
         return m_DWriteFactory;
     }
 
+    // Get IWICImagingFactory
+    inline IWICImagingFactory* IWICFactory()
+    {
+        return m_IWICFactory;
+    }
+
     // Get ID2D1HwndRenderTarget
     inline ID2D1HwndRenderTarget* RenderTarget()
     {
@@ -103,6 +113,10 @@ public:
         int Width = CW_USEDEFAULT, int Height = CW_USEDEFAULT, HWND Parent = NULL, HMENU Menu = NULL, HCURSOR Cursor = NULL, HICON Icon = NULL
     )
     {
+
+        HeapSetInformation(NULL, HeapEnableTerminationOnCorruption, NULL, 0);
+        HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
+
         WNDCLASS wc = ZERO_RECT;
 
         HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -143,6 +157,8 @@ public:
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+
+        CoUninitialize();
     }
 
     // Window proc
@@ -191,5 +207,6 @@ protected:
     // D2D and DWrite
     ID2D1Factory* m_D2DFactory;
     IDWriteFactory* m_DWriteFactory;
+    IWICImagingFactory* m_IWICFactory;
     ID2D1HwndRenderTarget* m_RenderTarget;
 };

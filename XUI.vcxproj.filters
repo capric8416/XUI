@@ -87,6 +87,9 @@
     <ClInclude Include="XUI\Tab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="XUI\Image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XUI\Main.cpp">
@@ -156,6 +159,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="XUI\Tab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XUI\Image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -25,6 +25,7 @@ class MainWnd;
 class Animation;
 class Background;
 class Border;
+class Image;
 class Text;
 
 
@@ -41,7 +42,8 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
-        std::initializer_list<Animation*> AnimationStyle = {}
+        std::initializer_list<Animation*> AnimationStyle = {},
+        std::initializer_list<Image*> ImageStyle = {}
     );
     Control(
         std::wstring ID,
@@ -57,7 +59,8 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
-        std::initializer_list<Animation*> AnimationStyle = {}
+        std::initializer_list<Animation*> AnimationStyle = {},
+        std::initializer_list<Image*> ImageStyle = {}
     );
     // Deconstructor
     ~Control();
@@ -79,6 +82,7 @@ public:
     std::wstring GetContent();
     bool SetContent(std::wstring Content, bool Paint = true);
 
+    bool SetImage(std::wstring Path, bool Paint = true);
 
     // Is hidden
     virtual inline bool Hidden();
@@ -208,7 +212,13 @@ public:
 
 protected:
     virtual void SaveStylePosition();
-    virtual void SaveStyleValues(std::initializer_list<Background*>& BackgroundStyle, std::initializer_list<Border*>& BorderStyle, std::initializer_list<Text*>& TextStyle, std::initializer_list<Animation*>& AnimationStyle);
+    virtual void SaveStyleValues(
+        std::initializer_list<Background*>& BackgroundStyle, 
+        std::initializer_list<Border*>& BorderStyle, 
+        std::initializer_list<Text*>& TextStyle, 
+        std::initializer_list<Animation*>& AnimationStyle,
+        std::initializer_list<Image*>& ImageStyle
+    );
 
     // Main wnd
     MainWnd* m_Wnd;
@@ -259,6 +269,10 @@ protected:
     // Animation styles
     CONTROL_STATUS m_AnimationStyle;
     std::list<Animation*> m_AnimationStyles[CONTROL_STATUS_SIZE];
+
+    // Image styles
+    CONTROL_STATUS m_ImageStyle;
+    std::list<Image*> m_ImageStyles[CONTROL_STATUS_SIZE];
 
     // Child controls
     std::vector<Control*> m_Children;

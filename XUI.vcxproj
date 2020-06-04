@@ -167,6 +167,7 @@
     <ClInclude Include="XUI\Common.h" />
     <ClInclude Include="XUI\Control.h" />
     <ClInclude Include="XUI\Event.h" />
+    <ClInclude Include="XUI\Image.h" />
     <ClInclude Include="XUI\Label.h" />
     <ClInclude Include="XUI\LoadingBar.h" />
     <ClInclude Include="XUI\LoadingCircle.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="XUI\Common.cpp" />
     <ClCompile Include="XUI\Control.cpp" />
     <ClCompile Include="XUI\Event.cpp" />
+    <ClCompile Include="XUI\Image.cpp" />
     <ClCompile Include="XUI\Label.cpp" />
     <ClCompile Include="XUI\LoadingBar.cpp" />
     <ClCompile Include="XUI\LoadingCircle.cpp" />

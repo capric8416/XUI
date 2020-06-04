@@ -109,16 +109,30 @@ HRESULT MainWnd::CreateGraphicsResources()
 {
     HRESULT hr = S_OK;
 
+    // Create WIC factory
+    if (m_IWICFactory == nullptr)
+    {
+        hr = CoCreateInstance(
+            CLSID_WICImagingFactory,
+            NULL,
+            CLSCTX_INPROC_SERVER,
+            IID_PPV_ARGS(&m_IWICFactory)
+        );
+    }
+
+    // Create d2d factory
     if (m_D2DFactory == nullptr)
     {
         hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_D2DFactory);
     }
 
+    // Create drwite factory
     if (m_DWriteFactory == nullptr)
     {
         hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown**>(&m_DWriteFactory));
     }
 
+    // Create render target
     if (m_RenderTarget == nullptr)
     {
         GetClientRect(m_NativeWnd, &m_ClientRect);
@@ -141,9 +155,10 @@ HRESULT MainWnd::CreateGraphicsResources()
 
 void MainWnd::DiscardGraphicsResources()
 {
-    XSafeRelease(&m_RenderTarget);
-    XSafeRelease(&m_D2DFactory);
-    XSafeRelease(&m_DWriteFactory);
+    XSafeRelease(m_RenderTarget);
+    XSafeRelease(m_D2DFactory);
+    XSafeRelease(m_DWriteFactory);
+    XSafeRelease(m_IWICFactory);
 }
 
 

@@ -67,16 +67,17 @@ void XSafeDelete(T* P, bool Array = false, bool NullCheck = true)
 
 
 
-// Safe relase pointer's pointer
+// Safe relase pointer
 template <class T>
-void XSafeRelease(T** PP, bool NullCheck = true)
+inline void XSafeRelease(T*& P, bool NullCheck = true)
 {
-    if (!NullCheck || *PP != nullptr)
+    if (!NullCheck || P != nullptr)
     {
-        (*PP)->Release();
-        *PP = nullptr;
+        P->Release();
+        P = nullptr;
     }
 }
+
 
 
 

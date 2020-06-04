@@ -100,14 +100,14 @@ LoadingAnimation::LoadingAnimation(
 
 LoadingAnimation::~LoadingAnimation()
 {
-    XSafeRelease(&m_OutlineBrush);
-    XSafeRelease(&m_GradientBrush);
-    XSafeRelease(&m_GeometryGroup);
-    XSafeRelease(&m_GradientStopCollection);
+    XSafeRelease(m_OutlineBrush);
+    XSafeRelease(m_GradientBrush);
+    XSafeRelease(m_GeometryGroup);
+    XSafeRelease(m_GradientStopCollection);
 
     for (int i = 0; i < LOADING_GEOMETRY_COUNT; i++)
     {
-        XSafeRelease(&m_EllipseArray[i]);
+        XSafeRelease(m_EllipseArray[i]);
     }
 }
 

@@ -17,10 +17,13 @@ MainWnd* Style::s_Wnd = nullptr;
 HWND Style::s_NativeWnd = nullptr;
 ID2D1Factory* Style::s_D2DFactory = nullptr;
 IDWriteFactory* Style::s_DWriteFactory = nullptr;
+IWICImagingFactory* Style::s_IWICFactory = nullptr;
 ID2D1HwndRenderTarget* Style::s_RenderTarget = nullptr;
 unordered_map<wstring, ID2D1SolidColorBrush*> Style::s_SolidBrushCache;
 unordered_map<wstring, IDWriteTextFormat*> Style::s_TextFormatCache;
 unordered_map<wstring, IDWriteTextLayout*> Style::s_TextLayoutCache;
+unordered_map<wstring, ID2D1Bitmap*> Style::s_D2DBitmapCache;
+unordered_map<wstring, WICFormatMeta> Style::s_ConvertedSourceBitmapCache;
 
 
 Style::Style(
@@ -39,6 +42,7 @@ Style::Style(
         s_NativeWnd = s_Wnd->NativeWnd();
         s_D2DFactory = s_Wnd->D2DFactory();
         s_DWriteFactory = s_Wnd->DWriteFactory();
+        s_IWICFactory = s_Wnd->IWICFactory();
         s_RenderTarget = s_Wnd->RenderTarget();
     }
 }
@@ -91,6 +95,18 @@ IDWriteTextFormat* Style::TextFormat()
 
 
 IDWriteTextLayout* Style::TextLayout()
+{
+    return nullptr;
+}
+
+
+IWICFormatConverter* Style::ConvertedSourceBitmap()
+{
+    return nullptr;
+}
+
+
+ID2D1Bitmap* Style::D2DBitmap()
 {
     return nullptr;
 }
@@ -192,25 +208,124 @@ IDWriteTextLayout* Style::TextLayout(wstring Text, IDWriteTextFormat* Format, fl
 }
 
 
+WICFormatMeta Style::ConvertedSourceBitmap(wstring Path)
+{
+    auto iter = s_ConvertedSourceBitmapCache.find(Path);
+    if (iter != s_ConvertedSourceBitmapCache.end() && iter->second.Converter != nullptr)
+    {
+        return iter->second;
+    }
+
+    // Create a decoder
+    IWICBitmapDecoder* Decoder = NULL;
+
+    HRESULT hr = s_IWICFactory->CreateDecoderFromFilename(
+        Path.c_str(),                    // Image to be decoded
+        NULL,                            // Do not prefer a particular vendor
+        GENERIC_READ,                    // Desired read access to the file
+        WICDecodeMetadataCacheOnDemand,  // Cache metadata when needed
+        &Decoder                         // Pointer to the decoder
+    );
+
+    // Retrieve the first frame of the image from the decoder
+    IWICBitmapFrameDecode* Frame = NULL;
+
+    WICFormatMeta meta = {nullptr, 0, 0, 0 };
+    if (SUCCEEDED(hr))
+    {
+        hr = Decoder->GetFrameCount(&meta.Frames);
+        hr = Decoder->GetFrame(0, &Frame);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = Frame->GetSize(&meta.Width, &meta.Height);
+    }
+
+    IWICFormatConverter* bitmap = nullptr;
+
+    // Format convert the frame to 32bppPBGRA
+    if (SUCCEEDED(hr))
+    {
+        hr = s_IWICFactory->CreateFormatConverter(&bitmap);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        hr = bitmap->Initialize(
+            Frame,                           // Input bitmap to convert
+            GUID_WICPixelFormat32bppPBGRA,   // Destination pixel format
+            WICBitmapDitherTypeNone,         // Specified dither pattern
+            NULL,                            // Specify a particular palette 
+            0.f,                             // Alpha threshold
+            WICBitmapPaletteTypeCustom       // Palette translation type
+        );
+    }
+
+    if (bitmap != nullptr)
+    {
+        meta.Converter = bitmap;
+        s_ConvertedSourceBitmapCache[Path] = meta;
+    }
+
+    XSafeRelease(Decoder);
+    XSafeRelease(Frame);
+
+    return meta;
+}
+
+
+ID2D1Bitmap* Style::D2DBitmap(wstring Path, IWICFormatConverter* Converter)
+{
+    auto iter = s_D2DBitmapCache.find(Path);
+    if (iter != s_D2DBitmapCache.end() && iter->second != nullptr)
+    {
+        return iter->second;
+    }
+
+    ID2D1Bitmap* bitmap;
+    HRESULT hr = s_RenderTarget->CreateBitmapFromWicBitmap(Converter, NULL, &bitmap);
+
+    if (SUCCEEDED(hr))
+    {
+        s_D2DBitmapCache[Path] = bitmap;
+    }
+
+    return bitmap;
+}
+
+
 void Style::ReleaseResourceCache()
 {
     for (auto iter = s_SolidBrushCache.begin(); iter != s_SolidBrushCache.end(); iter++)
     {
-        XSafeRelease(&iter->second);
+        XSafeRelease(iter->second);
     }
     s_SolidBrushCache.clear();
 
     for (auto iter = s_TextFormatCache.begin(); iter != s_TextFormatCache.end(); iter++)
     {
-        XSafeRelease(&iter->second);
+        XSafeRelease(iter->second);
     }
     s_TextFormatCache.clear();
 
     for (auto iter = s_TextLayoutCache.begin(); iter != s_TextLayoutCache.end(); iter++)
     {
-        XSafeRelease(&iter->second);
+        XSafeRelease(iter->second);
     }
     s_TextLayoutCache.clear();
+
+    for (auto iter = s_D2DBitmapCache.begin(); iter != s_D2DBitmapCache.end(); iter++)
+    {
+        XSafeRelease(iter->second);
+    }
+    s_D2DBitmapCache.clear();
+
+    for (auto iter = s_ConvertedSourceBitmapCache.begin(); iter != s_ConvertedSourceBitmapCache.end(); iter++)
+    {
+        XSafeRelease(iter->second.Converter);
+    }
+    s_ConvertedSourceBitmapCache.clear();
 }
 
 
