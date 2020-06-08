@@ -29,6 +29,9 @@ public:
 	virtual IWICFormatConverter* ConvertedSourceBitmap();
 	virtual IWICFormatConverter* ConvertedSourceBitmap(std::wstring Path);
 
+	static D2D_RECT_F Resize(float ImageWidth, float ImageHeight, D2D_RECT_F ContainerPosition);
+	static uint8_t* EncodeToJpeg(std::wstring Path, uint32_t Width, uint32_t Height, uint32_t& Size);
+
 private:
 	uint32_t m_Frames;
 	uint32_t m_Width;
