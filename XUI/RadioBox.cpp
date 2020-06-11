@@ -373,6 +373,34 @@ RadioBox* RadioGroup::Checked()
 }
 
 
+void RadioGroup::Siblings(RadioBox* Current, RadioBox*& Previous, RadioBox*& Next)
+{
+    auto size = Size();
+    auto pos = Current->GetPos();
+    if (size == 1)
+    {
+        Previous = nullptr;
+        Next = nullptr;
+    }
+    else
+    {
+        Previous = (RadioBox*)m_Children[pos > 0 ? pos - 1 : size - 1];
+        Next = (RadioBox*)m_Children[pos < size - 1 ? pos + 1 : 0];
+        if (size == 2)
+        {
+            if (pos == 0)
+            {
+                Previous = nullptr;
+            }
+            else
+            {
+                Next = nullptr;
+            }
+        }
+    }
+}
+
+
 bool RadioGroup::Check(size_t Pos)
 {
     if (0 <= Pos && Pos < Size())

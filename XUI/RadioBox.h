@@ -50,6 +50,7 @@ public:
 
     bool Checked();
 
+
 protected:
     LONG* m_User;
 
@@ -105,6 +106,8 @@ public:
 
     virtual void OnChildChecked(Control* Child, bool Notify = true);
     RadioBox* Checked();
+
+    void Siblings(RadioBox* Current, RadioBox*& Previous, RadioBox*& Next);
 
     bool Check(size_t Pos);
 
