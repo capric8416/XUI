@@ -10,6 +10,9 @@
 // project
 #include "Control.h"
 
+// c/c++
+#include <mutex>
+
 
 
 class RadioBox : public Control
@@ -118,6 +121,11 @@ public:
     void Unpin(std::wstring ID);
     RadioBox* Pinned();
 
+    // Handle mouse vertical wheel event
+    virtual void OnMouseVerticalWheel(LONG X, LONG Y, WPARAM wParam);
+    // Handle mouse horizontal wheel event
+    virtual void OnMouseHorizontalWheel(LONG X, LONG Y, WPARAM wParam);
+
 
 protected:
     float m_Padding;
@@ -129,4 +137,6 @@ protected:
     RadioBox* m_Checked;
 
     RadioBox* m_Pinned;
+
+    mutable std::mutex m_Mutex;
 };

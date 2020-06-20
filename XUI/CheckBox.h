@@ -12,7 +12,9 @@
 
 // c++
 #include <initializer_list>
+#include <mutex>
 #include <set>
+
 
 // forward
 class CheckGroup;
@@ -103,7 +105,7 @@ public:
     virtual void Attach(CheckBox* Child, bool Checked = false, bool Pin = false, bool Paint = true);
     virtual void Dettach(CheckBox* Child);
 
-    //virtual void Resize();
+    virtual void Resize();
 
     virtual void OnChildChecked(CheckBox* Child, bool Checked, bool Notify = true);
     std::set<CheckBox*> Checked();
@@ -111,6 +113,11 @@ public:
     void Pin(std::wstring ID);
     void Unpin(std::wstring ID);
     CheckBox* Pinned();
+
+    // Handle mouse vertical wheel event
+    virtual void OnMouseVerticalWheel(LONG X, LONG Y, WPARAM wParam);
+    // Handle mouse horizontal wheel event
+    virtual void OnMouseHorizontalWheel(LONG X, LONG Y, WPARAM wParam);
 
 
 protected:
@@ -120,4 +127,6 @@ protected:
     std::set<CheckBox*> m_Checked;
 
     CheckBox* m_Pinned;
+
+    mutable std::mutex m_Mutex;
 };

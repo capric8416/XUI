@@ -26,6 +26,11 @@
 using namespace std;
 
 
+int i = 0;
+int j = 0;
+int m = 0;
+int n = 0;
+
 
 class MyUI : public UI
 {
@@ -44,6 +49,117 @@ public:
         //{
         //    Target->SetImage(L"D:\\Desktop\\Sample WebP Image.webp");
         //}
+
+        auto parent = Target->Parent();
+        if ((parent != nullptr && parent->ID() == L"RadioGroup") || Target->ID() == L"RadioGroup")
+        {
+            auto id = to_wstring(i++);
+            auto box = new RadioBox(
+                id, false, { 0, 0, 1000, 100 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+                {
+                    new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
+                    new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
+                },
+                {
+                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                },
+                {
+                    new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
+                    new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+                }
+            );
+
+            if (parent->ID() == L"RadioGroup")
+            {
+                ((RadioGroup*)parent)->Attach(box);
+            }
+            else
+            {
+                ((RadioGroup*)Target)->Attach(box);
+            }
+        }
+        if ((parent != nullptr && parent->ID() == L"RadioGroup1") || Target->ID() == L"RadioGroup1")
+        {
+            auto id = to_wstring(j++);
+            auto box = new RadioBox(
+                id, false, { 0, 0, 100, 1000 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+                {
+                    new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
+                    new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
+                },
+                {
+                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                },
+                {
+                    new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
+                    new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+                }
+             );
+
+            if (parent->ID() == L"RadioGroup1")
+            {
+                ((RadioGroup*)parent)->Attach(box);
+            }
+            else
+            {
+                ((RadioGroup*)Target)->Attach(box);
+            }
+        }
+        else if ((parent != nullptr && parent->ID() == L"CheckGroup") || Target->ID() == L"CheckGroup")
+        {
+            auto id = to_wstring(m++);
+            auto box = new CheckBox(
+                id, false, { 0, 0, 1000, 100 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+                {
+                    new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
+                    new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
+                },
+                {
+                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                },
+                {
+                    new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
+                    new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+                }
+            );
+
+            if (parent->ID() == L"CheckGroup")
+            {
+                ((CheckGroup*)parent)->Attach(box);
+            }
+            else
+            {
+                ((CheckGroup*)Target)->Attach(box);
+            }
+        }
+        else if ((parent != nullptr && parent->ID() == L"CheckGroup1") || Target->ID() == L"CheckGroup1")
+        {
+            auto id = to_wstring(n++);
+            auto box = new CheckBox(
+                id, false, { 0, 0, 100, 1000 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+                {
+                    new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
+                    new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
+                },
+                {
+                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                },
+                {
+                    new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
+                    new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+                }
+            );
+
+            if (parent->ID() == L"CheckGroup1")
+            {
+                ((CheckGroup*)parent)->Attach(box);
+            }
+            else
+            {
+                ((CheckGroup*)Target)->Attach(box);
+            }
+        }
+        
     }
 
     virtual void OnRightClick(Control* Target)
@@ -56,6 +172,40 @@ public:
         //{
         //    Target->SetImage(L"D:\\Documents\\360手机照片\\E232F831E26C08D2A5E981B07AB15D28.jpeg");
         //}
+
+        auto parent = Target->Parent();
+        if (parent != nullptr && parent->ID() == L"RadioGroup")
+        {
+            if (Target == m_Focused)
+            {
+                m_Focused = nullptr;
+            }
+            ((RadioGroup*)parent)->Dettach((RadioBox*)Target);
+        }
+        else if (parent != nullptr && parent->ID() == L"RadioGroup1")
+        {
+            if (Target == m_Focused)
+            {
+                m_Focused = nullptr;
+            }
+            ((RadioGroup*)parent)->Dettach((RadioBox*)Target);
+        }
+        else if (parent != nullptr && parent->ID() == L"CheckGroup")
+        {
+            if (Target == m_Focused)
+            {
+                m_Focused = nullptr;
+            }
+            ((CheckGroup*)parent)->Dettach((CheckBox*)Target);
+        }
+        else if (parent != nullptr && parent->ID() == L"CheckGroup1")
+        {
+            if (Target == m_Focused)
+            {
+                m_Focused = nullptr;
+            }
+            ((CheckGroup*)parent)->Dettach((CheckBox*)Target);
+        }
     }
 
     virtual Control* Create()
@@ -222,45 +372,79 @@ public:
                 //    }
                 //),
 
-                new Control(
-                    L"UserDialog", {0, 0, 500, 80},
+                //new Control(
+                //    L"UserDialog", {0, 0, 500, 80},
+                //    {
+                //        new SingleLineEdit(
+                //            L"UserEdit", {10, 50, 990, 950}, ZERO_RECT, ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, false, false, true,
+                //            {
+                //                new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //            },
+                //            {},
+                //            {
+                //                new Text(L"", CONTROL_STATUS_NORMAL),
+                //                new Text(L"请输入用户, 按Esc取消，按Enter确认", CONTROL_STATUS_DISABLED, ZERO_RECT, 0, 0, D2D1::ColorF(0x969696))
+                //            }
+                //        )
+                //    },
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x7f7f7f)),
+                //    }
+                //),
+
+                //new Control(
+                //    L"PasswordDialog", {0, 100, 500, 180},
+                //    {
+                //        new SingleLineEdit(
+                //            L"PasswordEdit", {10, 50, 990, 950}, ZERO_RECT, ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, false, false, true,
+                //            {
+                //                new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //            },
+                //            {},
+                //            {
+                //                new Text(L"", CONTROL_STATUS_NORMAL),
+                //                new Text(L"请输入密码, 按Esc取消，按Enter确认", CONTROL_STATUS_DISABLED, ZERO_RECT, 0, 0, D2D1::ColorF(0x969696))
+                //            }
+                //        )
+                //    },
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x7f7f7f)),
+                //    }
+                //)
+            
+
+                new RadioGroup(
+                    L"RadioGroup", { 10, 10, 210, 810 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
                     {
-                        new SingleLineEdit(
-                            L"UserEdit", {10, 50, 990, 950}, ZERO_RECT, ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, false, false, true,
-                            {
-                                new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                            },
-                            {},
-                            {
-                                new Text(L"", CONTROL_STATUS_NORMAL),
-                                new Text(L"请输入用户, 按Esc取消，按Enter确认", CONTROL_STATUS_DISABLED, ZERO_RECT, 0, 0, D2D1::ColorF(0x969696))
-                            }
-                        )
                     },
                     {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x7f7f7f)),
+                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
                     }
                 ),
-
-                new Control(
-                    L"PasswordDialog", {0, 100, 500, 180},
+                new CheckGroup(
+                    L"CheckGroup", { 220, 10, 420, 810 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
                     {
-                        new SingleLineEdit(
-                            L"PasswordEdit", {10, 50, 990, 950}, ZERO_RECT, ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, false, false, true,
-                            {
-                                new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                            },
-                            {},
-                            {
-                                new Text(L"", CONTROL_STATUS_NORMAL),
-                                new Text(L"请输入密码, 按Esc取消，按Enter确认", CONTROL_STATUS_DISABLED, ZERO_RECT, 0, 0, D2D1::ColorF(0x969696))
-                            }
-                        )
                     },
                     {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x7f7f7f)),
+                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
                     }
-                )
+                ),
+                new RadioGroup(
+                    L"RadioGroup1", { 430, 10, 990, 210 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                    {
+                    },
+                    {
+                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                    }
+                ),
+                new CheckGroup(
+                    L"CheckGroup1", { 430, 320, 990, 520 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                    {
+                    },
+                    {
+                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                    }
+                ),
             }
         );
 

@@ -432,7 +432,7 @@ void Control::Show()
 }
 
 
-void Control::SetVisibility(bool Value)
+void Control::SetVisibility(bool Value, bool ReDraw)
 {
     bool last = m_Hidden;
     m_Hidden = Value == false;
@@ -443,7 +443,11 @@ void Control::SetVisibility(bool Value)
         {
             m_Clear = true;
         }
-        Invalidate();
+
+        if (ReDraw)
+        {
+            Invalidate();
+        }
     }
 }
 
@@ -528,6 +532,24 @@ D2D_RECT_F Control::DPIPosition()
 }
 
 
+inline RECT Control::PositionPercentage()
+{
+    return m_PositionPercentage;
+}
+
+
+inline LONG Control::Width()
+{
+    return m_Position.right - m_Position.left;
+}
+
+
+inline LONG Control::Height()
+{
+    return m_Position.bottom - m_Position.top;
+}
+
+
 LONG Control::WidthPercentage()
 {
     return m_PositionPercentage.right - m_PositionPercentage.left;
@@ -552,6 +574,40 @@ void Control::SetPosition(LONG Left, LONG Top, LONG Right, LONG Bottom)
     m_PositionPercentage.top = Top;
     m_PositionPercentage.right = Right;
     m_PositionPercentage.bottom = Bottom;
+}
+
+
+void Control::VerticalMovePosition(LONG Offset, FLOAT DpiOffset, LONG PercentOffset)
+{
+    m_Position.top += Offset;
+    m_Position.bottom += Offset;
+
+    m_PositionPercentage.top += PercentOffset;
+    m_PositionPercentage.bottom += PercentOffset;
+
+    m_DPIPosition.top += DpiOffset;
+    m_DPIPosition.bottom += DpiOffset;
+
+    m_Hidden = m_PositionPercentage.top < 0 || m_PositionPercentage.bottom > DENOMINATOR;
+
+    SaveStylePosition();
+}
+
+
+void Control::HorizontalMovePosition(LONG Offset, FLOAT DpiOffset, LONG PercentOffset)
+{
+    m_Position.left += Offset;
+    m_Position.right += Offset;
+
+    m_PositionPercentage.left += PercentOffset;
+    m_PositionPercentage.right += PercentOffset;
+
+    m_DPIPosition.left += DpiOffset;
+    m_DPIPosition.right += DpiOffset;
+
+    m_Hidden = m_PositionPercentage.left < 0 || m_PositionPercentage.right > DENOMINATOR;
+
+    SaveStylePosition();
 }
 
 
@@ -967,7 +1023,7 @@ void Control::OnMouseHorizontalWheel(POINT Pt, WPARAM wParam)
     {
         child->OnMouseHorizontalWheel(Pt, wParam);
     }
-    else if (Hintable() && m_VerticalScroolEnabled)
+    else if (Hintable() && m_HorizontalScroolEnabled)
     {
         OnMouseHorizontalWheel(Pt.x, Pt.y, wParam);
     }
@@ -1067,24 +1123,6 @@ bool Control::Contains(RECT& Position)
 
 void Control::SavePosition(UINT16 Index)
 {
-    // fix
-    if (m_PositionPercentage.left < 0 || m_PositionPercentage.left > DENOMINATOR)
-    {
-        m_PositionPercentage.left = 0;
-    }
-    if (m_PositionPercentage.top < 0 || m_PositionPercentage.top > DENOMINATOR)
-    {
-        m_PositionPercentage.top = 0;
-    }
-    if (m_PositionPercentage.right < 0 || m_PositionPercentage.right > DENOMINATOR)
-    {
-        m_PositionPercentage.right = DENOMINATOR;
-    }
-    if (m_PositionPercentage.bottom < 0 || m_PositionPercentage.bottom > DENOMINATOR)
-    {
-        m_PositionPercentage.bottom = DENOMINATOR;
-    }
-
     // parent info
     RECT parentPos;
     D2D_RECT_F parentDPIPos;

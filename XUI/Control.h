@@ -91,7 +91,7 @@ public:
     // Show it
     void Show();
     // Set visibility
-    void SetVisibility(bool Value);
+    void SetVisibility(bool Value, bool ReDraw = true);
     // Flip visibility
     void FlipVisibility();
 
@@ -126,11 +126,16 @@ public:
     // Get position
     virtual inline RECT Position();
     virtual inline D2D_RECT_F DPIPosition();
+    virtual inline RECT PositionPercentage();
+    virtual inline LONG Width();
+    virtual inline LONG Height();
     virtual inline LONG WidthPercentage();
     virtual inline LONG HeightPercentage();
     // Set position
     virtual void SetPosition(RECT Pos);
     virtual void SetPosition(LONG Left, LONG Top, LONG Right, LONG Bottom);
+    virtual void VerticalMovePosition(LONG Offset, FLOAT DpiOffset, LONG PercentOffset);
+    virtual void HorizontalMovePosition(LONG Offset, FLOAT DpiOffset, LONG PercentOffset);
 
     virtual RECT Padding();
     virtual D2D_RECT_F DPIPadding();
@@ -177,10 +182,10 @@ public:
     // Handle mouse drag event
     virtual void OnMouseDrag(Control* Target, POINT Pt, POINT LastPt);
     virtual void OnMouseDrag(POINT Pt, POINT LastPt);
-    // Hnadle mouse vertical wheel event
+    // Handle mouse vertical wheel event
     virtual void OnMouseVerticalWheel(POINT Pt, WPARAM wParam);
     virtual void OnMouseVerticalWheel(LONG X, LONG Y, WPARAM wParam);
-    // Hnadle mouse horizontal wheel event
+    // Handle mouse horizontal wheel event
     virtual void OnMouseHorizontalWheel(POINT Pt, WPARAM wParam);
     virtual void OnMouseHorizontalWheel(LONG X, LONG Y, WPARAM wParam);
 
