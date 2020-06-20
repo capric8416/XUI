@@ -51,7 +51,7 @@ public:
         const wchar_t* LocaleName = L"en-us"
     );
     // Deconstructor
-    ~Text();
+    virtual ~Text();
 
     // Handle paint event
     virtual void OnPaint();

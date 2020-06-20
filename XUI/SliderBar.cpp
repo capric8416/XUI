@@ -35,6 +35,7 @@ SliderBarBody::SliderBarBody(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
+    initializer_list<Image*> ImageStyle,
     initializer_list<Animation*> AnimationStyle
 ) :
     Control(
@@ -51,6 +52,7 @@ SliderBarBody::SliderBarBody(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
+        ImageStyle,
         AnimationStyle
     ),
     m_Value(Value),
@@ -274,6 +276,7 @@ SliderBar::SliderBar(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
+    initializer_list<Image*> ImageStyle,
     initializer_list<Animation*> AnimationStyle
 ) :
 Control(
@@ -290,6 +293,7 @@ Control(
     BackgroundStyle,
     BorderStyle,
     TextStyle,
+    ImageStyle,
     AnimationStyle
 ),
 m_SliderLabel(TitleLabel),
@@ -307,9 +311,6 @@ m_Formatter(nullptr)
 
 SliderBar::~SliderBar()
 {
-    XSafeDelete(m_SliderLabel);
-    XSafeDelete(m_SliderValue);
-    XSafeDelete(m_SliderBody);
 }
 
 

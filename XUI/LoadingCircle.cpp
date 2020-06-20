@@ -158,6 +158,7 @@ LoadingCircle::LoadingCircle(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
+    initializer_list<Image*> ImageStyle,
     initializer_list<Animation*> AnimationStyle
 ) :
     Control(
@@ -174,6 +175,7 @@ LoadingCircle::LoadingCircle(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
+        ImageStyle,
         AnimationStyle
     )
 {

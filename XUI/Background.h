@@ -35,7 +35,7 @@ public:
         float RadiusY = 0
     );
     // Deconstructor
-    ~Background();
+    virtual ~Background();
 
     // Handle paint event
     virtual void OnPaint(bool Clear = true);

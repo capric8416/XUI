@@ -18,7 +18,7 @@ class Image : public Style
 {
 public:
 	Image(CONTROL_STATUS Status, D2D_RECT_F Position = ZERO_RECT, std::wstring Path = L"");
-	~Image();
+	virtual ~Image();
 
 	virtual void OnPaint();
 

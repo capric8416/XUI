@@ -2,12 +2,14 @@
 #include "UI.h"
 
 // project
+#include "Edit.h"
 #include "Animation.h"
 
 
 
 UI::UI() :
     m_Tree(nullptr),
+    m_Focused(nullptr),
     m_Resized(false),
     m_Resizing(false),
     m_Prepared(false),
@@ -129,6 +131,24 @@ void UI::OnMouseEvent(UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 
+void UI::OnCharInput(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    if (m_Focused && m_Focused->TypeName() == typeid(SingleLineEdit).name())
+    {
+        m_Focused->OnCharInput(wParam, lParam);
+    }
+}
+
+
+void UI::OnKeyInput(UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    if (m_Focused && m_Focused->TypeName() == typeid(SingleLineEdit).name())
+    {
+        m_Focused->OnKeyInput(wParam, lParam);
+    }
+}
+
+
 bool UI::IsRoot(Control* Target)
 {
     return m_Tree == Target;
@@ -172,4 +192,18 @@ void UI::OnMouseVerticalScroll(Control* Target, SHORT Delta)
 
 void UI::OnMouseHorizontalScroll(Control* Target, SHORT Delta)
 {
+}
+
+
+void UI::OnFocus(Control* Target)
+{
+    if (m_Focused != nullptr)
+    {
+        m_Focused->OnLoseFocus();
+    }
+
+    if (Target != nullptr)
+    {
+        m_Focused = Target;
+    }
 }

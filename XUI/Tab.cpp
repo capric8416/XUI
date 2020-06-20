@@ -21,8 +21,8 @@ TabGroup::TabGroup(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
-    initializer_list<Animation*> AnimationStyle,
-    initializer_list<Image*> ImageStyle
+    initializer_list<Image*> ImageStyle,
+    initializer_list<Animation*> AnimationStyle
 ) :
     Control(
         ID,
@@ -38,11 +38,11 @@ TabGroup::TabGroup(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
-        AnimationStyle,
-        ImageStyle
+        ImageStyle,
+        AnimationStyle
     )
 {
-    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle, ImageStyle);
+    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, ImageStyle, AnimationStyle);
 
     Bind(Nav, Box);
 
@@ -76,8 +76,8 @@ TabGroup::TabGroup(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
-    initializer_list<Animation*> AnimationStyle,
-    initializer_list<Image*> ImageStyle
+    initializer_list<Image*> ImageStyle,
+    initializer_list<Animation*> AnimationStyle
 ) :
     Control(
         ID,
@@ -93,10 +93,11 @@ TabGroup::TabGroup(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
+        ImageStyle,
         AnimationStyle
     )
 {
-    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle, ImageStyle);
+    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, ImageStyle, AnimationStyle);
 
     Bind(Nav, Box);
 
@@ -112,6 +113,11 @@ TabGroup::TabGroup(
             m_HorizontalScroolEnabled = true;
         }
     }
+}
+
+
+TabGroup::~TabGroup()
+{
 }
 
 

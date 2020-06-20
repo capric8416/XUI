@@ -16,7 +16,7 @@ class UI
 {
 public:
     UI();
-    ~UI();
+    virtual ~UI();
 
     virtual Control* Create() = 0;
     virtual void Resize();
@@ -30,6 +30,8 @@ public:
 
     virtual void OnPaint(Control* Target, bool Refresh = false);
     virtual void OnMouseEvent(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    virtual void OnCharInput(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    virtual void OnKeyInput(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
     virtual bool IsRoot(Control* Target);
 
@@ -45,12 +47,16 @@ public:
     virtual void OnMouseVerticalScroll(Control* Target, SHORT Delta);
     virtual void OnMouseHorizontalScroll(Control* Target, SHORT Delta);
 
+    virtual void OnFocus(Control* Target);
+
 protected:
     bool m_Resized;
     bool m_Resizing;
     bool m_Prepared;
 
     Control* m_Tree;
+
+    Control* m_Focused;
 
     SHORT m_MouseScrollLines;
 };

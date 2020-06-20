@@ -26,6 +26,7 @@ Button::Button(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
+    initializer_list<Image*> ImageStyle,
     initializer_list<Animation*> AnimationStyle
 ) :
     Control(
@@ -42,6 +43,7 @@ Button::Button(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
+        ImageStyle,
         AnimationStyle
     )
 {

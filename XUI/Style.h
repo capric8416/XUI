@@ -42,7 +42,7 @@ public:
         float RadiusX = 0,
         float RadiusY = 0
     );
-    ~Style();
+    virtual ~Style();
 
     // Handle paint event
     virtual void OnPaint();

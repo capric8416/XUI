@@ -26,8 +26,8 @@ Control::Control(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
-    initializer_list<Animation*> AnimationStyle,
-    initializer_list<Image*> ImageStyle
+    initializer_list<Image*> ImageStyle,
+    initializer_list<Animation*> AnimationStyle
 ) :
     m_Wnd(MainWnd::Instance()),
     m_Parent(nullptr),
@@ -58,7 +58,7 @@ Control::Control(
     m_AnimationStyle(CONTROL_STATUS_NORMAL),
     m_ImageStyle(CONTROL_STATUS_NORMAL)
 {
-    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle, ImageStyle);
+    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, ImageStyle, AnimationStyle);
 
     for (const auto& child : m_Children)
     {
@@ -89,8 +89,8 @@ Control::Control(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
-    initializer_list<Animation*> AnimationStyle,
-    initializer_list<Image*> ImageStyle
+    initializer_list<Image*> ImageStyle,
+    initializer_list<Animation*> AnimationStyle
 ) :
     m_Wnd(MainWnd::Instance()),
     m_Parent(nullptr),
@@ -121,7 +121,7 @@ Control::Control(
     m_AnimationStyle(CONTROL_STATUS_NORMAL),
     m_ImageStyle(CONTROL_STATUS_NORMAL)
 {
-    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, AnimationStyle, ImageStyle);
+    SaveStyleValues(BackgroundStyle, BorderStyle, TextStyle, ImageStyle, AnimationStyle);
 
     for (const auto& child : m_Children)
     {
@@ -169,6 +169,12 @@ Control::~Control()
             delete style;
         }
         m_TextStyles[i].clear();
+
+        for (const auto& style : m_ImageStyles[i])
+        {
+            delete style;
+        }
+        m_ImageStyles[i].clear();
 
         for (const auto& style : m_AnimationStyles[i])
         {
@@ -334,11 +340,16 @@ wstring Control::GetContent()
 }
 
 
-bool Control::SetContent(wstring Content, bool Paint)
+bool Control::SetContent(wstring Content, bool Paint, CONTROL_STATUS Exclue)
 {
     bool changed = false;
     for (int i = CONTROL_STATUS_BTIV + 1; i < CONTROL_STATUS_SIZE; i++)
     {
+        if (i == Exclue)
+        {
+            continue;
+        }
+
         for (const auto& style : m_TextStyles[i])
         {
             auto x = style->SetContent(Content);
@@ -667,6 +678,7 @@ void Control::OnLeftButtonDown(POINT Pt)
 
 void Control::OnLeftButtonDown(LONG X, LONG Y)
 {
+    OnFocus();
 }
 
 
@@ -749,6 +761,7 @@ void Control::OnRightButtonDown(POINT Pt)
 
 void Control::OnRightButtonDown(LONG X, LONG Y)
 {
+    OnFocus();
 }
 
 
@@ -964,6 +977,27 @@ void Control::OnMouseHorizontalWheel(POINT Pt, WPARAM wParam)
 void Control::OnMouseHorizontalWheel(LONG X, LONG Y, WPARAM wParam)
 {
     m_Wnd->GetUI()->OnMouseHorizontalScroll(this, (short)HIWORD(wParam));
+}
+
+
+void Control::OnFocus()
+{
+    m_Wnd->GetUI()->OnFocus(this);
+}
+
+
+void Control::OnLoseFocus()
+{
+}
+
+
+void Control::OnCharInput(WPARAM wParam, LPARAM lParam)
+{
+}
+
+
+void Control::OnKeyInput(WPARAM wParam, LPARAM lParam)
+{
 }
 
 
@@ -1252,8 +1286,8 @@ void Control::SaveStyleValues(
     initializer_list<Background*>& BackgroundStyle,
     initializer_list<Border*>& BorderStyle,
     initializer_list<Text*>& TextStyle,
-    initializer_list<Animation*>& AnimationStyle,
-    std::initializer_list<Image*>& ImageStyle
+    initializer_list<Image*>& ImageStyle,
+    initializer_list<Animation*>& AnimationStyle
 )
 {
     for (const auto& style : BackgroundStyle)
@@ -1274,16 +1308,16 @@ void Control::SaveStyleValues(
         m_TextStyles[style->Status()].push_back(style);
     }
 
-    for (const auto& style : AnimationStyle)
-    {
-        style->SetOwner(this);
-        m_AnimationStyles[style->Status()].push_back(style);
-    }
-
     for (const auto& style : ImageStyle)
     {
         style->SetOwner(this);
         m_ImageStyles[style->Status()].push_back(style);
+    }
+
+    for (const auto& style : AnimationStyle)
+    {
+        style->SetOwner(this);
+        m_AnimationStyles[style->Status()].push_back(style);
     }
 
     for (const auto& child : m_Children)

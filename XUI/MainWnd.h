@@ -22,7 +22,7 @@ public:
     // Constructor
     MainWnd();
     // Decontructor
-    ~MainWnd();
+    virtual ~MainWnd();
 
     static MainWnd* Instance();
 

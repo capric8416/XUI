@@ -31,10 +31,11 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
     // Deconstructor
-    ~RadioBox();
+    virtual ~RadioBox();
 
     void SetGrouped();
     void SetChecked(bool Status = true, bool Notify = true);
@@ -76,6 +77,7 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
     RadioGroup(
@@ -94,6 +96,7 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
     // Deconstructor

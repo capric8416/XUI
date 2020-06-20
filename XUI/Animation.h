@@ -39,7 +39,7 @@ public:
         float RadiusY = 0
     );
 
-    ~Animation();
+    virtual ~Animation();
 
     static void Start(UINT8 FPS);
     static void Stop();

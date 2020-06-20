@@ -69,6 +69,27 @@ LRESULT MainWnd::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
     case WM_MOUSEHWHEEL:
         m_UI->OnMouseEvent(uMsg, wParam, lParam);
         return 0;
+
+    case WM_CHAR:
+        if (wParam >= VK_SPACE)
+            m_UI->OnCharInput(uMsg, wParam, lParam);
+        return 0;
+    
+    case WM_KEYDOWN:
+        switch (wParam)
+        {
+        case VK_LEFT:
+        case VK_RIGHT:
+        case VK_BACK:
+        case VK_HOME:
+        case VK_END:
+        case VK_DELETE:
+        case VK_ESCAPE:
+        case VK_RETURN:
+            m_UI->OnKeyInput(uMsg, wParam, lParam);
+            return 0;
+        }
+        return 0;
     }
 
     return DefWindowProc(m_NativeWnd, uMsg, wParam, lParam);

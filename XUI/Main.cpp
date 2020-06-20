@@ -17,6 +17,7 @@
 #include "Animation.h"
 #include "Image.h"
 #include "Tab.h"
+#include "Edit.h"
 
 #include <Windows.h>
 #include "Xml.h"
@@ -35,26 +36,26 @@ public:
 
     virtual void OnLeftClick(Control* Target)
     {
-        if (Target->ID() == L"ImageView1")
-        {
-            Target->SetImage(L"D:\\Documents\\360手机照片\\E232F831E26C08D2A5E981B07AB15D28.jpeg");
-        }
-        else if (Target->ID() == L"ImageView2")
-        {
-            Target->SetImage(L"D:\\Desktop\\Sample WebP Image.webp");
-        }
+        //if (Target->ID() == L"ImageView1")
+        //{
+        //    Target->SetImage(L"D:\\Documents\\360手机照片\\E232F831E26C08D2A5E981B07AB15D28.jpeg");
+        //}
+        //else if (Target->ID() == L"ImageView2")
+        //{
+        //    Target->SetImage(L"D:\\Desktop\\Sample WebP Image.webp");
+        //}
     }
 
     virtual void OnRightClick(Control* Target)
     {
-        if (Target->ID() == L"ImageView1")
-        {
-            Target->SetImage(L"D:\\Desktop\\Sample WebP Image.webp");
-        }
-        else if (Target->ID() == L"ImageView2")
-        {
-            Target->SetImage(L"D:\\Documents\\360手机照片\\E232F831E26C08D2A5E981B07AB15D28.jpeg");
-        }
+        //if (Target->ID() == L"ImageView1")
+        //{
+        //    Target->SetImage(L"D:\\Desktop\\Sample WebP Image.webp");
+        //}
+        //else if (Target->ID() == L"ImageView2")
+        //{
+        //    Target->SetImage(L"D:\\Documents\\360手机照片\\E232F831E26C08D2A5E981B07AB15D28.jpeg");
+        //}
     }
 
     virtual Control* Create()
@@ -194,32 +195,70 @@ public:
                 //    )
                 //),
 
+                //new Control(
+                //    L"ImageView1", {0, 0, 500, 1000}, {},
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //    },
+                //    {
+                //        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                //    },
+                //    {},
+                //    {
+                //        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
+                //    }
+                //),
+                //new Control(
+                //    L"ImageView2", {500, 0, 1000, 1000 }, {},
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //    },
+                //    {
+                //        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                //    },
+                //    {},
+                //    {
+                //        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
+                //    }
+                //),
+
                 new Control(
-                    L"ImageView1", {0, 0, 500, 1000}, {},
+                    L"UserDialog", {0, 0, 500, 80},
                     {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                        new SingleLineEdit(
+                            L"UserEdit", {10, 50, 990, 950}, ZERO_RECT, ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, false, false, true,
+                            {
+                                new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                            },
+                            {},
+                            {
+                                new Text(L"", CONTROL_STATUS_NORMAL),
+                                new Text(L"请输入用户, 按Esc取消，按Enter确认", CONTROL_STATUS_DISABLED, ZERO_RECT, 0, 0, D2D1::ColorF(0x969696))
+                            }
+                        )
                     },
                     {
-                        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                    },
-                    {},
-                    {},
-                    {
-                        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
+                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x7f7f7f)),
                     }
                 ),
+
                 new Control(
-                    L"ImageView2", {500, 0, 1000, 1000 }, {},
+                    L"PasswordDialog", {0, 100, 500, 180},
                     {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                        new SingleLineEdit(
+                            L"PasswordEdit", {10, 50, 990, 950}, ZERO_RECT, ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, false, false, true,
+                            {
+                                new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                            },
+                            {},
+                            {
+                                new Text(L"", CONTROL_STATUS_NORMAL),
+                                new Text(L"请输入密码, 按Esc取消，按Enter确认", CONTROL_STATUS_DISABLED, ZERO_RECT, 0, 0, D2D1::ColorF(0x969696))
+                            }
+                        )
                     },
                     {
-                        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                    },
-                    {},
-                    {},
-                    {
-                        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
+                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x7f7f7f)),
                     }
                 )
             }

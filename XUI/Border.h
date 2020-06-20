@@ -37,7 +37,7 @@ public:
         ID2D1StrokeStyle* StrokeStyle = NULL
     );
     // Deconstructor
-    ~Border();
+    virtual ~Border();
 
     // Handle paint event
     virtual void OnPaint();

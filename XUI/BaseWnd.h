@@ -42,7 +42,7 @@ public:
     }
 
     // Decontructor
-    ~BaseWnd()
+    virtual ~BaseWnd()
     {
         XSafeDelete(m_UI);
     }

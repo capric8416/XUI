@@ -36,7 +36,7 @@ public:
         float RadiusY = 0
     );
 
-    ~LoadingAnimation();
+    virtual ~LoadingAnimation();
 
     virtual void OnAnimated();
 
@@ -83,10 +83,11 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
     // Deconstructor
-    ~LoadingCircle();
+    virtual ~LoadingCircle();
 
 
 private:

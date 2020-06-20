@@ -33,6 +33,7 @@ RadioBox::RadioBox(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
+    initializer_list<Image*> ImageStyle,
     initializer_list<Animation*> AnimationStyle
 ) :
     Control(
@@ -49,6 +50,7 @@ RadioBox::RadioBox(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
+        ImageStyle,
         AnimationStyle
     ),
     m_Checked(Checked),
@@ -142,6 +144,7 @@ RadioGroup::RadioGroup(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
+    initializer_list<Image*> ImageStyle,
     initializer_list<Animation*> AnimationStyle
 ) :
     Control(
@@ -151,6 +154,7 @@ RadioGroup::RadioGroup(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
+        ImageStyle,
         AnimationStyle
     ),
     m_Vertical(Vertical),
@@ -194,6 +198,7 @@ RadioGroup::RadioGroup(
     initializer_list<Background*> BackgroundStyle,
     initializer_list<Border*> BorderStyle,
     initializer_list<Text*> TextStyle,
+    initializer_list<Image*> ImageStyle,
     initializer_list<Animation*> AnimationStyle
 ) :
     Control(
@@ -210,6 +215,7 @@ RadioGroup::RadioGroup(
         BackgroundStyle,
         BorderStyle,
         TextStyle,
+        ImageStyle,
         AnimationStyle
     ),
     m_Vertical(Vertical),

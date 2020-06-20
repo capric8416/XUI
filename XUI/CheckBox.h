@@ -37,10 +37,11 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
     // Deconstructor
-    ~CheckBox();
+    virtual ~CheckBox();
 
     void SetGrouped();
     void SetChecked(bool Status = true, bool Notify = true);
@@ -74,6 +75,7 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
     CheckGroup(
@@ -92,10 +94,11 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
     // Deconstructor
-    ~CheckGroup();
+    virtual ~CheckGroup();
 
     virtual void Attach(CheckBox* Child, bool Checked = false, bool Pin = false, bool Paint = true);
     virtual void Dettach(CheckBox* Child);

@@ -42,8 +42,8 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
-        std::initializer_list<Animation*> AnimationStyle = {},
-        std::initializer_list<Image*> ImageStyle = {}
+        std::initializer_list<Image*> ImageStyle = {},
+        std::initializer_list<Animation*> AnimationStyle = {}
     );
     Control(
         std::wstring ID,
@@ -59,11 +59,11 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
-        std::initializer_list<Animation*> AnimationStyle = {},
-        std::initializer_list<Image*> ImageStyle = {}
+        std::initializer_list<Image*> ImageStyle = {},
+        std::initializer_list<Animation*> AnimationStyle = {}
     );
     // Deconstructor
-    ~Control();
+    virtual ~Control();
 
     // Set parent
     virtual Control* Parent();
@@ -80,7 +80,7 @@ public:
     virtual void Style(uint8_t Index, Background* BackgroundStyle = nullptr, Border* BorderStyle = nullptr, Text* TextStyle = nullptr, Animation* AnimationStyle = nullptr);
 
     std::wstring GetContent();
-    bool SetContent(std::wstring Content, bool Paint = true);
+    bool SetContent(std::wstring Content, bool Paint = true, CONTROL_STATUS Exclue = CONTROL_STATUS_BTIV);
 
     bool SetImage(std::wstring Path, bool Paint = true);
 
@@ -184,6 +184,12 @@ public:
     virtual void OnMouseHorizontalWheel(POINT Pt, WPARAM wParam);
     virtual void OnMouseHorizontalWheel(LONG X, LONG Y, WPARAM wParam);
 
+    virtual void OnFocus();
+    virtual void OnLoseFocus();
+
+    virtual void OnCharInput(WPARAM wParam, LPARAM lParam);
+    virtual void OnKeyInput(WPARAM wParam, LPARAM lParam);
+
 
     // Find which control's rect has the point
     virtual inline Control* Find(POINT& Pt);
@@ -215,9 +221,9 @@ protected:
     virtual void SaveStyleValues(
         std::initializer_list<Background*>& BackgroundStyle, 
         std::initializer_list<Border*>& BorderStyle, 
-        std::initializer_list<Text*>& TextStyle, 
-        std::initializer_list<Animation*>& AnimationStyle,
-        std::initializer_list<Image*>& ImageStyle
+        std::initializer_list<Text*>& TextStyle,
+        std::initializer_list<Image*>& ImageStyle,
+        std::initializer_list<Animation*>& AnimationStyle
     );
 
     // Main wnd

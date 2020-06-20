@@ -11,13 +11,11 @@
 #include "Control.h"
 
 
-
-
-class Button : public Control
+class SingleLineEdit : public Control
 {
 public:
     // Constructor
-    Button(
+    SingleLineEdit(
         std::wstring ID,
         RECT Position = ZERO_RECT,
         RECT Margin = ZERO_RECT,
@@ -34,18 +32,11 @@ public:
         std::initializer_list<Animation*> AnimationStyle = {}
     );
     // Deconstructor
-    virtual ~Button();
+    virtual ~SingleLineEdit();
 
-    // Handle left button down event
-    virtual void OnLeftButtonDown(LONG X, LONG Y);
+    virtual void OnPaint(bool PaintChildren = false);
 
-    // Handle left button up event
-    virtual void OnLeftButtonUp(LONG X, LONG Y);
+    virtual void OnCharInput(WPARAM wParam, LPARAM lParam);
+    virtual void OnKeyInput(WPARAM wParam, LPARAM lParam);
 
-    // Handle mouse enter event
-    virtual void OnMouseEnter(LONG X, LONG Y);
-
-    // Handle mouse leave event
-    virtual void OnMouseLeave(LONG X, LONG Y);
 };
-

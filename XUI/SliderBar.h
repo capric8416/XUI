@@ -46,9 +46,10 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
-    ~SliderBarBody();
+    virtual ~SliderBarBody();
 
     virtual void OnLeftButtonClick(LONG X, LONG Y);
 
@@ -97,10 +98,11 @@ public:
         std::initializer_list<Background*> BackgroundStyle = {},
         std::initializer_list<Border*> BorderStyle = {},
         std::initializer_list<Text*> TextStyle = {},
+        std::initializer_list<Image*> ImageStyle = {},
         std::initializer_list<Animation*> AnimationStyle = {}
     );
 
-    ~SliderBar();
+    virtual ~SliderBar();
 
     virtual void OnValueChange(INT32 Value);
 

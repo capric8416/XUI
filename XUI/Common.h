@@ -23,7 +23,6 @@
 enum CONTROL_STATUS
 {
     CONTROL_STATUS_BTIV = -1,  // BTIV - Before the initial value
-    CONTROL_STATUS_CLEAR,
     CONTROL_STATUS_NORMAL,
     CONTROL_STATUS_HOVER,
     CONTROL_STATUS_DOWN,
@@ -53,7 +52,7 @@ enum CONTROL_ALIGN
 // Safe delete pointer
 //
 template <class T>
-void XSafeDelete(T* P, bool Array = false, bool NullCheck = true)
+void XSafeDelete(T*& P, bool Array = false, bool NullCheck = true)
 {
     if (!NullCheck || P != nullptr)
     {

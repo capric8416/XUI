@@ -34,7 +34,7 @@ public:
         m_QueueNotEmptyEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
     }
 
-    ~ThreadSafeQueue()
+    virtual ~ThreadSafeQueue()
     {
         m_List.clear();
 

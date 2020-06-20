@@ -17,7 +17,7 @@ class Event
 {
 public:
     Event();
-    ~Event();
+    virtual ~Event();
 
     bool Validate();
 
@@ -38,7 +38,7 @@ class EventGroup
 {
 public:
     EventGroup();
-    ~EventGroup();
+    virtual ~EventGroup();
 
     bool Validate();
 
