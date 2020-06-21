@@ -4,6 +4,7 @@
 // project
 #include "MainWnd.h"
 #include "Control.h"
+#include "Image.h"
 
 // c/c++
 #include <sstream>
@@ -208,7 +209,7 @@ IDWriteTextLayout* Style::TextLayout(wstring Text, IDWriteTextFormat* Format, fl
 }
 
 
-WICFormatMeta Style::ConvertedSourceBitmap(wstring Path)
+WICFormatMeta Style::ConvertedSourceBitmap(wstring Path, D2D_RECT_F OwnerPosition)
 {
     auto iter = s_ConvertedSourceBitmapCache.find(Path);
     if (iter != s_ConvertedSourceBitmapCache.end() && iter->second.Converter != nullptr)
@@ -216,7 +217,7 @@ WICFormatMeta Style::ConvertedSourceBitmap(wstring Path)
         return iter->second;
     }
 
-    while (s_ConvertedSourceBitmapCache.size() > 6)
+    while (s_ConvertedSourceBitmapCache.size() > 20)
     {
         auto i = s_ConvertedSourceBitmapCache.begin();
         auto p = i->first;
@@ -232,29 +233,53 @@ WICFormatMeta Style::ConvertedSourceBitmap(wstring Path)
     }
 
     // Create a decoder
-    IWICBitmapDecoder* Decoder = NULL;
+    IWICBitmapDecoder* decoder = NULL;
 
     HRESULT hr = s_IWICFactory->CreateDecoderFromFilename(
         Path.c_str(),                    // Image to be decoded
         NULL,                            // Do not prefer a particular vendor
         GENERIC_READ,                    // Desired read access to the file
         WICDecodeMetadataCacheOnDemand,  // Cache metadata when needed
-        &Decoder                         // Pointer to the decoder
+        &decoder                         // Pointer to the decoder
     );
 
     // Retrieve the first frame of the image from the decoder
-    IWICBitmapFrameDecode* Frame = NULL;
+    IWICBitmapFrameDecode* frame = NULL;
 
     WICFormatMeta meta = {nullptr, 0, 0, 0 };
     if (SUCCEEDED(hr))
     {
-        hr = Decoder->GetFrameCount(&meta.Frames);
-        hr = Decoder->GetFrame(0, &Frame);
+        hr = decoder->GetFrameCount(&meta.Frames);
+        hr = decoder->GetFrame(0, &frame);
     }
 
+    UINT imageWidth = 0;
+    UINT imageHeight = 0;
     if (SUCCEEDED(hr))
     {
-        hr = Frame->GetSize(&meta.Width, &meta.Height);
+        hr = frame->GetSize(&imageWidth, &imageHeight);
+    }
+
+    D2D_RECT_F pos = Image::Resize(imageWidth, imageHeight, { 0, 0, OwnerPosition.right - OwnerPosition.left, OwnerPosition.bottom - OwnerPosition.top });
+    meta.Width = (UINT)(pos.right - pos.left);
+    meta.Height = (UINT)(pos.bottom - pos.top);
+
+    // Create a BitmapScaler
+    IWICBitmapScaler* scaler = NULL;
+    if (SUCCEEDED(hr))
+    {
+        hr = s_IWICFactory->CreateBitmapScaler(&scaler);
+    }
+
+    // Initialize the bitmap scaler from the original bitmap map bits
+    if (SUCCEEDED(hr))
+    {
+        hr = scaler->Initialize(
+            frame,
+            meta.Width,
+            meta.Height,
+            WICBitmapInterpolationModeFant
+        );
     }
 
     IWICFormatConverter* bitmap = nullptr;
@@ -268,7 +293,7 @@ WICFormatMeta Style::ConvertedSourceBitmap(wstring Path)
     if (SUCCEEDED(hr))
     {
         hr = bitmap->Initialize(
-            Frame,                           // Input bitmap to convert
+            scaler,                          // Input bitmap to convert
             GUID_WICPixelFormat32bppPBGRA,   // Destination pixel format
             WICBitmapDitherTypeNone,         // Specified dither pattern
             NULL,                            // Specify a particular palette 
@@ -283,8 +308,9 @@ WICFormatMeta Style::ConvertedSourceBitmap(wstring Path)
         s_ConvertedSourceBitmapCache[Path] = meta;
     }
 
-    XSafeRelease(Decoder);
-    XSafeRelease(Frame);
+    XSafeRelease(decoder);
+    XSafeRelease(frame);
+    XSafeRelease(scaler);
 
     return meta;
 }

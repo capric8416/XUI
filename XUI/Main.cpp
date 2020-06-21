@@ -41,171 +41,171 @@ public:
 
     virtual void OnLeftClick(Control* Target)
     {
-        //if (Target->ID() == L"ImageView1")
+        if (Target->ID() == L"ImageView1")
+        {
+            Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202818R.jpg");
+        }
+        else if (Target->ID() == L"ImageView2")
+        {
+            Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202924R.jpg");
+        }
+
+        //auto parent = Target->Parent();
+        //if ((parent != nullptr && parent->ID() == L"RadioGroup") || Target->ID() == L"RadioGroup")
         //{
-        //    Target->SetImage(L"D:\\Documents\\360手机照片\\E232F831E26C08D2A5E981B07AB15D28.jpeg");
+        //    auto id = to_wstring(i++);
+        //    auto box = new RadioBox(
+        //        id, false, { 0, 0, 1000, 100 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+        //        {
+        //            new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
+        //            new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
+        //        },
+        //        {
+        //            new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+        //        },
+        //        {
+        //            new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
+        //            new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+        //        }
+        //    );
+
+        //    if (parent->ID() == L"RadioGroup")
+        //    {
+        //        ((RadioGroup*)parent)->Attach(box);
+        //    }
+        //    else
+        //    {
+        //        ((RadioGroup*)Target)->Attach(box);
+        //    }
         //}
-        //else if (Target->ID() == L"ImageView2")
+        //if ((parent != nullptr && parent->ID() == L"RadioGroup1") || Target->ID() == L"RadioGroup1")
         //{
-        //    Target->SetImage(L"D:\\Desktop\\Sample WebP Image.webp");
+        //    auto id = to_wstring(j++);
+        //    auto box = new RadioBox(
+        //        id, false, { 0, 0, 100, 1000 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+        //        {
+        //            new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
+        //            new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
+        //        },
+        //        {
+        //            new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+        //        },
+        //        {
+        //            new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
+        //            new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+        //        }
+        //     );
+
+        //    if (parent->ID() == L"RadioGroup1")
+        //    {
+        //        ((RadioGroup*)parent)->Attach(box);
+        //    }
+        //    else
+        //    {
+        //        ((RadioGroup*)Target)->Attach(box);
+        //    }
         //}
+        //else if ((parent != nullptr && parent->ID() == L"CheckGroup") || Target->ID() == L"CheckGroup")
+        //{
+        //    auto id = to_wstring(m++);
+        //    auto box = new CheckBox(
+        //        id, false, { 0, 0, 1000, 100 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+        //        {
+        //            new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
+        //            new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
+        //        },
+        //        {
+        //            new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+        //        },
+        //        {
+        //            new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
+        //            new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+        //        }
+        //    );
 
-        auto parent = Target->Parent();
-        if ((parent != nullptr && parent->ID() == L"RadioGroup") || Target->ID() == L"RadioGroup")
-        {
-            auto id = to_wstring(i++);
-            auto box = new RadioBox(
-                id, false, { 0, 0, 1000, 100 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
-                {
-                    new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
-                    new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
-                },
-                {
-                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                },
-                {
-                    new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
-                    new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
-                }
-            );
+        //    if (parent->ID() == L"CheckGroup")
+        //    {
+        //        ((CheckGroup*)parent)->Attach(box);
+        //    }
+        //    else
+        //    {
+        //        ((CheckGroup*)Target)->Attach(box);
+        //    }
+        //}
+        //else if ((parent != nullptr && parent->ID() == L"CheckGroup1") || Target->ID() == L"CheckGroup1")
+        //{
+        //    auto id = to_wstring(n++);
+        //    auto box = new CheckBox(
+        //        id, false, { 0, 0, 100, 1000 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+        //        {
+        //            new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
+        //            new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
+        //        },
+        //        {
+        //            new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+        //        },
+        //        {
+        //            new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
+        //            new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+        //        }
+        //    );
 
-            if (parent->ID() == L"RadioGroup")
-            {
-                ((RadioGroup*)parent)->Attach(box);
-            }
-            else
-            {
-                ((RadioGroup*)Target)->Attach(box);
-            }
-        }
-        if ((parent != nullptr && parent->ID() == L"RadioGroup1") || Target->ID() == L"RadioGroup1")
-        {
-            auto id = to_wstring(j++);
-            auto box = new RadioBox(
-                id, false, { 0, 0, 100, 1000 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
-                {
-                    new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
-                    new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
-                },
-                {
-                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                },
-                {
-                    new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
-                    new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
-                }
-             );
-
-            if (parent->ID() == L"RadioGroup1")
-            {
-                ((RadioGroup*)parent)->Attach(box);
-            }
-            else
-            {
-                ((RadioGroup*)Target)->Attach(box);
-            }
-        }
-        else if ((parent != nullptr && parent->ID() == L"CheckGroup") || Target->ID() == L"CheckGroup")
-        {
-            auto id = to_wstring(m++);
-            auto box = new CheckBox(
-                id, false, { 0, 0, 1000, 100 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
-                {
-                    new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
-                    new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
-                },
-                {
-                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                },
-                {
-                    new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
-                    new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
-                }
-            );
-
-            if (parent->ID() == L"CheckGroup")
-            {
-                ((CheckGroup*)parent)->Attach(box);
-            }
-            else
-            {
-                ((CheckGroup*)Target)->Attach(box);
-            }
-        }
-        else if ((parent != nullptr && parent->ID() == L"CheckGroup1") || Target->ID() == L"CheckGroup1")
-        {
-            auto id = to_wstring(n++);
-            auto box = new CheckBox(
-                id, false, { 0, 0, 100, 1000 }, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
-                {
-                    new Background(CONTROL_STATUS_NORMAL, {0, 0, 1000, 1000}, D2D1::ColorF(0xffffff)),
-                    new Background(CONTROL_STATUS_CHECKED, {0, 0, 1000, 1000}, D2D1::ColorF(0x009688)),
-                },
-                {
-                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                },
-                {
-                    new Text(id, CONTROL_STATUS_NORMAL, ZERO_RECT),
-                    new Text(id, CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
-                }
-            );
-
-            if (parent->ID() == L"CheckGroup1")
-            {
-                ((CheckGroup*)parent)->Attach(box);
-            }
-            else
-            {
-                ((CheckGroup*)Target)->Attach(box);
-            }
-        }
-        
+        //    if (parent->ID() == L"CheckGroup1")
+        //    {
+        //        ((CheckGroup*)parent)->Attach(box);
+        //    }
+        //    else
+        //    {
+        //        ((CheckGroup*)Target)->Attach(box);
+        //    }
+        //}
+        //
     }
 
     virtual void OnRightClick(Control* Target)
     {
-        //if (Target->ID() == L"ImageView1")
-        //{
-        //    Target->SetImage(L"D:\\Desktop\\Sample WebP Image.webp");
-        //}
-        //else if (Target->ID() == L"ImageView2")
-        //{
-        //    Target->SetImage(L"D:\\Documents\\360手机照片\\E232F831E26C08D2A5E981B07AB15D28.jpeg");
-        //}
+        if (Target->ID() == L"ImageView1")
+        {
+            Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202924R.jpg");
+        }
+        else if (Target->ID() == L"ImageView2")
+        {
+            Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202818R.jpg");
+        }
 
-        auto parent = Target->Parent();
-        if (parent != nullptr && parent->ID() == L"RadioGroup")
-        {
-            if (Target == m_Focused)
-            {
-                m_Focused = nullptr;
-            }
-            ((RadioGroup*)parent)->Dettach((RadioBox*)Target);
-        }
-        else if (parent != nullptr && parent->ID() == L"RadioGroup1")
-        {
-            if (Target == m_Focused)
-            {
-                m_Focused = nullptr;
-            }
-            ((RadioGroup*)parent)->Dettach((RadioBox*)Target);
-        }
-        else if (parent != nullptr && parent->ID() == L"CheckGroup")
-        {
-            if (Target == m_Focused)
-            {
-                m_Focused = nullptr;
-            }
-            ((CheckGroup*)parent)->Dettach((CheckBox*)Target);
-        }
-        else if (parent != nullptr && parent->ID() == L"CheckGroup1")
-        {
-            if (Target == m_Focused)
-            {
-                m_Focused = nullptr;
-            }
-            ((CheckGroup*)parent)->Dettach((CheckBox*)Target);
-        }
+        //auto parent = Target->Parent();
+        //if (parent != nullptr && parent->ID() == L"RadioGroup")
+        //{
+        //    if (Target == m_Focused)
+        //    {
+        //        m_Focused = nullptr;
+        //    }
+        //    ((RadioGroup*)parent)->Dettach((RadioBox*)Target);
+        //}
+        //else if (parent != nullptr && parent->ID() == L"RadioGroup1")
+        //{
+        //    if (Target == m_Focused)
+        //    {
+        //        m_Focused = nullptr;
+        //    }
+        //    ((RadioGroup*)parent)->Dettach((RadioBox*)Target);
+        //}
+        //else if (parent != nullptr && parent->ID() == L"CheckGroup")
+        //{
+        //    if (Target == m_Focused)
+        //    {
+        //        m_Focused = nullptr;
+        //    }
+        //    ((CheckGroup*)parent)->Dettach((CheckBox*)Target);
+        //}
+        //else if (parent != nullptr && parent->ID() == L"CheckGroup1")
+        //{
+        //    if (Target == m_Focused)
+        //    {
+        //        m_Focused = nullptr;
+        //    }
+        //    ((CheckGroup*)parent)->Dettach((CheckBox*)Target);
+        //}
     }
 
     virtual Control* Create()
@@ -345,32 +345,32 @@ public:
                 //    )
                 //),
 
-                //new Control(
-                //    L"ImageView1", {0, 0, 500, 1000}, {},
-                //    {
-                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                //    },
-                //    {
-                //        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                //    },
-                //    {},
-                //    {
-                //        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
-                //    }
-                //),
-                //new Control(
-                //    L"ImageView2", {500, 0, 1000, 1000 }, {},
-                //    {
-                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                //    },
-                //    {
-                //        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                //    },
-                //    {},
-                //    {
-                //        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
-                //    }
-                //),
+                new Control(
+                    L"ImageView1", {0, 0, 500, 1000}, {},
+                    {
+                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                    },
+                    {
+                        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                    },
+                    {},
+                    {
+                        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
+                    }
+                ),
+                new Control(
+                    L"ImageView2", {500, 0, 1000, 1000 }, {},
+                    {
+                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                    },
+                    {
+                        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                    },
+                    {},
+                    {
+                        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
+                    }
+                ),
 
                 //new Control(
                 //    L"UserDialog", {0, 0, 500, 80},
@@ -413,42 +413,42 @@ public:
                 //)
             
 
-                new RadioGroup(
-                    L"RadioGroup", { 10, 100, 210, 900 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
-                    {
-                    },
-                    {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                    }
-                ),
-                new CheckGroup(
-                    L"CheckGroup", { 220, 100, 420, 900 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
-                    {
-                    },
-                    {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                    }
-                ),
-                new RadioGroup(
-                    L"RadioGroup1", { 500, 100, 920, 300 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
-                    {
-                    },
-                    {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                    }
-                ),
-                new CheckGroup(
-                    L"CheckGroup1", { 500, 700, 920, 900 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
-                    {
-                    },
-                    {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                    }
-                ),
-            },
+                //new RadioGroup(
+                //    L"RadioGroup", { 10, 100, 210, 900 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                //    {
+                //    },
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //    }
+                //),
+                //new CheckGroup(
+                //    L"CheckGroup", { 220, 100, 420, 900 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                //    {
+                //    },
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //    }
+                //),
+                //new RadioGroup(
+                //    L"RadioGroup1", { 500, 100, 920, 300 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                //    {
+                //    },
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //    }
+                //),
+                //new CheckGroup(
+                //    L"CheckGroup1", { 500, 700, 920, 900 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                //    {
+                //    },
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //    }
+                //),
+            }/*,
             {
                 new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xc8c8c8)),
-            }
+            }*/
         );
 
 

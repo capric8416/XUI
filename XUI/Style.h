@@ -69,7 +69,7 @@ public:
         DWRITE_TEXT_ALIGNMENT TextAlignment, DWRITE_PARAGRAPH_ALIGNMENT ParagraphAlignment, bool NoWrapAndEllipsis = true
     );
     static IDWriteTextLayout* TextLayout(std::wstring Text, IDWriteTextFormat* Format, float MaxWidth, float MaxHeight);
-    static WICFormatMeta ConvertedSourceBitmap(std::wstring Path);
+    static WICFormatMeta ConvertedSourceBitmap(std::wstring Path, D2D_RECT_F OwnerPosition);
     static ID2D1Bitmap* D2DBitmap(std::wstring Path, IWICFormatConverter* Converter);
     
     static void ReleaseResourceCache();

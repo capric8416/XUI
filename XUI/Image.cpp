@@ -98,7 +98,7 @@ IWICFormatConverter* Image::ConvertedSourceBitmap()
         return m_ConvertedSourceBitmap;
     }
 
-    WICFormatMeta meta = __super::ConvertedSourceBitmap(m_Path);
+    WICFormatMeta meta = __super::ConvertedSourceBitmap(m_Path, m_Owner->DPIPosition());
     
     m_ConvertedSourceBitmap = meta.Converter;
     m_Frames = meta.Frames;
@@ -116,7 +116,7 @@ IWICFormatConverter* Image::ConvertedSourceBitmap(wstring Path)
         return m_ConvertedSourceBitmap;
     }
 
-    WICFormatMeta meta = __super::ConvertedSourceBitmap(Path);
+    WICFormatMeta meta = __super::ConvertedSourceBitmap(Path, m_Owner->DPIPosition());
 
     m_ConvertedSourceBitmap = meta.Converter;
     m_Frames = meta.Frames;
