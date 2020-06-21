@@ -216,6 +216,21 @@ WICFormatMeta Style::ConvertedSourceBitmap(wstring Path)
         return iter->second;
     }
 
+    while (s_ConvertedSourceBitmapCache.size() > 6)
+    {
+        auto i = s_ConvertedSourceBitmapCache.begin();
+        auto p = i->first;
+        XSafeRelease(i->second.Converter);
+        s_ConvertedSourceBitmapCache.erase(i);
+
+        auto j = s_D2DBitmapCache.find(p);
+        if (j != s_D2DBitmapCache.end())
+        {
+            XSafeRelease(j->second);
+            s_D2DBitmapCache.erase(j);
+        }
+    }
+
     // Create a decoder
     IWICBitmapDecoder* Decoder = NULL;
 

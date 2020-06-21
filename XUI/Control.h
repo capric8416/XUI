@@ -134,8 +134,8 @@ public:
     // Set position
     virtual void SetPosition(RECT Pos);
     virtual void SetPosition(LONG Left, LONG Top, LONG Right, LONG Bottom);
-    virtual void VerticalMovePosition(LONG Offset, FLOAT DpiOffset, LONG PercentOffset);
-    virtual void HorizontalMovePosition(LONG Offset, FLOAT DpiOffset, LONG PercentOffset);
+    virtual void VerticalMovePosition(LONG PercentOffset, UINT16 Index);
+    virtual void HorizontalMovePosition(LONG PercentOffset, UINT16 Index);
 
     virtual RECT Padding();
     virtual D2D_RECT_F DPIPadding();

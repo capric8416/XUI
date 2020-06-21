@@ -140,6 +140,9 @@ void XTrace(const wchar_t* Format, ...);
 #define IS_ZERO_RECT(Rect) (Rect.left == 0 && Rect.top == 0 && Rect.right == 0 && Rect.bottom == 0)
 #define IS_FULL_RECT(Rect) (Rect.left == 0 && Rect.top == 0 && Rect.right == DENOMINATOR && Rect.bottom == DENOMINATOR)
 
+#define MAX_SHORT 32767
+#define MIN_SHORT -32767
+
 
 // XTRACE only working on debug mode
 #ifndef _DEBUG

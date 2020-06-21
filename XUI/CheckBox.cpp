@@ -229,7 +229,7 @@ CheckGroup::~CheckGroup()
 }
 
 
-void CheckGroup::Attach(CheckBox* Child, bool Checked, bool Pin, bool Paint)
+void CheckGroup::Attach(CheckBox* Child, bool Checked, bool Pin, bool Paint, bool Lazy)
 {
     __super::Attach(Child);
 
@@ -245,7 +245,10 @@ void CheckGroup::Attach(CheckBox* Child, bool Checked, bool Pin, bool Paint)
         m_Pinned = Child;
     }
 
-    Resize();
+    if (!Lazy)
+    {
+        Resize();
+    }
 
     if (Paint)
     {
@@ -412,7 +415,7 @@ void CheckGroup::OnMouseVerticalWheel(LONG X, LONG Y, WPARAM wParam)
 {
     lock_guard<mutex> lock(m_Mutex);
 
-    auto offset = (short)HIWORD(wParam);
+    auto offset = X != 0 && Y != 0 ? (short)HIWORD(wParam) : (short)wParam;
     if (offset == 0 || m_Children.size() == 0)
     {
         return;
@@ -424,47 +427,61 @@ void CheckGroup::OnMouseVerticalWheel(LONG X, LONG Y, WPARAM wParam)
     auto maxHeight = Height();
     auto maxVisiable = maxHeight / height;
 
-    auto absOffset = offset > 0 ? offset : -offset;
-    if (absOffset < height)
+    LONG percentOffset;
+    if (offset == MIN_SHORT)
     {
-        absOffset = height;
+        auto topPos = firstChild->PositionPercentage();
+        percentOffset = -topPos.top;
+    }
+    else if (offset == MAX_SHORT)
+    {
+        auto bottomPos = m_Children[m_Children.size() - 1]->PositionPercentage();
+        percentOffset = DENOMINATOR - bottomPos.bottom;
     }
     else
     {
-        if (absOffset < maxHeight)
+        auto absOffset = offset > 0 ? offset : -offset;
+        if (absOffset < height)
         {
-            absOffset = absOffset / height * height;
+            absOffset = height;
         }
         else
         {
-            absOffset = (maxHeight - height) / height * height;
+            if (absOffset < maxHeight)
+            {
+                absOffset = absOffset / height * height;
+            }
+            else
+            {
+                absOffset = (maxHeight - height) / height * height;
+            }
         }
-    }
-    offset = offset > 0 ? absOffset : -absOffset;
+        offset = offset > 0 ? absOffset : -absOffset;
 
-    if (offset < 0)
-    {
-        auto topSentinel = m_Children[m_Children.size() - maxVisiable]->PositionPercentage();
-        if (topSentinel.top <= 0)
+        if (offset < 0)
         {
-            return;
+            auto topSentinel = m_Children[m_Children.size() - maxVisiable]->PositionPercentage();
+            if (topSentinel.top <= 0)
+            {
+                return;
+            }
         }
-    }
-    else
-    {
-        auto bottomSentinel = m_Children[maxVisiable - 1]->PositionPercentage();
-        if (bottomSentinel.bottom >= maxVisiable * heightPercent)
+        else
         {
-            return;
+            auto bottomSentinel = m_Children[maxVisiable - 1]->PositionPercentage();
+            if (bottomSentinel.bottom >= maxVisiable * heightPercent)
+            {
+                return;
+            }
         }
+
+        percentOffset = offset / height * heightPercent;
     }
 
-    auto dpiOffset = (float)offset / m_Wnd->DpiScaleY();
-    auto percentOffset = offset / height * heightPercent;
-
+    UINT16 i = 0;
     for (const auto& child : m_Children)
     {
-        child->VerticalMovePosition(offset, dpiOffset, percentOffset);
+        child->VerticalMovePosition(percentOffset, i++);
     }
 
     Invalidate();
@@ -475,7 +492,7 @@ void CheckGroup::OnMouseHorizontalWheel(LONG X, LONG Y, WPARAM wParam)
 {
     lock_guard<mutex> lock(m_Mutex);
 
-    auto offset = (short)HIWORD(wParam);
+    auto offset = X != 0 && Y != 0 ? (short)HIWORD(wParam) : (short)wParam;
     if (offset == 0 || m_Children.size() == 0)
     {
         return;
@@ -487,47 +504,61 @@ void CheckGroup::OnMouseHorizontalWheel(LONG X, LONG Y, WPARAM wParam)
     auto maxWidth = Width();
     auto maxVisiable = maxWidth / width;
 
-    auto absOffset = offset > 0 ? offset : -offset;
-    if (absOffset < width)
+    LONG percentOffset;
+    if (offset == MIN_SHORT)
     {
-        absOffset = width;
+        auto leftPos = firstChild->PositionPercentage();
+        percentOffset = -leftPos.left;
+    }
+    else if (offset == MAX_SHORT)
+    {
+        auto rightPos = m_Children[m_Children.size() - 1]->PositionPercentage();
+        percentOffset = DENOMINATOR - rightPos.right;
     }
     else
     {
-        if (absOffset < maxWidth)
+        auto absOffset = offset > 0 ? offset : -offset;
+        if (absOffset < width)
         {
-            absOffset = absOffset / width * width;
+            absOffset = width;
         }
         else
         {
-            absOffset = (maxWidth - width) / width * width;
+            if (absOffset < maxWidth)
+            {
+                absOffset = absOffset / width * width;
+            }
+            else
+            {
+                absOffset = (maxWidth - width) / width * width;
+            }
         }
-    }
-    offset = offset > 0 ? absOffset : -absOffset;
+        offset = offset > 0 ? absOffset : -absOffset;
 
-    if (offset < 0)
-    {
-        auto leftSentinel = m_Children[m_Children.size() - maxVisiable]->PositionPercentage();
-        if (leftSentinel.left <= 0)
+        if (offset < 0)
         {
-            return;
+            auto leftSentinel = m_Children[m_Children.size() - maxVisiable]->PositionPercentage();
+            if (leftSentinel.left <= 0)
+            {
+                return;
+            }
         }
-    }
-    else
-    {
-        auto rightSentinel = m_Children[maxVisiable - 1]->PositionPercentage();
-        if (rightSentinel.right >= maxVisiable * widthPercent)
+        else
         {
-            return;
+            auto rightSentinel = m_Children[maxVisiable - 1]->PositionPercentage();
+            if (rightSentinel.right >= maxVisiable * widthPercent)
+            {
+                return;
+            }
         }
+
+        percentOffset = offset / width * widthPercent;
     }
 
-    auto dpiOffset = (float)offset / m_Wnd->DpiScaleX();
-    auto percentOffset = offset / width * widthPercent;
-
+    UINT16 i = 0;
     for (const auto& child : m_Children)
     {
-        child->HorizontalMovePosition(offset, dpiOffset, percentOffset);
+        child->HorizontalMovePosition(percentOffset, i++);
     }
 
     Invalidate();

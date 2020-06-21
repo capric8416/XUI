@@ -414,7 +414,7 @@ public:
             
 
                 new RadioGroup(
-                    L"RadioGroup", { 10, 10, 210, 810 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                    L"RadioGroup", { 10, 100, 210, 900 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
                     {
                     },
                     {
@@ -422,7 +422,7 @@ public:
                     }
                 ),
                 new CheckGroup(
-                    L"CheckGroup", { 220, 10, 420, 810 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                    L"CheckGroup", { 220, 100, 420, 900 }, true, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
                     {
                     },
                     {
@@ -430,7 +430,7 @@ public:
                     }
                 ),
                 new RadioGroup(
-                    L"RadioGroup1", { 430, 10, 990, 210 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                    L"RadioGroup1", { 500, 100, 920, 300 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
                     {
                     },
                     {
@@ -438,13 +438,16 @@ public:
                     }
                 ),
                 new CheckGroup(
-                    L"CheckGroup1", { 430, 320, 990, 520 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
+                    L"CheckGroup1", { 500, 700, 920, 900 }, false, true, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1 }, false, false, true,
                     {
                     },
                     {
                         new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
                     }
                 ),
+            },
+            {
+                new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xc8c8c8)),
             }
         );
 

@@ -577,37 +577,25 @@ void Control::SetPosition(LONG Left, LONG Top, LONG Right, LONG Bottom)
 }
 
 
-void Control::VerticalMovePosition(LONG Offset, FLOAT DpiOffset, LONG PercentOffset)
+void Control::VerticalMovePosition(LONG PercentOffset, UINT16 Index)
 {
-    m_Position.top += Offset;
-    m_Position.bottom += Offset;
-
     m_PositionPercentage.top += PercentOffset;
     m_PositionPercentage.bottom += PercentOffset;
 
-    m_DPIPosition.top += DpiOffset;
-    m_DPIPosition.bottom += DpiOffset;
-
     m_Hidden = m_PositionPercentage.top < 0 || m_PositionPercentage.bottom > DENOMINATOR;
 
-    SaveStylePosition();
+    SavePosition(Index);
 }
 
 
-void Control::HorizontalMovePosition(LONG Offset, FLOAT DpiOffset, LONG PercentOffset)
+void Control::HorizontalMovePosition(LONG PercentOffset, UINT16 Index)
 {
-    m_Position.left += Offset;
-    m_Position.right += Offset;
-
     m_PositionPercentage.left += PercentOffset;
     m_PositionPercentage.right += PercentOffset;
 
-    m_DPIPosition.left += DpiOffset;
-    m_DPIPosition.right += DpiOffset;
-
     m_Hidden = m_PositionPercentage.left < 0 || m_PositionPercentage.right > DENOMINATOR;
 
-    SaveStylePosition();
+    SavePosition(Index);
 }
 
 

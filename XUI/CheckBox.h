@@ -102,7 +102,7 @@ public:
     // Deconstructor
     virtual ~CheckGroup();
 
-    virtual void Attach(CheckBox* Child, bool Checked = false, bool Pin = false, bool Paint = true);
+    virtual void Attach(CheckBox* Child, bool Checked = false, bool Pin = false, bool Paint = true, bool Lazy = false);
     virtual void Dettach(CheckBox* Child);
 
     virtual void Resize();

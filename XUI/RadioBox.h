@@ -49,8 +49,8 @@ public:
     // Handle left button click event
     virtual void OnLeftButtonClick(LONG X, LONG Y);
 
-    void Check();
-    void Uncheck();
+    void Check(bool Lazy = false);
+    void Uncheck(bool Lazy = false);
 
     bool Checked();
 
@@ -105,17 +105,17 @@ public:
     // Deconstructor
     ~RadioGroup();
 
-    virtual void Attach(RadioBox* Child, bool Checked = false, bool Pin = false, bool Paint = true);
+    virtual void Attach(RadioBox* Child, bool Checked = false, bool Pin = false, bool Paint = true, bool Lazy = false);
     virtual void Dettach(RadioBox* Child);
 
     virtual void Resize();
 
-    virtual void OnChildChecked(Control* Child, bool Notify = true);
+    virtual void OnChildChecked(Control* Child, bool Notify = true, bool Lazy = false);
     RadioBox* Checked();
 
     void Siblings(RadioBox* Current, RadioBox*& Previous, RadioBox*& Next);
 
-    bool Check(size_t Pos);
+    bool Check(size_t Pos, bool Lazy = false);
 
     void Pin(std::wstring ID);
     void Unpin(std::wstring ID);
