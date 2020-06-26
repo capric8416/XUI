@@ -39,9 +39,6 @@ Style(
     RadiusY
 ),
 m_Color(Color),
-m_Brush(nullptr),
-m_TextFormat(nullptr),
-m_TextLayout(nullptr),
 m_Content(Content),
 m_TextAlignment(TextAlignment),
 m_ParagraphAlignment(ParagraphAlignment),
@@ -99,61 +96,37 @@ bool Text::SetContent(wstring Content)
 
 ID2D1SolidColorBrush* Text::SolidBrush()
 {
-    if (m_Brush != nullptr)
-    {
-        return m_Brush;
-    }
-
-    m_Brush = __super::SolidBrush(m_Color);
-    return m_Brush;
+    return __super::SolidBrush(m_Color);
 }
 
 
 IDWriteTextFormat* Text::TextFormat()
 {
-    if (m_TextFormat != nullptr)
-    {
-        return m_TextFormat;
-    }
-
-    m_TextFormat = __super::TextFormat(
+    return __super::TextFormat(
         m_FontFamily, m_FontCollection, m_FontWeight, m_FontStyle, m_FontStretch,
         m_FontSize, m_LocaleName, m_TextAlignment, m_ParagraphAlignment, true
     );
-    return m_TextFormat;
 }
 
 
 IDWriteTextLayout* Text::TextLayout(bool Resize)
 {
-    if (m_TextLayout != nullptr && !Resize)
-    {
-        return m_TextLayout;
-    }
-
-    m_TextLayout = __super::TextLayout(
+    return __super::TextLayout(
         m_Content,
         TextFormat(),
         m_Position.rect.right - m_Position.rect.left,
         m_Position.rect.bottom - m_Position.rect.top
     );
-    return m_TextLayout;
 }
 
 
 IDWriteTextLayout* Text::TextLayout(std::wstring Content)
 {
-    if (m_TextLayout != nullptr && Content == m_Content)
-    {
-        return m_TextLayout;
-    }
-
-    m_TextLayout = __super::TextLayout(
+    return __super::TextLayout(
         Content,
         TextFormat(),
         m_Position.rect.right - m_Position.rect.left,
         m_Position.rect.bottom - m_Position.rect.top
     );
-    return m_TextLayout;
 }
 

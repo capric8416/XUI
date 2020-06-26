@@ -107,6 +107,8 @@ void RadioBox::Check(bool Lazy)
 {
     Style(CONTROL_STATUS_CHECKED);
 
+    m_Checked = true;
+
     if (m_Grouped)
     {
         ((RadioGroup*)m_Parent)->OnChildChecked(this, true, Lazy);
@@ -127,6 +129,8 @@ void RadioBox::Uncheck(bool Lazy)
 {
     Style(CONTROL_STATUS_NORMAL);
 
+    m_Checked = false;
+
     if (!Lazy)
     {
         Invalidate();
@@ -139,6 +143,21 @@ bool RadioBox::Checked()
     return m_Checked;
 }
 
+
+void RadioBox::OnMouseEnter(LONG X, LONG Y)
+{
+    __super::OnMouseEnter(X, Y);
+    Style(CONTROL_STATUS_HOVER);
+    Invalidate();
+}
+
+
+void RadioBox::OnMouseLeave(LONG X, LONG Y)
+{
+    __super::OnMouseLeave(X, Y);
+    Style(m_Checked ? CONTROL_STATUS_CHECKED : CONTROL_STATUS_NORMAL);
+    Invalidate();
+}
 
 
 RadioGroup::RadioGroup(

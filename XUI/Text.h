@@ -71,9 +71,6 @@ private:
     std::wstring m_Content;
 
     D2D1_COLOR_F m_Color;
-    ID2D1SolidColorBrush* m_Brush;
-    IDWriteTextFormat* m_TextFormat;
-    IDWriteTextLayout* m_TextLayout;
 
     DWRITE_TEXT_ALIGNMENT m_TextAlignment;
     DWRITE_PARAGRAPH_ALIGNMENT m_ParagraphAlignment;

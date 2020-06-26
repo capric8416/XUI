@@ -108,6 +108,22 @@ void CheckBox::OnLeftButtonClick(LONG X, LONG Y)
 }
 
 
+void CheckBox::OnMouseEnter(LONG X, LONG Y)
+{
+    __super::OnMouseEnter(X, Y);
+    Style(CONTROL_STATUS_HOVER);
+    Invalidate();
+}
+
+
+void CheckBox::OnMouseLeave(LONG X, LONG Y)
+{
+    __super::OnMouseLeave(X, Y);
+    Style(m_Checked ? CONTROL_STATUS_CHECKED : CONTROL_STATUS_NORMAL);
+    Invalidate();
+}
+
+
 CheckGroup::CheckGroup(
     wstring ID,
     RECT Position,

@@ -57,6 +57,7 @@ LRESULT MainWnd::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
         return 0;
 
     case WM_SIZE:
+        Style::ReleaseResourceCache();
         Resize();
         return 0;
 
@@ -67,7 +68,10 @@ LRESULT MainWnd::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
     case WM_MOUSEMOVE:
     case WM_MOUSEWHEEL:
     case WM_MOUSEHWHEEL:
-        m_UI->OnMouseEvent(uMsg, wParam, lParam);
+        if (!m_Resizing)
+        {
+            m_UI->OnMouseEvent(uMsg, wParam, lParam);
+        }
         return 0;
 
     case WM_CHAR:

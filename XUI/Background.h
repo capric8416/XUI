@@ -45,6 +45,5 @@ public:
 
 private:
     D2D1_COLOR_F m_Color;
-    ID2D1SolidColorBrush* m_Brush;
 };
 

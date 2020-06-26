@@ -174,14 +174,13 @@ public:
     // Handle mouse move event
     virtual void OnMouseMove(POINT Pt, WPARAM wParam);
     // Handle mouse enter event
-    virtual void OnMouseEnter(Control* Target, POINT Pt);
+    virtual void OnMouseEnter(POINT Pt);
     virtual void OnMouseEnter(LONG X, LONG Y);
     // Handle mouse leave event
-    virtual void OnMouseLeave(Control* Target, POINT Pt);
     virtual void OnMouseLeave(LONG X, LONG Y);
     // Handle mouse drag event
-    virtual void OnMouseDrag(Control* Target, POINT Pt, POINT LastPt);
     virtual void OnMouseDrag(POINT Pt, POINT LastPt);
+    virtual void OnMouseDrag(LONG X, LONG Y, POINT LastPt);
     // Handle mouse vertical wheel event
     virtual void OnMouseVerticalWheel(POINT Pt, WPARAM wParam);
     virtual void OnMouseVerticalWheel(LONG X, LONG Y, WPARAM wParam);
@@ -289,27 +288,27 @@ protected:
     std::vector<Control*> m_Children;
 
     // Left button opation point
-    POINT m_LeftButtonDownPoint;
-    POINT m_LeftButtonUpPoint;
+    static POINT m_LeftButtonDownPoint;
+    static POINT m_LeftButtonUpPoint;
     // Left button opation tikcout
-    DWORD64 m_LeftButtonDownTick;
-    DWORD64 m_LeftButtonUpTick;
-    DWORD64 m_LeftButtonClickTick;
-    DWORD64 m_LeftButtonDoubleClickTick;
+    static DWORD64 m_LeftButtonDownTick;
+    static DWORD64 m_LeftButtonUpTick;
+    static DWORD64 m_LeftButtonClickTick;
+    static DWORD64 m_LeftButtonDoubleClickTick;
 
     // Right button opation point
-    POINT m_RightButtonDownPoint;
-    POINT m_RightButtonUpPoint;
+    static POINT m_RightButtonDownPoint;
+    static POINT m_RightButtonUpPoint;
     // Right button opation tikcout
-    DWORD64 m_RightButtonDownTick;
-    DWORD64 m_RightButtonUpTick;
-    DWORD64 m_RightButtonClickTick;
-    DWORD64 m_RightButtonDoubleClickTick;
+    static DWORD64 m_RightButtonDownTick;
+    static DWORD64 m_RightButtonUpTick;
+    static DWORD64 m_RightButtonClickTick;
+    static DWORD64 m_RightButtonDoubleClickTick;
 
     // The control mouse enters
-    Control* m_MouseEnter;
+    static Control* m_MouseEnter;
     // Last mouse point
-    POINT m_LastMousePoint;
+    static POINT m_LastMousePoint;
 
     // Scrool enabled
     bool m_VerticalScroolEnabled;

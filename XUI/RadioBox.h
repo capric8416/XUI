@@ -54,6 +54,12 @@ public:
 
     bool Checked();
 
+    // Handle mouse enter event
+    virtual void OnMouseEnter(LONG X, LONG Y);
+
+    // Handle mouse leave event
+    virtual void OnMouseLeave(LONG X, LONG Y);
+
 
 protected:
     LONG* m_User;

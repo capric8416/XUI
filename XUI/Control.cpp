@@ -18,6 +18,30 @@
 using namespace std;
 
 
+// Left button opation point
+POINT Control::m_LeftButtonDownPoint;
+POINT Control::m_LeftButtonUpPoint;
+// Left button opation tikcout
+DWORD64 Control::m_LeftButtonDownTick = 0;
+DWORD64 Control::m_LeftButtonUpTick = 0;
+DWORD64 Control::m_LeftButtonClickTick = 0;
+DWORD64 Control::m_LeftButtonDoubleClickTick = 0;
+
+// Right button opation point
+POINT Control::m_RightButtonDownPoint;
+POINT Control::m_RightButtonUpPoint;
+// Right button opation tikcout
+DWORD64 Control::m_RightButtonDownTick;
+DWORD64 Control::m_RightButtonUpTick;
+DWORD64 Control::m_RightButtonClickTick;
+DWORD64 Control::m_RightButtonDoubleClickTick;
+
+// The control mouse enters
+Control* Control::m_MouseEnter = nullptr;
+// Last mouse point
+POINT Control::m_LastMousePoint;
+
+
 
 Control::Control(
     wstring ID,
@@ -31,7 +55,6 @@ Control::Control(
 ) :
     m_Wnd(MainWnd::Instance()),
     m_Parent(nullptr),
-    m_MouseEnter(nullptr),
     m_ID(ID),
     m_Position(ZERO_RECT),
     m_DPIPosition(ZERO_RECT),
@@ -46,10 +69,6 @@ Control::Control(
     m_Disabled(false),
     m_Hintable(true),
     m_Children(Children),
-    m_LeftButtonClickTick(0),
-    m_RightButtonClickTick(0),
-    m_LeftButtonDoubleClickTick(0),
-    m_RightButtonDoubleClickTick(0),
     m_VerticalScroolEnabled(false),
     m_HorizontalScroolEnabled(false),
     m_BackgroundStyle(CONTROL_STATUS_NORMAL),
@@ -94,7 +113,6 @@ Control::Control(
 ) :
     m_Wnd(MainWnd::Instance()),
     m_Parent(nullptr),
-    m_MouseEnter(nullptr),
     m_ID(ID),
     m_Position(ZERO_RECT),
     m_DPIPosition(ZERO_RECT),
@@ -109,10 +127,6 @@ Control::Control(
     m_Disabled(Disabled),
     m_Hintable(Hintable),
     m_Children(Children),
-    m_LeftButtonClickTick(0),
-    m_RightButtonClickTick(0),
-    m_LeftButtonDoubleClickTick(0),
-    m_RightButtonDoubleClickTick(0),
     m_VerticalScroolEnabled(false),
     m_HorizontalScroolEnabled(false),
     m_BackgroundStyle(CONTROL_STATUS_NORMAL),
@@ -231,22 +245,11 @@ void Control::Attach(initializer_list<Control*> Children)
 
 void Control::Style(CONTROL_STATUS Status)
 {
-    if (m_BackgroundStyles[Status].size() > 0)
-    {
-        m_BackgroundStyle = Status;
-    }
-    if (m_BorderStyles[Status].size() > 0)
-    {
-        m_BorderStyle = Status;
-    }
-    if (m_TextStyles[Status].size() > 0)
-    {
-        m_TextStyle = Status;
-    }
-    if (m_AnimationStyles[Status].size() > 0)
-    {
-        m_AnimationStyle = Status;
-    }
+    m_BackgroundStyle = m_BackgroundStyles[Status].size() > 0 ? Status : CONTROL_STATUS_NORMAL;
+    m_BorderStyle = m_BorderStyles[Status].size() > 0 ? Status : CONTROL_STATUS_NORMAL;
+    m_TextStyle = m_TextStyles[Status].size() > 0 ? Status : CONTROL_STATUS_NORMAL;
+    m_AnimationStyle = m_AnimationStyles[Status].size() > 0 ? Status : CONTROL_STATUS_NORMAL;
+    m_ImageStyle = m_ImageStyles[Status].size() > 0 ? Status : CONTROL_STATUS_NORMAL;
 }
 
 
@@ -723,6 +726,7 @@ void Control::OnLeftButtonDown(POINT Pt)
 void Control::OnLeftButtonDown(LONG X, LONG Y)
 {
     OnFocus();
+    OnMouseEnter(X, Y);
 }
 
 
@@ -872,104 +876,68 @@ void Control::OnRightButtonDoubleClick(LONG X, LONG Y)
 
 void Control::OnMouseMove(POINT Pt, WPARAM wParam)
 {
-    Control* child = Find(Pt);
-    if (child != nullptr)
-    {
-        if (child != m_MouseEnter)
-        {
-            if (m_MouseEnter != nullptr && m_MouseEnter->Hintable())
-            {
-                m_MouseEnter->OnMouseLeave(m_MouseEnter, Pt);
-            }
+    OnMouseEnter(Pt);
 
-            if (child->Hintable())
-            {
-                child->OnMouseEnter(child, Pt);
-            }
-
-            m_MouseEnter = child;
-        }
-        else if (wParam == MK_LBUTTON)
-        {
-            if (child->Hintable() && (Pt.x - m_LastMousePoint.x != 0 || Pt.y - m_LastMousePoint.y != 0))
-            {
-                child->OnMouseDrag(child, Pt, m_LastMousePoint);
-            }
-        }
-    }
-    else
+    if (wParam == MK_LBUTTON)
     {
-        if (m_MouseEnter != nullptr && m_MouseEnter->Hintable())
-        {
-            m_MouseEnter->OnMouseLeave(m_MouseEnter, Pt);
-            m_MouseEnter = nullptr;
-        }
+        OnMouseDrag(Pt, m_LastMousePoint);
     }
 
     m_LastMousePoint = Pt;
 }
 
 
-void Control::OnMouseEnter(Control* Target, POINT Pt)
+void Control::OnMouseEnter(POINT Pt)
 {
-    Control* child = Target->Find(Pt);
-    if (child != nullptr)
+    Control* child = Find(Pt);
+    if (child != nullptr && child->Hintable())
     {
-        child->OnMouseEnter(child, Pt);
+        child->OnMouseEnter(Pt);
     }
     else if (Hintable())
     {
-        OnMouseEnter(Pt.x, Pt.y);
+        if (m_MouseEnter != this)
+        {
+            OnMouseEnter(Pt.x, Pt.y);
+        }
     }
 }
 
 
 void Control::OnMouseEnter(LONG X, LONG Y)
 {
-}
+    XTRACE("%s", m_ID.c_str());
 
+    if (m_MouseEnter != nullptr && m_MouseEnter != this)
+    {
+        m_MouseEnter->OnMouseLeave(X, Y);
+    }
 
-void Control::OnMouseLeave(Control* Target, POINT Pt)
-{
-    Control* child = Target->Find(Pt);
-    if (child != nullptr)
-    {
-        child->OnMouseLeave(child, Pt);
-    }
-    else if (Hintable())
-    {
-        OnMouseLeave(Pt.x, Pt.y);
-    }
+    m_MouseEnter = this;
 }
 
 
 void Control::OnMouseLeave(LONG X, LONG Y)
 {
-    for (const auto& child : m_Children)
-    {
-        if (child->Hintable())
-        {
-            child->OnMouseLeave(X, Y);
-        }
-    }
-}
-
-
-void Control::OnMouseDrag(Control* Target, POINT Pt, POINT LastPt)
-{
-    Control* child = Target->Find(Pt);
-    if (child != nullptr)
-    {
-        child->OnMouseDrag(child, Pt, LastPt);
-    }
-    else if (Hintable())
-    {
-        OnMouseDrag(Pt, LastPt);
-    }
+    XTRACE("%s", m_ID.c_str());
 }
 
 
 void Control::OnMouseDrag(POINT Pt, POINT LastPt)
+{
+    Control* child = Find(Pt);
+    if (child != nullptr)
+    {
+        child->OnMouseDrag(Pt, LastPt);
+    }
+    else if (Hintable())
+    {
+        OnMouseDrag(Pt.x, Pt.y, LastPt);
+    }
+}
+
+
+void Control::OnMouseDrag(LONG X, LONG Y, POINT LastPt)
 {
 }
 

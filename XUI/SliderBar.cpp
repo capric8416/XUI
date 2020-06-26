@@ -77,11 +77,11 @@ void SliderBarBody::OnLeftButtonClick(LONG X, LONG Y)
 }
 
 
-void SliderBarBody::OnMouseDrag(POINT Pt, POINT LastPt)
+void SliderBarBody::OnMouseDrag(LONG X, LONG Y, POINT LastPt)
 {
-    __super::OnMouseDrag(Pt, LastPt);
+    __super::OnMouseDrag(X, Y, LastPt);
 
-    UpdateValue(Pt.x, Pt.y);
+    UpdateValue(X, Y);
 }
 
 
@@ -252,6 +252,22 @@ bool SliderBarBody::SetMax(INT32 Value)
 
     m_MaxValue = Value;
     return true;
+}
+
+
+void SliderBarBody::OnMouseEnter(LONG X, LONG Y)
+{
+    __super::OnMouseEnter(X, Y);
+    Style(CONTROL_STATUS_HOVER);
+    Invalidate();
+}
+
+
+void SliderBarBody::OnMouseLeave(LONG X, LONG Y)
+{
+    __super::OnMouseLeave(X, Y);
+    Style(CONTROL_STATUS_NORMAL);
+    Invalidate();
 }
 
 

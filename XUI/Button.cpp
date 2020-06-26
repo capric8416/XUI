@@ -57,6 +57,7 @@ Button::~Button()
 
 void Button::OnLeftButtonDown(LONG X, LONG Y)
 {
+    __super::OnLeftButtonDown(X, Y);
     Style(CONTROL_STATUS_DOWN);
     Invalidate();
 }
@@ -64,6 +65,7 @@ void Button::OnLeftButtonDown(LONG X, LONG Y)
 
 void Button::OnLeftButtonUp(LONG X, LONG Y)
 {
+    __super::OnLeftButtonUp(X, Y);
     Style(CONTROL_STATUS_NORMAL);
     Invalidate();
 }
@@ -71,6 +73,7 @@ void Button::OnLeftButtonUp(LONG X, LONG Y)
 
 void Button::OnMouseEnter(LONG X, LONG Y)
 {
+    __super::OnMouseEnter(X, Y);
     Style(CONTROL_STATUS_HOVER);
     Invalidate();
 }
@@ -78,6 +81,7 @@ void Button::OnMouseEnter(LONG X, LONG Y)
 
 void Button::OnMouseLeave(LONG X, LONG Y)
 {
+    __super::OnMouseLeave(X, Y);
     Style(CONTROL_STATUS_NORMAL);
     Invalidate();
 }

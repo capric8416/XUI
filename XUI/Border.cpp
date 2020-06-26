@@ -24,7 +24,6 @@ Border::Border(
         Position
     ),
     m_Color(Color),
-    m_Brush(nullptr),
     m_StrokeWidth(StrokeWidth),
     m_StrokeStyle(StrokeStyle)
 {
@@ -48,11 +47,5 @@ void Border::OnPaint()
 
 ID2D1SolidColorBrush* Border::SolidBrush()
 {
-    if (m_Brush != nullptr)
-    {
-        return m_Brush;
-    }
-
-    m_Brush = __super::SolidBrush(m_Color);
-    return m_Brush;
+    return __super::SolidBrush(m_Color);
 }

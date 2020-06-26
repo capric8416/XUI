@@ -23,8 +23,7 @@ Background::Background(
         RadiusX,
         RadiusY
     ),
-    m_Color(Color),
-    m_Brush(nullptr)
+    m_Color(Color)
 {
     SolidBrush();
 }
@@ -65,11 +64,5 @@ void Background::OnPaint(bool Clear)
 
 ID2D1SolidColorBrush* Background::SolidBrush()
 {
-    if (m_Brush != nullptr)
-    {
-        return m_Brush;
-    }
-
-    m_Brush = __super::SolidBrush(m_Color);
-    return m_Brush;
+    return __super::SolidBrush(m_Color);
 }

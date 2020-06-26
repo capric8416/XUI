@@ -20,8 +20,6 @@ Image::Image(CONTROL_STATUS Status, D2D_RECT_F Position, wstring Path)
     , m_Width(0)
     , m_Height(0)
 	, m_Path(Path)
-	, m_D2DBitmap(nullptr)
-	, m_ConvertedSourceBitmap(nullptr)
 {
     D2DBitmap();
 }
@@ -64,13 +62,7 @@ ID2D1Bitmap* Image::D2DBitmap()
         return nullptr;
     }
 
-    if (m_D2DBitmap != nullptr)
-    {
-        return m_D2DBitmap;
-    }
-
-    m_D2DBitmap = __super::D2DBitmap(m_Path, ConvertedSourceBitmap());
-    return m_D2DBitmap;
+    return __super::D2DBitmap(m_Path, ConvertedSourceBitmap());
 }
 
 
@@ -81,49 +73,41 @@ ID2D1Bitmap* Image::D2DBitmap(wstring Path)
         return nullptr;
     }
 
-    if (m_D2DBitmap != nullptr && Path == m_Path)
-    {
-        return m_D2DBitmap;
-    }
-
-    m_D2DBitmap = __super::D2DBitmap(Path, ConvertedSourceBitmap(Path));
-    return m_D2DBitmap;
+    return __super::D2DBitmap(Path, ConvertedSourceBitmap(Path));
 }
 
 
 IWICFormatConverter* Image::ConvertedSourceBitmap()
 {
-    if (m_ConvertedSourceBitmap != nullptr)
+    if (m_Path.empty())
     {
-        return m_ConvertedSourceBitmap;
+        return nullptr;
     }
 
     WICFormatMeta meta = __super::ConvertedSourceBitmap(m_Path, m_Owner->DPIPosition());
     
-    m_ConvertedSourceBitmap = meta.Converter;
     m_Frames = meta.Frames;
     m_Width = meta.Width;
     m_Height = meta.Height;
 
-    return m_ConvertedSourceBitmap;
+    return meta.Converter;
 }
 
 
 IWICFormatConverter* Image::ConvertedSourceBitmap(wstring Path)
 {
-    if (m_ConvertedSourceBitmap != nullptr && Path == m_Path)
+    if (Path.empty())
     {
-        return m_ConvertedSourceBitmap;
+        return nullptr;
     }
 
     WICFormatMeta meta = __super::ConvertedSourceBitmap(Path, m_Owner->DPIPosition());
 
-    m_ConvertedSourceBitmap = meta.Converter;
     m_Frames = meta.Frames;
     m_Width = meta.Width;
     m_Height = meta.Height;
 
-    return m_ConvertedSourceBitmap;
+    return meta.Converter;
 }
 
 
@@ -203,7 +187,7 @@ uint32_t FindJpegEndPos(uint8_t* Buffer, uint32_t Last)
 }
 
 
-uint8_t* Image::EncodeToJpeg(std::wstring Path, uint32_t Width, uint32_t Height, uint32_t& Size)
+uint8_t* Image::EncodeToJpeg(std::wstring Path, uint32_t Width, uint32_t Height, uint32_t& Size, float Quality)
 {
     // Create a decoder
     IWICBitmapDecoder* decoder = NULL;
@@ -307,7 +291,7 @@ uint8_t* Image::EncodeToJpeg(std::wstring Path, uint32_t Width, uint32_t Height,
     propBag2.pstrName = (LPOLESTR)L"ImageQuality";
     VariantInit(&variant);
     variant.vt = VT_R4;
-    variant.fltVal = 0.5f;
+    variant.fltVal = Quality;
     if (SUCCEEDED(hr))
     {
         hr = propertybag->Write(1, &propBag2, &variant);

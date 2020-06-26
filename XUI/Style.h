@@ -71,7 +71,7 @@ public:
     static IDWriteTextLayout* TextLayout(std::wstring Text, IDWriteTextFormat* Format, float MaxWidth, float MaxHeight);
     static WICFormatMeta ConvertedSourceBitmap(std::wstring Path, D2D_RECT_F OwnerPosition);
     static ID2D1Bitmap* D2DBitmap(std::wstring Path, IWICFormatConverter* Converter);
-    
+
     static void ReleaseResourceCache();
 
 protected:

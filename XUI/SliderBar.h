@@ -53,7 +53,7 @@ public:
 
     virtual void OnLeftButtonClick(LONG X, LONG Y);
 
-    virtual void OnMouseDrag(POINT Pt, POINT LastPt);
+    virtual void OnMouseDrag(LONG X, LONG Y, POINT LastPt);
     
     void UpdateValue(LONG X, LONG Y, bool Init = false, bool Paint = true);
 
@@ -63,6 +63,12 @@ public:
     bool SetMax(INT32 Value);
 
     virtual void SavePosition(UINT16 Index);
+
+    // Handle mouse enter event
+    virtual void OnMouseEnter(LONG X, LONG Y);
+
+    // Handle mouse leave event
+    virtual void OnMouseLeave(LONG X, LONG Y);
 
 protected:
     INT32 m_Value;
