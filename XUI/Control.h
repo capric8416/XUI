@@ -80,7 +80,7 @@ public:
     virtual void Style(uint8_t Index, Background* BackgroundStyle = nullptr, Border* BorderStyle = nullptr, Text* TextStyle = nullptr, Animation* AnimationStyle = nullptr);
 
     std::wstring GetContent();
-    bool SetContent(std::wstring Content, bool Paint = true, CONTROL_STATUS Exclue = CONTROL_STATUS_BTIV);
+    bool SetContent(std::wstring Content, bool Paint = true, CONTROL_STATUS ExclueStatus = CONTROL_STATUS_BTIV, std::initializer_list<int> ExcluePos = {});
 
     bool SetImage(std::wstring Path, bool Paint = true);
 

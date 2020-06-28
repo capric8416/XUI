@@ -100,6 +100,8 @@ public:
     {
         m_UI = Tree;
 
+        m_UI->SetMainWnd((MainWnd*)this);
+
         // Get the dpi information.
         HDC screen = GetDC(0);
         m_DpiScaleX = GetDeviceCaps(screen, LOGPIXELSX) / 96.0f;

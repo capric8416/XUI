@@ -22,6 +22,7 @@
 // forward
 class MainWnd;
 class Control;
+class Language;
 
 
 typedef struct WICFormatMeta_s
@@ -74,6 +75,9 @@ public:
 
     static void ReleaseResourceCache();
 
+    static void ReleaseResoureCacheOnResize();
+    static void ReleaseResoureCacheOnLangauge();
+
 protected:
     Control* m_Owner;
 
@@ -84,6 +88,7 @@ protected:
 
     static MainWnd* s_Wnd;
     static HWND s_NativeWnd;
+    static Language* s_Language;
     static ID2D1Factory* s_D2DFactory;
     static IDWriteFactory* s_DWriteFactory;
     static ID2D1HwndRenderTarget* s_RenderTarget;

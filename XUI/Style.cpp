@@ -5,6 +5,7 @@
 #include "MainWnd.h"
 #include "Control.h"
 #include "Image.h"
+#include "Language.h"
 
 // c/c++
 #include <sstream>
@@ -16,6 +17,7 @@ using namespace std;
 // static
 MainWnd* Style::s_Wnd = nullptr;
 HWND Style::s_NativeWnd = nullptr;
+Language* Style::s_Language = nullptr;
 ID2D1Factory* Style::s_D2DFactory = nullptr;
 IDWriteFactory* Style::s_DWriteFactory = nullptr;
 IWICImagingFactory* Style::s_IWICFactory = nullptr;
@@ -41,6 +43,7 @@ Style::Style(
     {
         s_Wnd = MainWnd::Instance();
         s_NativeWnd = s_Wnd->NativeWnd();
+        s_Language = s_Wnd->GetUI()->GetLanguage();
         s_D2DFactory = s_Wnd->D2DFactory();
         s_DWriteFactory = s_Wnd->DWriteFactory();
         s_IWICFactory = s_Wnd->IWICFactory();
@@ -187,6 +190,11 @@ IDWriteTextFormat* Style::TextFormat(
 
 IDWriteTextLayout* Style::TextLayout(wstring Text, IDWriteTextFormat* Format, float MaxWidth, float MaxHeight)
 {
+    if (s_Language != nullptr)
+    {
+        Text = s_Language->Translate(Text);
+    }
+
     wstringstream tmp;
     tmp << Text << L" " << Format << L" " << MaxWidth << L" " << MaxHeight;
     wstring key = tmp.str();
@@ -367,6 +375,39 @@ void Style::ReleaseResourceCache()
         XSafeRelease(iter->second.Converter);
     }
     s_ConvertedSourceBitmapCache.clear();
+}
+
+
+
+void Style::ReleaseResoureCacheOnResize()
+{
+    for (auto iter = s_TextLayoutCache.begin(); iter != s_TextLayoutCache.end(); iter++)
+    {
+        XSafeRelease(iter->second);
+    }
+    s_TextLayoutCache.clear();
+
+    for (auto iter = s_D2DBitmapCache.begin(); iter != s_D2DBitmapCache.end(); iter++)
+    {
+        XSafeRelease(iter->second);
+    }
+    s_D2DBitmapCache.clear();
+
+    for (auto iter = s_ConvertedSourceBitmapCache.begin(); iter != s_ConvertedSourceBitmapCache.end(); iter++)
+    {
+        XSafeRelease(iter->second.Converter);
+    }
+    s_ConvertedSourceBitmapCache.clear();
+}
+
+
+void Style::ReleaseResoureCacheOnLangauge()
+{
+    for (auto iter = s_TextLayoutCache.begin(); iter != s_TextLayoutCache.end(); iter++)
+    {
+        XSafeRelease(iter->second);
+    }
+    s_TextLayoutCache.clear();
 }
 
 

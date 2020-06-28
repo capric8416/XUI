@@ -18,6 +18,7 @@
 #include "Image.h"
 #include "Tab.h"
 #include "Edit.h"
+#include "Language.h"
 
 #include <Windows.h>
 #include "Xml.h"
@@ -35,20 +36,22 @@ int n = 0;
 class MyUI : public UI
 {
 public:
+    using UI::UI;
+
     virtual void OnGroupItemChanged(Control* Parent, Control* Last, Control* Current, LONG Value)
     {
     }
 
     virtual void OnLeftClick(Control* Target)
     {
-        if (Target->ID() == L"ImageView1")
-        {
-            Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202818R.jpg");
-        }
-        else if (Target->ID() == L"ImageView2")
-        {
-            Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202924R.jpg");
-        }
+        //if (Target->ID() == L"ImageView1")
+        //{
+        //    Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202818R.jpg");
+        //}
+        //else if (Target->ID() == L"ImageView2")
+        //{
+        //    Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202924R.jpg");
+        //}
 
         //auto parent = Target->Parent();
         //if ((parent != nullptr && parent->ID() == L"RadioGroup") || Target->ID() == L"RadioGroup")
@@ -164,14 +167,14 @@ public:
 
     virtual void OnRightClick(Control* Target)
     {
-        if (Target->ID() == L"ImageView1")
-        {
-            Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202924R.jpg");
-        }
-        else if (Target->ID() == L"ImageView2")
-        {
-            Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202818R.jpg");
-        }
+        //if (Target->ID() == L"ImageView1")
+        //{
+        //    Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202924R.jpg");
+        //}
+        //else if (Target->ID() == L"ImageView2")
+        //{
+        //    Target->SetImage(L"D:\\Documents\\360手机照片\\IMG_20170131_202818R.jpg");
+        //}
 
         //auto parent = Target->Parent();
         //if (parent != nullptr && parent->ID() == L"RadioGroup")
@@ -210,74 +213,76 @@ public:
 
     virtual Control* Create()
     {
+        __super::Create();
+
         m_Tree = new Control(
             L"Body", ZERO_RECT, false, false, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -5, -5, -5, -5 }, true,
             {
-                //new TabGroup(
-                //    L"RadioTab", {0, 0, 300, 300},
-                //    new TAB_RADIO_NAV(
-                //        L"RadioNav", { 0, 0, 300, 1000 }, true, false, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1}, false, false, true,
-                //        {
-                //            new RadioBox(
-                //                L"CastScreen", true, {0, 0, 1000, 500}, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
-                //                {
-                //                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                //                    new Background(CONTROL_STATUS_CHECKED, ZERO_RECT, D2D1::ColorF(0x009688))
-                //                },
-                //                {
-                //                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                //                },
-                //                {
-                //                    new Text(L"投屏幕", CONTROL_STATUS_NORMAL, ZERO_RECT),
-                //                    new Text(L"投屏幕", CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
-                //                }
-                //            ),
-                //            new RadioBox(
-                //                L"CastWindow", false, {0, 500, 1000, 1000}, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
-                //                {
-                //                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                //                    new Background(CONTROL_STATUS_CHECKED, ZERO_RECT, D2D1::ColorF(0x009688))
-                //                },
-                //                {
-                //                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                //                },
-                //                {
-                //                    new Text(L"投窗口", CONTROL_STATUS_NORMAL, ZERO_RECT),
-                //                    new Text(L"投窗口", CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
-                //                }
-                //            ),
-                //        },
-                //        {},
-                //        {
-                //            new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                //        }
-                //    ),
-                //    new TAB_BOX(
-                //        L"RadioBox", {300, 0, 1000, 1000}, false, false, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, {-10, 0, 0, 0}, {-1, -1, -1, -1}, true,
-                //        {
-                //            new Label(
-                //                L"Screen", ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, false, false, true,
-                //                {
-                //                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                //                },
-                //                {},
-                //                {
-                //                    new Text(L"屏幕", CONTROL_STATUS_NORMAL, ZERO_RECT),
-                //                }
-                //            ),
-                //            new Label(
-                //                L"Window", ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, true, false, true,
-                //                {
-                //                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                //                },
-                //                {},
-                //                {
-                //                    new Text(L"窗口", CONTROL_STATUS_NORMAL, ZERO_RECT),
-                //                }
-                //            ),
-                //        }
-                //    )
-                //),
+                new TabGroup(
+                    L"RadioTab", {0, 0, 300, 300},
+                    new TAB_RADIO_NAV(
+                        L"RadioNav", { 0, 0, 300, 1000 }, true, false, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, { -1, -1, -1, -1}, false, false, true,
+                        {
+                            new RadioBox(
+                                L"CastScreen", true, {0, 0, 1000, 500}, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+                                {
+                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                                    new Background(CONTROL_STATUS_CHECKED, ZERO_RECT, D2D1::ColorF(0x009688))
+                                },
+                                {
+                                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                                },
+                                {
+                                    new Text(L"CastScreen", CONTROL_STATUS_NORMAL, ZERO_RECT),
+                                    new Text(L"CastScreen", CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+                                }
+                            ),
+                            new RadioBox(
+                                L"CastWindow", false, {0, 500, 1000, 1000}, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, nullptr, false, false, true,
+                                {
+                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                                    new Background(CONTROL_STATUS_CHECKED, ZERO_RECT, D2D1::ColorF(0x009688))
+                                },
+                                {
+                                    new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                                },
+                                {
+                                    new Text(L"CastWindow", CONTROL_STATUS_NORMAL, ZERO_RECT),
+                                    new Text(L"CastWindow", CONTROL_STATUS_CHECKED, ZERO_RECT, 0, 0, D2D1::ColorF(0xffffff))
+                                }
+                            ),
+                        },
+                        {},
+                        {
+                            new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                        }
+                    ),
+                    new TAB_BOX(
+                        L"RadioBox", {300, 0, 1000, 1000}, false, false, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, {-10, 0, 0, 0}, {-1, -1, -1, -1}, true,
+                        {
+                            new Label(
+                                L"Screen", ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, false, false, true,
+                                {
+                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                                },
+                                {},
+                                {
+                                    new Text(L"Screen", CONTROL_STATUS_NORMAL, ZERO_RECT),
+                                }
+                            ),
+                            new Label(
+                                L"Window", ZERO_RECT, CONTROL_ALIGN_HORIZONTAL_CENTER, CONTROL_ALIGN_VERTICAL_CENTER, ZERO_RECT, ZERO_RECT, true, false, true,
+                                {
+                                    new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                                },
+                                {},
+                                {
+                                    new Text(L"Window", CONTROL_STATUS_NORMAL, ZERO_RECT),
+                                }
+                            ),
+                        }
+                    )
+                ),
 
                 //new TabGroup(
                 //    L"CheckTab", {0, 400, 300, 700},
@@ -345,32 +350,32 @@ public:
                 //    )
                 //),
 
-                new Control(
-                    L"ImageView1", {0, 0, 500, 1000}, {},
-                    {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                    },
-                    {
-                        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                    },
-                    {},
-                    {
-                        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
-                    }
-                ),
-                new Control(
-                    L"ImageView2", {500, 0, 1000, 1000 }, {},
-                    {
-                        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
-                    },
-                    {
-                        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
-                    },
-                    {},
-                    {
-                        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
-                    }
-                ),
+                //new Control(
+                //    L"ImageView1", {0, 0, 500, 1000}, {},
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //    },
+                //    {
+                //        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                //    },
+                //    {},
+                //    {
+                //        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
+                //    }
+                //),
+                //new Control(
+                //    L"ImageView2", {500, 0, 1000, 1000 }, {},
+                //    {
+                //        new Background(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0xffffff)),
+                //    },
+                //    {
+                //        new Border(CONTROL_STATUS_NORMAL, ZERO_RECT, D2D1::ColorF(0x009688))
+                //    },
+                //    {},
+                //    {
+                //        new Image(CONTROL_STATUS_NORMAL, ZERO_RECT, L"")
+                //    }
+                //),
 
                 //new Control(
                 //    L"UserDialog", {0, 0, 500, 80},
@@ -457,6 +462,55 @@ public:
 };
 
 
+class MyLanguage : public Language
+{
+public:
+    MyLanguage(std::string Name)
+        : Language(Name)
+    {
+        // read contructor param, app conf, os conf
+        Read();
+
+        // init language key value pairs
+        Init();
+    }
+
+    ~MyLanguage()
+    {
+        // save
+        Write();
+    }
+
+    virtual void Read()
+    {
+        // read os conf
+        if (m_Name.empty() || (m_Name != "english" && m_Name != "ChineseSimplified"))
+        {
+            m_Name = (GetUserDefaultLCID() & 0xFF) == LANG_CHINESE ? "ChineseSimplified" : "english";
+        }
+    }
+
+
+    virtual void Init()
+    {
+        // English
+        m_Data["english"] = {
+            {L"CastScreen", L"Cast Screen"},
+            {L"CastWindow", L"Cast Window"},
+            {L"Screen", L"Screen"},
+            {L"Window", L"Window"},
+        };
+
+
+        // Chinese
+        m_Data["ChineseSimplified"] = {
+            {L"CastScreen", L"投屏幕"},
+            {L"CastWindow", L"投窗口"},
+            {L"Screen", L"屏幕"},
+            {L"Window", L"窗口"},
+        };
+    }
+};
 
 
 
@@ -505,7 +559,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int nCmdShow)
     MainWnd win;
 
     // Setup ui
-    win.Setup(new MyUI());
+    win.Setup(new MyUI(new MyLanguage("english")));
 
     // Create window
     if (!win.Create(L"XUI", L"XUI Window", WS_OVERLAPPEDWINDOW, 0, 660, 240, 800, 640))

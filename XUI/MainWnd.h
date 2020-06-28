@@ -36,6 +36,7 @@ public:
 
     // Is resizeing
     bool Resizing();
+    void SetResizing(bool Value);
 
     // Get client rect
     RECT Position();

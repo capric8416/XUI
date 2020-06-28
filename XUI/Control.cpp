@@ -343,23 +343,39 @@ wstring Control::GetContent()
 }
 
 
-bool Control::SetContent(wstring Content, bool Paint, CONTROL_STATUS Exclue)
+bool Control::SetContent(wstring Content, bool Paint, CONTROL_STATUS ExclueStatus, initializer_list<int> ExcluePos)
 {
     bool changed = false;
     for (int i = CONTROL_STATUS_BTIV + 1; i < CONTROL_STATUS_SIZE; i++)
     {
-        if (i == Exclue)
+        if (i == ExclueStatus)
         {
             continue;
         }
 
+        int j = 0;
         for (const auto& style : m_TextStyles[i])
         {
-            auto x = style->SetContent(Content);
-            if (x)
+            bool skip = false;
+            for (const auto k : ExcluePos)
             {
-                changed = true;
+                if (j == k)
+                {
+                    skip = true;
+                    break;
+                }
             }
+
+            if (!skip)
+            {
+                auto x = style->SetContent(Content);
+                if (x)
+                {
+                    changed = true;
+                }
+            }
+
+            j++;
         }
     }
 

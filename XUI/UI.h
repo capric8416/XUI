@@ -11,12 +11,18 @@
 #include "Control.h"
 
 
+class Language;
+class MainWnd;
+
 
 class UI
 {
 public:
-    UI();
+    UI(Language* Lang);
     virtual ~UI();
+
+    virtual MainWnd* GetMainWnd();
+    virtual void SetMainWnd(MainWnd* Wnd);
 
     virtual Control* Create() = 0;
     virtual void Resize();
@@ -49,6 +55,8 @@ public:
 
     virtual void OnFocus(Control* Target);
 
+    virtual Language* GetLanguage();
+
 protected:
     bool m_Resized;
     bool m_Resizing;
@@ -56,7 +64,11 @@ protected:
 
     Control* m_Tree;
 
+    MainWnd* m_MainWnd;
+
     Control* m_Focused;
+
+    Language* m_Language;
 
     SHORT m_MouseScrollLines;
 };

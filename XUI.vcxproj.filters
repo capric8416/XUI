@@ -93,6 +93,9 @@
     <ClInclude Include="XUI\Edit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="XUI\Language.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="XUI\Main.cpp">
@@ -168,6 +171,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="XUI\Edit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XUI\Language.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

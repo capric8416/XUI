@@ -57,7 +57,7 @@ LRESULT MainWnd::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
         return 0;
 
     case WM_SIZE:
-        Style::ReleaseResourceCache();
+        Style::ReleaseResoureCacheOnResize();
         Resize();
         return 0;
 
@@ -68,18 +68,29 @@ LRESULT MainWnd::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
     case WM_MOUSEMOVE:
     case WM_MOUSEWHEEL:
     case WM_MOUSEHWHEEL:
-        if (!m_Resizing)
+        if (m_Resizing)
         {
-            m_UI->OnMouseEvent(uMsg, wParam, lParam);
+            return 0;
         }
+        m_UI->OnMouseEvent(uMsg, wParam, lParam);
         return 0;
 
     case WM_CHAR:
+        if (m_Resizing)
+        {
+            return 0;
+        }
         if (wParam >= VK_SPACE)
+        {
             m_UI->OnCharInput(uMsg, wParam, lParam);
+        }
         return 0;
     
     case WM_KEYDOWN:
+        if (m_Resizing)
+        {
+            return 0;
+        }
         switch (wParam)
         {
         case VK_LEFT:
@@ -115,6 +126,12 @@ void MainWnd::DisableAnimation()
 bool MainWnd::Resizing()
 {
     return m_Resizing;
+}
+
+
+void MainWnd::SetResizing(bool Value)
+{
+    m_Resizing = Value;
 }
 
 

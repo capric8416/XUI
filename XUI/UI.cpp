@@ -4,11 +4,14 @@
 // project
 #include "Edit.h"
 #include "Animation.h"
+#include "Language.h"
 
 
 
-UI::UI() :
+UI::UI(Language* Lang) :
+    m_Language(Lang),
     m_Tree(nullptr),
+    m_MainWnd(nullptr),
     m_Focused(nullptr),
     m_Resized(false),
     m_Resizing(false),
@@ -22,6 +25,19 @@ UI::UI() :
 UI::~UI()
 {
     XSafeDelete(m_Tree);
+    XSafeDelete(m_Language);
+}
+
+
+MainWnd* UI::GetMainWnd()
+{
+    return m_MainWnd;
+}
+
+
+void UI::SetMainWnd(MainWnd* Wnd)
+{
+    m_MainWnd = Wnd;
 }
 
 
@@ -206,4 +222,10 @@ void UI::OnFocus(Control* Target)
     {
         m_Focused = Target;
     }
+}
+
+
+Language* UI::GetLanguage()
+{
+    return m_Language;
 }
