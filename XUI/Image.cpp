@@ -171,7 +171,7 @@ uint32_t FindJpegEndPos(uint8_t* Buffer, uint32_t Last)
         {
             if (memcmp(Buffer + i, end, 2) == 0)
             {
-                return i + 1;
+                return i + 2;
             }
 
             if (Buffer[i + 1] == 0xFF)
