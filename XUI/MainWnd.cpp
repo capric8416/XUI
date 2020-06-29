@@ -2,8 +2,12 @@
 #include "MainWnd.h"
 
 // project
-#include "UI.h"
+#include "Automation.h"
 #include "Style.h"
+#include "UI.h"
+
+// c/c++
+#include <map>
 
 
 
@@ -35,6 +39,13 @@ LRESULT MainWnd::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 {
     switch (uMsg)
     {
+    case WM_COPYDATA:
+        if (m_Resizing)
+        {
+            return -1;
+        }
+        return Automation::Route(m_UI, (PCOPYDATASTRUCT)lParam);
+
     case WM_CREATE:
         if (FAILED(CreateGraphicsResources()))
         {
@@ -43,13 +54,23 @@ LRESULT MainWnd::HandleMessage(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPara
 
         m_UI->Create();
 
+        Automation::Open();
+        Automation::Map();
+
         return 0;
 
     case WM_DESTROY:
         m_UI->StopAnimation(m_AnimationEnabled);
+        
         Style::ReleaseResourceCache();
+        
         DiscardGraphicsResources();
+
+        Automation::UnMap();
+        Automation::Close();
+        
         PostQuitMessage(0);
+
         return 0;
 
     case WM_PAINT:

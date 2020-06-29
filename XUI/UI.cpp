@@ -7,6 +7,10 @@
 #include "Language.h"
 
 
+// namespace
+using namespace std;
+
+
 
 UI::UI(Language* Lang) :
     m_Language(Lang),
@@ -156,12 +160,26 @@ void UI::OnCharInput(UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 
+int UI::OnCharInput(wstring ID, wstring Text, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
+}
+
+
 void UI::OnKeyInput(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     if (m_Focused && m_Focused->TypeName() == typeid(SingleLineEdit).name())
     {
         m_Focused->OnKeyInput(wParam, lParam);
     }
+}
+
+
+int UI::OnKeyInput(wstring ID, int Key, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
 }
 
 
@@ -181,6 +199,20 @@ void UI::OnLeftDoubleClick(Control* Target)
 }
 
 
+int UI::OnLeftClick(wstring ID, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
+}
+
+
+int UI::OnLeftDoubleClick(wstring ID, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
+}
+
+
 void UI::OnRightClick(Control* Target)
 {
 }
@@ -188,6 +220,20 @@ void UI::OnRightClick(Control* Target)
 
 void UI::OnRightDoubleClick(Control* Target)
 {
+}
+
+
+int UI::OnRightClick(wstring ID, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
+}
+
+
+int UI::OnRightDoubleClick(wstring ID, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
 }
 
 
@@ -201,6 +247,20 @@ void UI::OnSliderValueChanged(Control* Parent, Control* Target, INT32 Last, INT3
 }
 
 
+int UI::OnGroupItemChanged(wstring ID, LONG Pos, LONG Value, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
+}
+
+
+int UI::OnSliderValueChanged(wstring ID, LONG Value, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
+}
+
+
 void UI::OnMouseVerticalScroll(Control* Target, SHORT Delta)
 {
 }
@@ -208,6 +268,20 @@ void UI::OnMouseVerticalScroll(Control* Target, SHORT Delta)
 
 void UI::OnMouseHorizontalScroll(Control* Target, SHORT Delta)
 {
+}
+
+
+int UI::OnMouseVerticalScroll(wstring ID, SHORT Delta, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
+}
+
+
+int UI::OnMouseHorizontalScroll(wstring ID, SHORT Delta, wchar_t* Buffer)
+{
+    wcscpy(Buffer, L"{\"message\": \"Not implemented\"}");
+    return 0;
 }
 
 

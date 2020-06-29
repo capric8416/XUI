@@ -70,6 +70,7 @@ public:
     virtual void SetParent(Control* Parent);
 
     // Get children
+    virtual Control* Child(size_t Pos);
     virtual std::vector<Control*>* Children();
 
     // Attach child control
@@ -195,6 +196,9 @@ public:
     virtual void OnKeyInput(WPARAM wParam, LPARAM lParam);
 
 
+    static void OnControlDelete(Control* Target);
+
+
     // Find which control's rect has the point
     virtual inline Control* Find(POINT& Pt);
     // Find which control's rect equal the rect
@@ -288,27 +292,27 @@ protected:
     std::vector<Control*> m_Children;
 
     // Left button opation point
-    static POINT m_LeftButtonDownPoint;
-    static POINT m_LeftButtonUpPoint;
+    static POINT s_LeftButtonDownPoint;
+    static POINT s_LeftButtonUpPoint;
     // Left button opation tikcout
-    static DWORD64 m_LeftButtonDownTick;
-    static DWORD64 m_LeftButtonUpTick;
-    static DWORD64 m_LeftButtonClickTick;
-    static DWORD64 m_LeftButtonDoubleClickTick;
+    static DWORD64 s_LeftButtonDownTick;
+    static DWORD64 s_LeftButtonUpTick;
+    static DWORD64 s_LeftButtonClickTick;
+    static DWORD64 s_LeftButtonDoubleClickTick;
 
     // Right button opation point
-    static POINT m_RightButtonDownPoint;
-    static POINT m_RightButtonUpPoint;
+    static POINT s_RightButtonDownPoint;
+    static POINT s_RightButtonUpPoint;
     // Right button opation tikcout
-    static DWORD64 m_RightButtonDownTick;
-    static DWORD64 m_RightButtonUpTick;
-    static DWORD64 m_RightButtonClickTick;
-    static DWORD64 m_RightButtonDoubleClickTick;
+    static DWORD64 s_RightButtonDownTick;
+    static DWORD64 s_RightButtonUpTick;
+    static DWORD64 s_RightButtonClickTick;
+    static DWORD64 s_RightButtonDoubleClickTick;
 
     // The control mouse enters
-    static Control* m_MouseEnter;
+    static Control* s_MouseEnter;
     // Last mouse point
-    static POINT m_LastMousePoint;
+    static POINT s_LastMousePoint;
 
     // Scrool enabled
     bool m_VerticalScroolEnabled;

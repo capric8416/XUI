@@ -19,27 +19,27 @@ using namespace std;
 
 
 // Left button opation point
-POINT Control::m_LeftButtonDownPoint;
-POINT Control::m_LeftButtonUpPoint;
+POINT Control::s_LeftButtonDownPoint;
+POINT Control::s_LeftButtonUpPoint;
 // Left button opation tikcout
-DWORD64 Control::m_LeftButtonDownTick = 0;
-DWORD64 Control::m_LeftButtonUpTick = 0;
-DWORD64 Control::m_LeftButtonClickTick = 0;
-DWORD64 Control::m_LeftButtonDoubleClickTick = 0;
+DWORD64 Control::s_LeftButtonDownTick = 0;
+DWORD64 Control::s_LeftButtonUpTick = 0;
+DWORD64 Control::s_LeftButtonClickTick = 0;
+DWORD64 Control::s_LeftButtonDoubleClickTick = 0;
 
 // Right button opation point
-POINT Control::m_RightButtonDownPoint;
-POINT Control::m_RightButtonUpPoint;
+POINT Control::s_RightButtonDownPoint;
+POINT Control::s_RightButtonUpPoint;
 // Right button opation tikcout
-DWORD64 Control::m_RightButtonDownTick;
-DWORD64 Control::m_RightButtonUpTick;
-DWORD64 Control::m_RightButtonClickTick;
-DWORD64 Control::m_RightButtonDoubleClickTick;
+DWORD64 Control::s_RightButtonDownTick;
+DWORD64 Control::s_RightButtonUpTick;
+DWORD64 Control::s_RightButtonClickTick;
+DWORD64 Control::s_RightButtonDoubleClickTick;
 
 // The control mouse enters
-Control* Control::m_MouseEnter = nullptr;
+Control* Control::s_MouseEnter = nullptr;
 // Last mouse point
-POINT Control::m_LastMousePoint;
+POINT Control::s_LastMousePoint;
 
 
 
@@ -208,6 +208,12 @@ Control* Control::Parent()
 void Control::SetParent(Control* Parent)
 {
     m_Parent = Parent;
+}
+
+
+Control* Control::Child(size_t Pos)
+{
+    return 0 <= Pos && Pos < m_Children.size() ? m_Children[Pos] : nullptr;
 }
 
 
@@ -732,8 +738,8 @@ void Control::OnLeftButtonDown(POINT Pt)
     }
     else if (Hintable())
     {
-        m_LeftButtonDownPoint = Pt;
-        m_LeftButtonDownTick = TICK_COUNT;
+        s_LeftButtonDownPoint = Pt;
+        s_LeftButtonDownTick = TICK_COUNT;
         OnLeftButtonDown(Pt.x, Pt.y);
     }
 }
@@ -755,29 +761,29 @@ void Control::OnLeftButtonUp(POINT Pt)
     }
     else if (Hintable())
     {
-        m_LeftButtonUpPoint = Pt;
-        m_LeftButtonUpTick = TICK_COUNT;
+        s_LeftButtonUpPoint = Pt;
+        s_LeftButtonUpTick = TICK_COUNT;
 
         OnLeftButtonUp(Pt.x, Pt.y);
 
         if (
-            m_LeftButtonDownTick > 0 &&
-            m_LeftButtonUpTick > 0 &&
-            m_LeftButtonUpTick - m_LeftButtonDownTick <= CLICK_DELTA &&
-            m_LeftButtonDownPoint.x >= 0 &&
-            m_LeftButtonDownPoint.y >= 0 &&
-            m_LeftButtonUpPoint.x >= 0 &&
-            m_LeftButtonUpPoint.y >= 0
+            s_LeftButtonDownTick > 0 &&
+            s_LeftButtonUpTick > 0 &&
+            s_LeftButtonUpTick - s_LeftButtonDownTick <= CLICK_DELTA &&
+            s_LeftButtonDownPoint.x >= 0 &&
+            s_LeftButtonDownPoint.y >= 0 &&
+            s_LeftButtonUpPoint.x >= 0 &&
+            s_LeftButtonUpPoint.y >= 0
             )
         {
             OnLeftButtonClick(Pt.x, Pt.y);
         }
 
-        m_LeftButtonDownPoint = { -1, -1 };
-        m_LeftButtonUpPoint = { -1, -1 };
+        s_LeftButtonDownPoint = { -1, -1 };
+        s_LeftButtonUpPoint = { -1, -1 };
 
-        m_LeftButtonDownTick = 0;
-        m_LeftButtonUpTick = 0;
+        s_LeftButtonDownTick = 0;
+        s_LeftButtonUpTick = 0;
     }
 }
 
@@ -791,13 +797,13 @@ void Control::OnLeftButtonClick(LONG X, LONG Y)
 {
     m_Wnd->GetUI()->OnLeftClick(this);
 
-    if (m_LeftButtonUpTick - m_LeftButtonClickTick <= DBL_CLICK_DELTA && m_LeftButtonUpTick - m_LeftButtonDoubleClickTick > DBL_CLICK_DELTA)
+    if (s_LeftButtonUpTick - s_LeftButtonClickTick <= DBL_CLICK_DELTA && s_LeftButtonUpTick - s_LeftButtonDoubleClickTick > DBL_CLICK_DELTA)
     {
         OnLeftButtonDoubleClick(X, Y);
-        m_LeftButtonDoubleClickTick = m_LeftButtonUpTick;
+        s_LeftButtonDoubleClickTick = s_LeftButtonUpTick;
     }
 
-    m_LeftButtonClickTick = m_LeftButtonUpTick;
+    s_LeftButtonClickTick = s_LeftButtonUpTick;
 }
 
 
@@ -816,8 +822,8 @@ void Control::OnRightButtonDown(POINT Pt)
     }
     else if (Hintable())
     {
-        m_RightButtonDownPoint = Pt;
-        m_RightButtonDownTick = TICK_COUNT;
+        s_RightButtonDownPoint = Pt;
+        s_RightButtonDownTick = TICK_COUNT;
         OnRightButtonDown(Pt.x, Pt.y);
     }
 }
@@ -838,29 +844,29 @@ void Control::OnRightButtonUp(POINT Pt, WPARAM wParam)
     }
     else if (Hintable())
     {
-        m_RightButtonUpPoint = Pt;
-        m_RightButtonUpTick = TICK_COUNT;
+        s_RightButtonUpPoint = Pt;
+        s_RightButtonUpTick = TICK_COUNT;
 
         OnRightButtonUp(Pt.x, Pt.y);
 
         if (
-            m_RightButtonDownTick > 0 &&
-            m_RightButtonUpTick > 0 &&
-            m_RightButtonUpTick - m_RightButtonDownTick <= CLICK_DELTA &&
-            m_RightButtonDownPoint.x >= 0 &&
-            m_RightButtonDownPoint.y >= 0 &&
-            m_RightButtonUpPoint.x >= 0 &&
-            m_RightButtonUpPoint.y >= 0
+            s_RightButtonDownTick > 0 &&
+            s_RightButtonUpTick > 0 &&
+            s_RightButtonUpTick - s_RightButtonDownTick <= CLICK_DELTA &&
+            s_RightButtonDownPoint.x >= 0 &&
+            s_RightButtonDownPoint.y >= 0 &&
+            s_RightButtonUpPoint.x >= 0 &&
+            s_RightButtonUpPoint.y >= 0
             )
         {
             OnRightButtonClick(Pt.x, Pt.y);
         }
 
-        m_RightButtonDownPoint = { -1, -1 };
-        m_RightButtonUpPoint = { -1, -1 };
+        s_RightButtonDownPoint = { -1, -1 };
+        s_RightButtonUpPoint = { -1, -1 };
 
-        m_RightButtonDownTick = 0;
-        m_RightButtonUpTick = 0;
+        s_RightButtonDownTick = 0;
+        s_RightButtonUpTick = 0;
     }
 }
 
@@ -874,13 +880,13 @@ void Control::OnRightButtonClick(LONG X, LONG Y)
 {
     m_Wnd->GetUI()->OnRightClick(this);
 
-    if (m_RightButtonUpTick - m_RightButtonClickTick <= DBL_CLICK_DELTA && m_RightButtonUpTick - m_RightButtonDoubleClickTick > DBL_CLICK_DELTA)
+    if (s_RightButtonUpTick - s_RightButtonClickTick <= DBL_CLICK_DELTA && s_RightButtonUpTick - s_RightButtonDoubleClickTick > DBL_CLICK_DELTA)
     {
         OnRightButtonDoubleClick(X, Y);
-        m_RightButtonDoubleClickTick = m_RightButtonUpTick;
+        s_RightButtonDoubleClickTick = s_RightButtonUpTick;
     }
 
-    m_RightButtonClickTick = m_RightButtonUpTick;
+    s_RightButtonClickTick = s_RightButtonUpTick;
 }
 
 
@@ -896,10 +902,10 @@ void Control::OnMouseMove(POINT Pt, WPARAM wParam)
 
     if (wParam == MK_LBUTTON)
     {
-        OnMouseDrag(Pt, m_LastMousePoint);
+        OnMouseDrag(Pt, s_LastMousePoint);
     }
 
-    m_LastMousePoint = Pt;
+    s_LastMousePoint = Pt;
 }
 
 
@@ -912,7 +918,7 @@ void Control::OnMouseEnter(POINT Pt)
     }
     else if (Hintable())
     {
-        if (m_MouseEnter != this)
+        if (s_MouseEnter != this)
         {
             OnMouseEnter(Pt.x, Pt.y);
         }
@@ -924,12 +930,12 @@ void Control::OnMouseEnter(LONG X, LONG Y)
 {
     XTRACE("%s", m_ID.c_str());
 
-    if (m_MouseEnter != nullptr && m_MouseEnter != this)
+    if (s_MouseEnter != nullptr && s_MouseEnter != this)
     {
-        m_MouseEnter->OnMouseLeave(X, Y);
+        s_MouseEnter->OnMouseLeave(X, Y);
     }
 
-    m_MouseEnter = this;
+    s_MouseEnter = this;
 }
 
 
@@ -1026,6 +1032,15 @@ void Control::OnCharInput(WPARAM wParam, LPARAM lParam)
 
 void Control::OnKeyInput(WPARAM wParam, LPARAM lParam)
 {
+}
+
+
+void Control::OnControlDelete(Control* Target)
+{
+    if (Target == s_MouseEnter)
+    {
+        s_MouseEnter = nullptr;
+    }
 }
 
 

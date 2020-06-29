@@ -35,23 +35,40 @@ public:
     virtual void ExecuteAnimation();
 
     virtual void OnPaint(Control* Target, bool Refresh = false);
+
     virtual void OnMouseEvent(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    
     virtual void OnCharInput(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    virtual int OnCharInput(std::wstring ID, std::wstring Text, wchar_t* Buffer);
+    
     virtual void OnKeyInput(UINT uMsg, WPARAM wParam, LPARAM lParam);
+    virtual int OnKeyInput(std::wstring ID, int Key, wchar_t* Buffer);
 
     virtual bool IsRoot(Control* Target);
 
     virtual void OnLeftClick(Control* Target);
     virtual void OnLeftDoubleClick(Control* Target);
 
+    virtual int OnLeftClick(std::wstring ID, wchar_t* Buffer);
+    virtual int OnLeftDoubleClick(std::wstring ID, wchar_t* Buffer);
+
     virtual void OnRightClick(Control* Target);
     virtual void OnRightDoubleClick(Control* Target);
+
+    virtual int OnRightClick(std::wstring ID, wchar_t* Buffer);
+    virtual int OnRightDoubleClick(std::wstring ID, wchar_t* Buffer);
 
     virtual void OnGroupItemChanged(Control* Parent, Control* Last, Control* Current, LONG Value = 0);
     virtual void OnSliderValueChanged(Control* Parent, Control* Target, INT32 Last, INT32 Current);
 
+    virtual int OnGroupItemChanged(std::wstring ID, LONG Pos, LONG Value, wchar_t* Buffer);
+    virtual int OnSliderValueChanged(std::wstring ID, LONG Value, wchar_t* Buffer);
+
     virtual void OnMouseVerticalScroll(Control* Target, SHORT Delta);
     virtual void OnMouseHorizontalScroll(Control* Target, SHORT Delta);
+
+    virtual int OnMouseVerticalScroll(std::wstring ID, SHORT Delta, wchar_t* Buffer);
+    virtual int OnMouseHorizontalScroll(std::wstring ID, SHORT Delta, wchar_t* Buffer);
 
     virtual void OnFocus(Control* Target);
 
