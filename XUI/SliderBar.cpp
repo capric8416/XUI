@@ -81,7 +81,10 @@ void SliderBarBody::OnMouseDrag(LONG X, LONG Y, POINT LastPt)
 {
     __super::OnMouseDrag(X, Y, LastPt);
 
-    UpdateValue(X, Y);
+    if (m_MaxValue > m_MinValue)
+    {
+        UpdateValue(X, Y);
+    }
 }
 
 
@@ -353,9 +356,10 @@ INT32 SliderBar::Value()
 }
 
 
-bool SliderBar::Value(INT32 Value)
+bool SliderBar::Value(INT32 Value, bool Force)
 {
-    if (Value != m_Value && m_MinValue <= Value && Value <= m_MaxValue)
+    bool valid = m_MinValue <= Value && Value <= m_MaxValue;
+    if (Value != m_Value && (valid || Force))
     {
         m_Value = Value;
 
@@ -370,8 +374,11 @@ bool SliderBar::Value(INT32 Value)
             m_SliderValue->SetContent(to_wstring(m_Value));
         }
 
-        m_SliderBody->Value(Value);
-        m_SliderBody->UpdateValue(0, 0, true);
+        if (valid)
+        {
+            m_SliderBody->Value(m_Value);
+            m_SliderBody->UpdateValue(0, 0, true);
+        }
 
         if (paint)
         {

@@ -113,7 +113,7 @@ public:
     virtual void OnValueChange(INT32 Value);
 
     INT32 Value();
-    bool Value(INT32 Value);
+    bool Value(INT32 Value, bool Force = false);
     void Min();
     INT32 GetMin();
     bool SetMin(INT32 Value);
